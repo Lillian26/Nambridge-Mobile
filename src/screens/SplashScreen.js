@@ -14,43 +14,64 @@ import {
 } from "@99xt/first-born";
 import * as Animatable from 'react-native-animatable';
 import { useTheme } from '@react-navigation/native';
+import actuatedNormalize from '../helpers/actuatedNormalize';
+import grayColor from '../constants/Colors';
 
 const SplashScreen = ({ navigation }) => {
   const { colors } = useTheme();
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor='#5b2c90' barStyle="light-content" />
+      <StatusBar backgroundColor='#ffffff' barStyle="dark-content" />
+      <View style={{flex:1}}></View>
       <View style={styles.header}>
         <Animatable.Image
           animation="bounceIn"
           duraton="1500"
-          source={require('../assets/logo.png')}
+          source={require('../assets/logo.jpeg')}
           style={styles.logo}
-          resizeMode="stretch"
+          resizeMode="center"
         />
-        <Text style={[styles.title]}>Get The Word Out</Text>
+        <Text style={[styles.title]}></Text>
 
       </View>
+      <View style={[styles.footer]}>
       <Animatable.View
-        style={[styles.footer]}
-        animation="fadeInUpBig"
+        animation="slideInDown"
       >
 
         <View style={styles.button}>
           <TouchableOpacity style={{}}>
             <Button
-              rounded
-              style={styles.button}
-              color="#ec4143"
+              color="#fe4b34"
               onPress={() => navigation.navigate('SignInScreen')}
             >
-              <Icon name="checkmark" />
-              <Text style={styles.textSign}>Get Started</Text>
+              {/* <Icon name="checkmark" /> */}
+              <Text style={styles.textSign}>Get The Word Out</Text>
             </Button>
           </TouchableOpacity>
         </View>
       </Animatable.View>
+      <Animatable.View
+        animation="fadeInUpBig"
+        duraton="1500"
+      >
+
+        <View style={styles.button}>
+          <TouchableOpacity style={{}}>
+            <Button
+              color="#ffffff"
+              style={{    borderWidth: .5,
+                borderColor: {grayColor},}}
+              onPress={() => navigation.navigate('SignInScreen')}
+            >
+              {/* <Icon name="checkmark" /> */}
+              <Text style={{color: '#fe4b34'}}>Login</Text>
+            </Button>
+          </TouchableOpacity>
+        </View>
+      </Animatable.View>
+      </View>
     </View>
   );
 };
@@ -63,10 +84,10 @@ const height_logo = height * 0.28;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#5b2c90'
+    backgroundColor: '#ffffff'
   },
   header: {
-    flex: 2,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -79,20 +100,23 @@ const styles = StyleSheet.create({
   },
   logo: {
     width: height_logo,
-    height: height_logo
+    height: height_logo,
+    // borderWidth: .5,
+    // borderColor: {grayColor}, 
+    // borderRadius: 50
   },
   title: {
-    color: '#fff',
-    fontSize: 30,
-    fontWeight: 'bold'
+    color: grayColor,
+    fontSize: actuatedNormalize(14),
+    // fontWeight: 'bold'
   },
   text: {
     color: 'grey',
     marginTop: 5
   },
   button: {
-    alignItems: 'flex-end',
-    marginTop: 10
+    // alignItems: 'flex-end',
+    marginTop: 5
   },
   signIn: {
     width: 150,

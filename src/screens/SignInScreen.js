@@ -14,6 +14,7 @@ import * as Animatable from 'react-native-animatable';
 // import { useTheme } from 'react-native-paper';
 
 import { AuthContext } from '../components/context';
+import grayColor from '../constants/Colors';
 
 import Users from '../model/users';
 import { FormInput, Button, Icon, Text } from "@99xt/first-born";
@@ -66,14 +67,14 @@ const SignInScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor='#fff' barStyle="dark-content" />
-      <Animatable.Image
+      <StatusBar backgroundColor='#258c9b' barStyle="light-content" />
+      {/* <Animatable.Image
           animation="bounceIn"
           duraton="1800"
-          source={require('../assets/logof.png')}
-          style={{ width: '20%', flex: 1, alignSelf: 'center'}}
+          source={require('../assets/logo.jpeg')}
+          style={{ width: '30%', flex: 1, alignSelf: 'center'}}
           resizeMode="center"
-        />
+        /> */}
       <View style={styles.header}>
         {/* <Animatable.Image
           animation="bounceIn"
@@ -83,75 +84,72 @@ const SignInScreen = ({ navigation }) => {
           resizeMode="center"
         /> */}
         {/* <PositionExample/> */}
-        <Text style={styles.title}>Welcome to Adverts App</Text>
+        <Text style={styles.title}>Welcome</Text>
         <Text style={[styles.subTitle]}>Please login here</Text>
 
       </View>
-      <ScrollView>
-        <View style={styles.form}>
-          <Input
-            label="Username"
-            iconPosition="right"
-            placeholder="Enter Username"
-            onChangeText={(val) => setUsername(val)}
-          />
-          {data.isValidUser ? null :
-            <Animatable.View animation="fadeInLeft" duration={500}>
-              <Text style={styles.errorMsg}>Username must be 4 characters long.</Text>
-            </Animatable.View>
-          }
+      {/* <ScrollView> */}
+      {/* <View style={styles.form}> */}
+      <View style={{ flex: 2, paddingHorizontal: 20, marginTop: 10 }}>
+        <Input
+          iconPosition="right"
+          placeholder="Username"
+          onChangeText={(val) => setUsername(val)}
+          style={{ backgroundColor: '#f1f3f2', paddingLeft: 15}}
+        />
+        {data.isValidUser ? null :
+          <Animatable.View animation="fadeInLeft" duration={500}>
+            <Text style={styles.errorMsg}>Username must be 4 characters long.</Text>
+          </Animatable.View>
+        }
 
-          <Input
-            label="Password"
-            placeholder="Enter Password"
-            secureTextEntry={isSecureEntry}
-            icon={
-              <TouchableOpacity
-                onPress={() => {
-                  setIsSecureEntry((prev) => !prev);
-                }}>
-                <Text style={{ fontSize: 14 }}>{isSecureEntry ? 'Show' : 'Hide'}</Text>
-              </TouchableOpacity>
-            }
-            iconPosition="right"
-            onChangeText={(val) => setPassword(val)}
-          />
-          {data.isValidPassword ? null :
-            <Animatable.View animation="fadeInLeft" duration={500}>
-              <Text style={styles.errorMsg}>Password must be 8 characters long.</Text>
-            </Animatable.View>
-          }
-          <TouchableOpacity>
-            <Text style={{ color: "#ec4143", marginTop: 15 }}>Forgot password?</Text>
-          </TouchableOpacity>
-          <View style={styles.button}>
-            <Button
-              block
-              style={styles.button}
-              color="#ec4143"
+        <Input
+          placeholder="Password"
+          secureTextEntry={isSecureEntry}
+          style={{ backgroundColor: '#f1f3f2', paddingLeft: 15}}
+          icon={
+            <TouchableOpacity
               onPress={() => {
-                loginHandle(username, password)
-              }}
-            >
-              {/* <Icon name="checkmark" /> */}
-              <Text>{'Sign in'}</Text>
-            </Button>
+                setIsSecureEntry((prev) => !prev);
+              }} style={{backgroundColor: '#f1f3f2', paddingVertical: 10, paddingRight: 5}}>
+              <Text style={{ fontSize: 14, paddingRight: 10 }}>{isSecureEntry ? 'Show' : 'Hide'}</Text>
+            </TouchableOpacity>
+          }
+          iconPosition="right"
+          onChangeText={(val) => setPassword(val)}
+        />
+        {data.isValidPassword ? null :
+          <Animatable.View animation="fadeInLeft" duration={500}>
+            <Text style={styles.errorMsg}>Password must be 8 characters long.</Text>
+          </Animatable.View>
+        }
+        <TouchableOpacity style={{alignItems: 'flex-end'}}>
+          <Text style={[ styles.actionTxt,{ marginTop: 5}]}>Forgot your password?</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.button}>
+        <Button
+          block
+          color="#258c9b"
+          onPress={() => {
+            loginHandle(username, password)
+          }}
+          style={{height: 50}}
+        >
+          {/* <Icon name="checkmark" /> */}
+          <Text style={{fontWeight: 'bold', padding: 3}}>{'SIGN IN'}</Text>
+        </Button>
 
-            {/* <TouchableOpacity onPress={() => navigation.navigate('SignUpScreen')}>
-            <Text style={{ color: '#ec4143', marginTop: 15 }}>Create Account</Text>
+        {/* <TouchableOpacity onPress={() => navigation.navigate('SignUpScreen')}>
+            <Text style={{ color: '#fe4b34', marginTop: 15 }}>Create Account</Text>
           </TouchableOpacity> */}
-            <Button
-              style={styles.button}
-              color="#fff"
-              block
-              onPress={() => navigation.navigate('SignUpScreen')}
-            >
-              <Text style={{ color: "#ec4143" }}>{'Create Account'}</Text>
-            </Button>
+        <TouchableOpacity onPress={() => navigation.navigate('SignUpScreen')} style={{paddingVertical: 20}}>
+          <Text style={styles.actionTxt}>{`Don't have an Account? Create`}</Text>
+        </TouchableOpacity>
 
-          </View>
-        </View>
-      </ScrollView>
+      </View>
+      {/* </View> */}
+      {/* </ScrollView> */}
     </View>
   );
 };
@@ -161,13 +159,14 @@ export default SignInScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: '#5b2c90'
+    // backgroundColor: '#268d9c'
   },
   header: {
     flex: 1,
     justifyContent: 'center',
     paddingTop: 20,
-    paddingBottom: 20
+    paddingBottom: 20,
+    backgroundColor: '#258c9b'
   },
   footer: {
     flex: 3,
@@ -178,18 +177,19 @@ const styles = StyleSheet.create({
     paddingVertical: 30
   },
   title: {
-    fontSize: 21,
+    fontSize: 30,
     textAlign: 'center',
     paddingTop: 30,
     fontWeight: '600',
+    color: '#ffffff'
   },
 
   subTitle: {
-    fontSize: 17,
+    fontSize: 16,
     textAlign: 'center',
     paddingVertical: 30,
-    fontWeight: '500',
-    color: '#5b2c90'
+    // fontWeight: '500',
+    color: '#fff'
   },
   form: {
     paddingHorizontal: 20,
@@ -225,8 +225,11 @@ const styles = StyleSheet.create({
     // fontSize: 14,
   },
   button: {
+    flex: 1,
+    paddingHorizontal: 20,
+    justifyContent: 'flex-end',
     alignItems: 'center',
-    marginTop: 10
+    marginBottom: 10
   },
   signIn: {
     width: '100%',
@@ -238,5 +241,8 @@ const styles = StyleSheet.create({
   textSign: {
     fontSize: 18,
     fontWeight: 'bold'
+  },
+  actionTxt: {
+    color: "grey", fontSize: 14, fontWeight: 'bold'
   }
 });

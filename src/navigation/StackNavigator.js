@@ -21,7 +21,7 @@ const screenOptionStyle = {
 const HomeStackScreen = ({ navigation }) => (
   <Stack.Navigator screenOptions={{
     headerStyle: {
-      backgroundColor: '#5b2c90',
+      backgroundColor: '#268d9c',
     },
     headerTintColor: '#fff',
     headerTitleStyle: {
@@ -31,7 +31,7 @@ const HomeStackScreen = ({ navigation }) => (
     <Stack.Screen name="Home" component={HomeScreen} options={{
       title: 'Announcements',
       headerLeft: () => (
-        <Icon.Button name="bars" size={20} backgroundColor="#5b2c90"
+        <Icon.Button name="bars" size={20} backgroundColor="#268d9c"
           onPress={() => navigation.openDrawer()} />
       )
     }} />
@@ -52,7 +52,7 @@ const HomeStackScreen = ({ navigation }) => (
 const ProfileStackScreen = ({ navigation }) => (
   <Stack.Navigator screenOptions={{
     headerStyle: {
-      backgroundColor: '#5b2c90',
+      backgroundColor: '#268d9c',
     },
     headerTintColor: '#fff',
     headerTitleStyle: {
@@ -61,7 +61,7 @@ const ProfileStackScreen = ({ navigation }) => (
   }}>
     <Stack.Screen name="Profile" component={ProfileScreen} options={{
       headerLeft: () => (
-        <Icon.Button name="bars" size={25} backgroundColor="#5b2c90"
+        <Icon.Button name="bars" size={25} backgroundColor="#268d9c"
           onPress={() => navigation.openDrawer()} />
       ),
       headerShown: false,
@@ -72,7 +72,7 @@ const ProfileStackScreen = ({ navigation }) => (
 // const EarnStackScreen = ({ navigation }) => (
 //     <Stack.Navigator screenOptions={{
 //         headerStyle: {
-//             backgroundColor: '#5b2c90',
+//             backgroundColor: '#268d9c',
 //         },
 //         headerTintColor: '#fff',
 //         headerTitleStyle: {
@@ -81,7 +81,7 @@ const ProfileStackScreen = ({ navigation }) => (
 //     }}>
 //         <Stack.Screen name="Earn" component={EarnScreen} options={{
 //             headerLeft: () => (
-//                 <Icon.Button name="ios-menu" size={25} backgroundColor="#5b2c90"
+//                 <Icon.Button name="ios-menu" size={25} backgroundColor="#268d9c"
 //                     onPress={() => navigation.openDrawer()} />
 //             ),
 //             // headerShown: false,

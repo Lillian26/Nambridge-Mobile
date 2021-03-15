@@ -84,7 +84,7 @@ const SignInScreen = ({navigation}) => {
                             rounded
                             block
                             style={styles.button}
-                            color="#ec4143"
+                            color="#fe4b34"
                             onPress={() => alert('Thanks ' + username)}
                         >
                             <Icon name="checkmark"/>
@@ -114,7 +114,7 @@ export default SignInScreen;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#5b2c90'
+        backgroundColor: '#268d9c'
     },
     header: {
         flex: 1,

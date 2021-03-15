@@ -101,7 +101,7 @@ const PersonalScreen = (navigation) => {
                 <TouchableOpacity>
                   <View style={[telStyles.container]}>
                     <View style={telStyles.iconRow}>
-                      <Icon name="person-circle-outline" style={{ color: "#ec4143", }} size={26} />
+                      <Icon name="person-circle-outline" style={{ color: "#fe4b34", }} size={26} />
                     </View>
                     <TouchableOpacity
                       style={telStyles.telRow}>
@@ -117,7 +117,7 @@ const PersonalScreen = (navigation) => {
                       <Icon
                         ios="logo-whatsapp"
                         android="logo-whatsapp"
-                        style={{ color: "#ec4143", }} />
+                        style={{ color: "#fe4b34", }} />
                     </View>
                   </View>
                 </TouchableOpacity>
@@ -126,7 +126,7 @@ const PersonalScreen = (navigation) => {
                 <TouchableOpacity>
                   <View style={[telStyles.container]}>
                     <View style={telStyles.iconRow}>
-                      <Icon name="ios-call" style={{ color: "#ec4143", }} size={26} />
+                      <Icon name="ios-call" style={{ color: "#fe4b34", }} size={26} />
                     </View>
                     <TouchableOpacity
                       style={telStyles.telRow}>
@@ -141,7 +141,7 @@ const PersonalScreen = (navigation) => {
                       <Icon
                         ios="logo-whatsapp"
                         android="logo-whatsapp"
-                        style={{ color: "#ec4143", }} />
+                        style={{ color: "#fe4b34", }} />
                     </View>
                   </View>
                 </TouchableOpacity>
@@ -157,8 +157,8 @@ const PersonalScreen = (navigation) => {
                     <View style={mailStyles.iconRow}>
                       {/*<Icon*/}
                       {/*    name="ios-mail"*/}
-                      {/*    style={{color: "#ec4143",}}/>*/}
-                      <Icon name="ios-mail" style={{ color: "#ec4143", }} size={26} />
+                      {/*    style={{color: "#fe4b34",}}/>*/}
+                      <Icon name="ios-mail" style={{ color: "#fe4b34", }} size={26} />
                     </View>
                     <TouchableOpacity
                       style={mailStyles.emailRow}>
@@ -183,7 +183,7 @@ const PersonalScreen = (navigation) => {
                     <View style={mailStyles.iconRow}>
                       <Icon
                         name="ios-pin"
-                        style={{ color: "#ec4143", }}
+                        style={{ color: "#fe4b34", }}
                         size={26}
                       />
                     </View>
@@ -205,7 +205,7 @@ const PersonalScreen = (navigation) => {
                 <Button
                   rounded
                   style={mailStyles.startBtn}
-                  color="#ec4143"
+                  color="#fe4b34"
                   onPress={() => onLogout()}
                 >
                   <Text>{'Logout'}</Text>
@@ -236,7 +236,7 @@ const mailStyles = StyleSheet.create({
     marginBottom: 5,
   },
   emailIcon: {
-    color: '#ec4143',
+    color: '#fe4b34',
     fontSize: 30,
   },
   emailNameColumn: {
@@ -326,7 +326,7 @@ const telStyles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   telIcon: {
-    color: '#ec4143',
+    color: '#fe4b34',
     fontSize: 30,
   },
   telNameColumn: {
