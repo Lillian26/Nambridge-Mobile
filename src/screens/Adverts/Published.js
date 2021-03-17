@@ -1,14 +1,14 @@
 import React, { useCallback, useState } from 'react';
 import { View, StyleSheet, TouchableOpacity, ScrollView, TextInput, StatusBar } from 'react-native';
-import Icon from '../components/common/Icon';
-import colors from '../assets/theme/colors';
+// import Icon from '../../components/common/Icon';
+import colors from '../../assets/theme/colors';
 import * as Animatable from 'react-native-animatable';
 import { Container, Header, Content, Card, CardItem, Text, Body } from 'native-base';
 import Iconb from "react-native-vector-icons/Ionicons";
 
 //state, hooks for function based
 
-const HomeScreen = ({ navigation }) => {
+const PublishedScreen = ({ navigation }) => {
 
   const [balance, setBalance] = useState('');
   const [accNum, setAccNum] = useState('');
@@ -19,33 +19,16 @@ const HomeScreen = ({ navigation }) => {
       <StatusBar backgroundColor='#f1f3f2' barStyle="dark-content" />
       <View style={{ padding: 4 }}>
         <Card>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-          <TextInput
-            placeholder="What are you looking for"
-            onChangeText={(val) => setUsername(val)}
-            style={styles.textInput}>
-          </TextInput>
-          <Iconb.Button name="search-outline" size={22} style={{ alignSelf: 'center'}} color='rgba(118,121,116, .5)' backgroundColor='#fff'
-            onPress={() => { }} />
-          </View>
+          <Text>Published artcles</Text>
         </Card>
         {/* Tabs - drafts, published */}
       </View>
       {/* </View> */}
-      <TouchableOpacity
-        style={styles.floatingActionButton}
-        onPress={() => {
-          navigation.navigate('CreateAdvert2');
-        }}>
-        <Animatable.View animation="pulse" easing="ease-out" iterationCount="infinite">
-          <Icon name="plus" size={25} color={colors.white} />
-        </Animatable.View>
-      </TouchableOpacity>
     </>
   );
 };
 
-export default HomeScreen;
+export default PublishedScreen;
 
 const styles = StyleSheet.create({
   container: {

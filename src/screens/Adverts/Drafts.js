@@ -1,37 +1,24 @@
 import React, { useCallback, useState } from 'react';
 import { View, StyleSheet, TouchableOpacity, ScrollView, TextInput, StatusBar } from 'react-native';
-import Icon from '../components/common/Icon';
-import colors from '../assets/theme/colors';
+import Icon from '../../components/common/Icon';
+import colors from '../../assets/theme/colors';
 import * as Animatable from 'react-native-animatable';
 import { Container, Header, Content, Card, CardItem, Text, Body } from 'native-base';
 import Iconb from "react-native-vector-icons/Ionicons";
 
 //state, hooks for function based
 
-const HomeScreen = ({ navigation }) => {
+const DraftsScreen = ({ navigation }) => {
 
-  const [balance, setBalance] = useState('');
+  const [balance, setBaslance] = useState('');
   const [accNum, setAccNum] = useState('');
 
   return (
     <>
-      {/* <View style={styles.container} > */}
       <StatusBar backgroundColor='#f1f3f2' barStyle="dark-content" />
       <View style={{ padding: 4 }}>
-        <Card>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-          <TextInput
-            placeholder="What are you looking for"
-            onChangeText={(val) => setUsername(val)}
-            style={styles.textInput}>
-          </TextInput>
-          <Iconb.Button name="search-outline" size={22} style={{ alignSelf: 'center'}} color='rgba(118,121,116, .5)' backgroundColor='#fff'
-            onPress={() => { }} />
-          </View>
-        </Card>
-        {/* Tabs - drafts, published */}
+       
       </View>
-      {/* </View> */}
       <TouchableOpacity
         style={styles.floatingActionButton}
         onPress={() => {
@@ -45,7 +32,7 @@ const HomeScreen = ({ navigation }) => {
   );
 };
 
-export default HomeScreen;
+export default DraftsScreen;
 
 const styles = StyleSheet.create({
   container: {

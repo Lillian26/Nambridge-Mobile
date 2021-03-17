@@ -35,7 +35,7 @@ const SignInScreen = ({navigation}) => {
 
     return (
         <View style={styles.container}>
-            <StatusBar backgroundColor='#dad7de' barStyle="light-content"/>
+            <StatusBar backgroundColor='#258c9b' barStyle="light-content"/>
             <View style={styles.header}>
                 <Text style={styles.text_header}>Register!</Text>
             </View>

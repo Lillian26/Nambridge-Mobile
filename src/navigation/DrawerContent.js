@@ -71,7 +71,7 @@ export function DrawerContent(props) {
       },
     },
     {
-      icon: <Icon type="material" size={17} name="logout" />,
+      icon: <Icon type="materialCommunity" size={17} name="logout" />,
       name: 'Logout',
       onPress: signOut,
     },
@@ -83,7 +83,7 @@ export function DrawerContent(props) {
         <Image
           height={70}
           width={70}
-          source={require('../assets/logof.png')}
+          source={require('../assets/logot.png')}
           style={styles.logoImage}
         />
         <View style={{ paddingHorizontal: 7 }}>
@@ -106,18 +106,18 @@ export function DrawerContent(props) {
 const styles = StyleSheet.create({
   container2: {
     padding: 20,
-    backgroundColor: "#dad7de",
+    backgroundColor: "#f1f3f2",
     height: "100%"
   },
   logoImage: {
     height: 150,
-    width: 150,
+    width: 200,
     alignSelf: 'center',
     marginTop: 50,
   },
   drawerContent: {
     flex: 1,
-    // backgroundColor: '#dad7de'
+    // backgroundColor: '#f1f3f2'
   },
   userInfoSection: {
     paddingLeft: 20,

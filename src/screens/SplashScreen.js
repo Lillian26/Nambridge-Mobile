@@ -23,7 +23,7 @@ const SplashScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor='#ffffff' barStyle="dark-content" />
-      <View style={{flex:1}}></View>
+      <View style={{ flex: 1 }}></View>
       <View style={styles.header}>
         <Animatable.Image
           animation="bounceIn"
@@ -36,41 +36,37 @@ const SplashScreen = ({ navigation }) => {
 
       </View>
       <View style={[styles.footer]}>
-      <Animatable.View
-        animation="slideInDown"
-      >
-
-        <View style={styles.button}>
-          <TouchableOpacity style={{}}>
+        <Animatable.View
+          animation="slideInDown"
+        >
+          <View style={styles.button}>
             <Button
               color="#fe4b34"
               onPress={() => navigation.navigate('SignInScreen')}
             >
-              {/* <Icon name="checkmark" /> */}
               <Text style={styles.textSign}>Get The Word Out</Text>
             </Button>
-          </TouchableOpacity>
-        </View>
-      </Animatable.View>
-      <Animatable.View
-        animation="fadeInUpBig"
-        duraton="1500"
-      >
+          </View>
+        </Animatable.View>
+        <Animatable.View
+          animation="fadeInUpBig"
+          duraton="1500"
+        >
 
-        <View style={styles.button}>
-          <TouchableOpacity style={{}}>
-            <Button
-              color="#ffffff"
-              style={{    borderWidth: .5,
-                borderColor: {grayColor},}}
-              onPress={() => navigation.navigate('SignInScreen')}
-            >
-              {/* <Icon name="checkmark" /> */}
-              <Text style={{color: '#fe4b34'}}>Login</Text>
-            </Button>
-          </TouchableOpacity>
-        </View>
-      </Animatable.View>
+          <View style={styles.button}>
+              <Button
+                color="#ffffff"
+                style={{
+                  borderWidth: .5,
+                  borderColor: { grayColor },
+                }}
+                onPress={() => navigation.navigate('SignInScreen')}
+              >
+                {/* <Icon name="checkmark" /> */}
+                <Text style={{ color: '#fe4b34' }}>Login</Text>
+              </Button>
+          </View>
+        </Animatable.View>
       </View>
     </View>
   );

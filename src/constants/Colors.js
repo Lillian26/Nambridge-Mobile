@@ -1,4 +1,4 @@
-const tintColor = '#dad7de';
+const tintColor = '#f1f3f2';
 const whiteColor = '#ffffff';
 const blackColor = '#000000';
 const grayColor = '#808080';
