@@ -7,11 +7,11 @@ import HomeScreen from "../screens/HomeScreen";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Iconb from "react-native-vector-icons/Ionicons";
 import ProfileScreen from "../screens/profile/ProfileScreen2";
-import CreateAdvert2 from "../screens/CreateAdvert2";
-
-import PublishedScreen from "../screens/Adverts/Published";
-import DraftsScreen from "../screens/Adverts/Drafts";
-
+import RegisterOfShareHolders from "../screens/RegisterViews/RegisterOfShareHolders";
+import ManageScreen from "../screens/ManageScreen";
+import RegisterScreen from "../screens/RegisterScreen";
+import RegistersList from "../screens/RegistersList";
+import NotFound from "../screens/NotFound";
 import 'react-native-gesture-handler';
 import {
   createMaterialTopTabNavigator
@@ -41,7 +41,7 @@ function TabStack() {
         name="HomeScreen"
         component={HomeScreen}
         options={{
-          tabBarLabel: 'Published',
+          tabBarLabel: 'Registers',
           // tabBarIcon: ({ color, size }) => (
           //   <MaterialCommunityIcons
           //       name="home"
@@ -49,12 +49,12 @@ function TabStack() {
           //       size={size}
           //     />
           // ),
-        }}  />
+        }} />
       <Tab.Screen
-        name="DraftsScreen"
-        component={DraftsScreen}
+        name="ManageScreen"
+        component={ManageScreen}
         options={{
-          tabBarLabel: 'Drafts',
+          tabBarLabel: 'Manage',
           // tabBarIcon: ({ color, size }) => (
           //   <MaterialCommunityIcons
           //       name="settings"
@@ -91,18 +91,20 @@ const HomeStackScreen = ({ navigation }) => (
     }
   }}>
     <Stack.Screen
-          name="Home"
-          component={TabStack}
-          options={{ title: 'Articles',
-          headerLeft: () => (
-            <Icon.Button name="bars" size={20} backgroundColor="#268d9c"
-              onPress={() => navigation.openDrawer()} />
-          ),
-          headerRight: () => (
-            <Iconb.Button name="chatbubbles-outline" size={22} backgroundColor="#268d9c"
-              onPress={() => {}} />
-          ) }}
-        />
+      name="Home"
+      component={TabStack}
+      options={{
+        title: 'Dashboard',
+        headerLeft: () => (
+          <Icon.Button name="bars" size={20} backgroundColor="#268d9c"
+            onPress={() => navigation.openDrawer()} />
+        ),
+        // headerRight: () => (
+        //   <Iconb.Button name="chatbubbles-outline" size={22} backgroundColor="#268d9c"
+        //     onPress={() => {}} />
+        // ) 
+      }}
+    />
     {/* <Stack.Screen name="Home" component={HomeScreen} options={{
       title: 'Articles',
       headerLeft: () => (
@@ -115,16 +117,28 @@ const HomeStackScreen = ({ navigation }) => (
       )
     }} /> */}
 
-    <Stack.Screen name="CreateAdvert2" component={CreateAdvert2} options={{
-      title: 'Article Post'
+    <Stack.Screen name="RegisterOfShareHolders" component={RegisterOfShareHolders} options={{
+      title: 'Add a Record'
+    }} />
+
+    <Stack.Screen name="NotFound" component={NotFound} options={{
+      title: 'Nambridge Feature'
+    }} />
+
+    <Stack.Screen name="RegisterScreen" component={RegisterScreen} options={{
+      title: '...'
+    }} />
+
+    <Stack.Screen name="RegistersList" component={RegistersList} options={{
+      title: 'List of Registers'
     }} />
 
     <Stack.Screen name="Profile" component={ProfileScreen} options={{
       title: 'Settings',
       headerRight: () => (
         <Iconb.Button name="chatbubbles-outline" size={22} backgroundColor="#268d9c"
-          onPress={() => {}} />
-      ) 
+          onPress={() => { }} />
+      )
     }} />
 
 

@@ -123,9 +123,6 @@ const SignInScreen = ({ navigation }) => {
             <Text style={styles.errorMsg}>Password must be 8 characters long.</Text>
           </Animatable.View>
         }
-        <TouchableOpacity style={{alignItems: 'flex-end'}}>
-          <Text style={[ styles.actionTxt,{ marginTop: 5}]}>Forgot your password?</Text>
-        </TouchableOpacity>
       </View>
       <View style={styles.button}>
         <Button
@@ -143,8 +140,11 @@ const SignInScreen = ({ navigation }) => {
         {/* <TouchableOpacity onPress={() => navigation.navigate('SignUpScreen')}>
             <Text style={{ color: '#fe4b34', marginTop: 15 }}>Create Account</Text>
           </TouchableOpacity> */}
-        <TouchableOpacity onPress={() => navigation.navigate('SignUpScreen')} style={{paddingVertical: 20}}>
+        {/* <TouchableOpacity onPress={() => navigation.navigate('SignUpScreen')} style={{paddingVertical: 20}}>
           <Text style={styles.actionTxt}>{`Don't have an Account? Create`}</Text>
+        </TouchableOpacity> */}
+        <TouchableOpacity onPress={() => navigation.navigate('ForgotPwScreen')} style={{alignItems: 'flex-end'}}>
+          <Text style={[ styles.actionTxt,{ marginTop: 5, paddingVertical: 20}]}>Forgot your password?</Text>
         </TouchableOpacity>
 
       </View>

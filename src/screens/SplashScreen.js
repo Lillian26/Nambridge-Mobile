@@ -23,28 +23,28 @@ const SplashScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor='#ffffff' barStyle="dark-content" />
-      <View style={{ flex: 1 }}></View>
-      <View style={styles.header}>
+      {/* <View style={{ flex: 1 }}></View> */}
+      <View style={[styles.header, { flex: 2 }]}>
         <Animatable.Image
           animation="bounceIn"
           duraton="1500"
-          source={require('../assets/logo.jpeg')}
+          source={require('../assets/logo1.png')}
           style={styles.logo}
           resizeMode="center"
         />
-        <Text style={[styles.title]}></Text>
+        <Text style={[styles.title]}>Your company resource center, automate your registers!</Text>
 
       </View>
-      <View style={[styles.footer]}>
+      <View style={[styles.footer, { flex: 1 }]}>
         <Animatable.View
           animation="slideInDown"
         >
           <View style={styles.button}>
             <Button
-              color="#fe4b34"
+              color="#258c9b"
               onPress={() => navigation.navigate('SignInScreen')}
             >
-              <Text style={styles.textSign}>Get The Word Out</Text>
+              <Text style={styles.textSign}>Get Started</Text>
             </Button>
           </View>
         </Animatable.View>
@@ -63,7 +63,7 @@ const SplashScreen = ({ navigation }) => {
                 onPress={() => navigation.navigate('SignInScreen')}
               >
                 {/* <Icon name="checkmark" /> */}
-                <Text style={{ color: '#fe4b34' }}>Login</Text>
+                <Text style={{ color: '#258c9b' }}>Login</Text>
               </Button>
           </View>
         </Animatable.View>
@@ -75,7 +75,8 @@ const SplashScreen = ({ navigation }) => {
 export default SplashScreen;
 
 const { height } = Dimensions.get("screen");
-const height_logo = height * 0.28;
+const weight_logo = height * 0.3;
+const height_logo = height * 0.1;
 
 const styles = StyleSheet.create({
   container: {
@@ -83,28 +84,30 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff'
   },
   header: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
+    // flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    marginTop: height * 0.1,
   },
   footer: {
-    flex: 1,
+    // flex: 1,
     // backgroundColor: '#fff',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     paddingHorizontal: 30
   },
   logo: {
-    width: height_logo,
-    height: height_logo,
+    width: weight_logo,
+    // height: height_logo,
     // borderWidth: .5,
     // borderColor: {grayColor}, 
     // borderRadius: 50
   },
   title: {
-    color: grayColor,
-    fontSize: actuatedNormalize(14),
+    color: "#646464",
+    fontSize: actuatedNormalize(18),
     // fontWeight: 'bold'
+    paddingHorizontal: actuatedNormalize(26)
   },
   text: {
     color: 'grey',

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Linking, SafeAreaView, ScrollView, Image, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, SafeAreaView, ScrollView, Image, Alert } from 'react-native';
 import {
   useTheme,
   Avatar,
@@ -20,6 +20,7 @@ import Icon from '../components/common/Icon';
 
 import { AuthContext } from '../components/context';
 import AsyncStorage from '@react-native-community/async-storage';
+import actuatedNormalize from '../helpers/actuatedNormalize';
 
 export function DrawerContent(props) {
 
@@ -73,19 +74,25 @@ export function DrawerContent(props) {
     {
       icon: <Icon type="materialCommunity" size={17} name="logout" />,
       name: 'Logout',
-      onPress: signOut,
+      onPress: () => {
+        Alert.alert('Confirm Logout', 'You will be signed out.', [{text: 'Continue', onPress: ()=>signOut()},
+        {text: 'Cancel', onPress: ()=> {}}])
+      },
     },
   ];
 
   return (
     <SafeAreaView>
       <ScrollView style={styles.container2}>
+        <View 
+        style={styles.logoImage}>
         <Image
           height={70}
           width={70}
-          source={require('../assets/logot.png')}
-          style={styles.logoImage}
+          source={require('../assets/logos.png')}
+          
         />
+        </View>
         <View style={{ paddingHorizontal: 7 }}>
           {menuItems.map(({ name, icon, onPress }) => (
             <Drawer.Section style={styles.drawerSection} key={name}>
@@ -105,13 +112,13 @@ export function DrawerContent(props) {
 }
 const styles = StyleSheet.create({
   container2: {
-    padding: 20,
+    padding: 0,
     backgroundColor: "#f1f3f2",
     height: "100%"
   },
   logoImage: {
-    height: 150,
-    width: 200,
+    height: actuatedNormalize(80),
+    width: actuatedNormalize(80),
     alignSelf: 'center',
     marginTop: 50,
   },
