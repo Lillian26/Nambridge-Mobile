@@ -6,9 +6,12 @@ import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "../screens/HomeScreen";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Iconb from "react-native-vector-icons/Ionicons";
+import Iconm from "react-native-vector-icons/MaterialCommunityIcons";
 import ProfileScreen from "../screens/profile/ProfileScreen2";
 import RegisterOfShareHolders from "../screens/RegisterViews/RegisterOfShareHolders";
-import ManageScreen from "../screens/ManageScreen";
+import ShareHoldersLedger from "../screens/RegisterViews/ShareHoldersLedger";
+import CompaniesScreen from "../screens/Manage/CompaniesScreen";
+import ActiveCompanyScreen from "../screens/Manage/ActiveCompanyScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import RegistersList from "../screens/RegistersList";
 import NotFound from "../screens/NotFound";
@@ -16,32 +19,34 @@ import 'react-native-gesture-handler';
 import {
   createMaterialTopTabNavigator
 } from '@react-navigation/material-top-tabs';
+import { Alert } from "react-native";
+import NewCompanyScreen from "../screens/Manage/NewCompanyScreen";
 
 const Tab = createMaterialTopTabNavigator();
 
 function TabStack() {
   return (
     <Tab.Navigator
-      initialRouteName="Feed"
+      initialRouteName="AllCompanies"
       tabBarOptions={{
         activeTintColor: 'white',
         inactiveTintColor: '#F8F8F8',
         style: {
-          backgroundColor: '#268d9c',
+          backgroundColor: '#0165ff',
         },
         labelStyle: {
           textAlign: 'center',
         },
         indicatorStyle: {
-          borderBottomColor: '#e89188',
+          borderBottomColor: '#002255',
           borderBottomWidth: 2,
         },
       }}>
       <Tab.Screen
-        name="HomeScreen"
-        component={HomeScreen}
+        name="AllCompanies"
+        component={CompaniesScreen}
         options={{
-          tabBarLabel: 'Registers',
+          tabBarLabel: 'All Companies',
           // tabBarIcon: ({ color, size }) => (
           //   <MaterialCommunityIcons
           //       name="home"
@@ -51,10 +56,10 @@ function TabStack() {
           // ),
         }} />
       <Tab.Screen
-        name="ManageScreen"
-        component={ManageScreen}
+        name="ActiveCompany"
+        component={ActiveCompanyScreen}
         options={{
-          tabBarLabel: 'Manage',
+          tabBarLabel: 'Active',
           // tabBarIcon: ({ color, size }) => (
           //   <MaterialCommunityIcons
           //       name="settings"
@@ -80,45 +85,56 @@ const screenOptionStyle = {
 const HomeStackScreen = ({ navigation }) => (
   <Stack.Navigator screenOptions={{
     headerStyle: {
-      backgroundColor: '#268d9c',
+      backgroundColor: '#0165ff',
     },
     headerTintColor: '#fff',
     headerTitleStyle: {
       fontWeight: '600',
       fontSize: 19,
       left: '-8%',
-      alignSelf: 'center'
     }
   }}>
     <Stack.Screen
       name="Home"
-      component={TabStack}
+      component={HomeScreen}
       options={{
-        title: 'Dashboard',
+        title: 'Registers',
         headerLeft: () => (
-          <Icon.Button name="bars" size={20} backgroundColor="#268d9c"
+          <Icon.Button name="bars" size={20} backgroundColor="#0165ff"
             onPress={() => navigation.openDrawer()} />
         ),
         // headerRight: () => (
-        //   <Iconb.Button name="chatbubbles-outline" size={22} backgroundColor="#268d9c"
+        //   <Iconb.Button name="chatbubbles-outline" size={22} backgroundColor="#0165ff"
         //     onPress={() => {}} />
         // ) 
       }}
     />
+
     {/* <Stack.Screen name="Home" component={HomeScreen} options={{
       title: 'Articles',
       headerLeft: () => (
-        <Icon.Button name="bars" size={20} backgroundColor="#268d9c"
+        <Icon.Button name="bars" size={20} backgroundColor="#0165ff"
           onPress={() => navigation.openDrawer()} />
       ),
       headerRight: () => (
-        <Iconb.Button name="chatbubbles-outline" size={22} backgroundColor="#268d9c"
+        <Iconb.Button name="chatbubbles-outline" size={22} backgroundColor="#0165ff"
           onPress={() => {}} />
       )
     }} /> */}
 
     <Stack.Screen name="RegisterOfShareHolders" component={RegisterOfShareHolders} options={{
-      title: 'Add a Record'
+      title: '...'
+    }} />
+
+    <Stack.Screen name="ShareHoldersLedger" component={ShareHoldersLedger} options={{
+      title: 'ShareHolders Ledger',
+      headerRight: () => (
+        <Iconm.Button name="folder-plus-outline" size={28} backgroundColor="#0165ff"
+          onPress={() => {
+            Alert.alert("Add New", "Proceed to create new Ledger",
+              [{ text: 'Ok', onPress: () => navigation.navigate("CreateLedger") }, { text: 'Cancel', onPress: () => { } }])
+          }} />
+      )
     }} />
 
     <Stack.Screen name="NotFound" component={NotFound} options={{
@@ -136,38 +152,87 @@ const HomeStackScreen = ({ navigation }) => (
     <Stack.Screen name="Profile" component={ProfileScreen} options={{
       title: 'Settings',
       headerRight: () => (
-        <Iconb.Button name="chatbubbles-outline" size={22} backgroundColor="#268d9c"
+        <Iconb.Button name="chatbubbles-outline" size={22} backgroundColor="#0165ff"
           onPress={() => { }} />
       )
     }} />
+    <Stack.Screen
+      name="Manage"
+      component={TabStack}
+      options={{
+        title: 'Manage',
+        headerLeft: () => (
+          <Icon.Button name="bars" size={20} backgroundColor="#0165ff"
+            onPress={() => navigation.openDrawer()} />
+        ),
+        headerRight: () => (
+          <Iconm.Button name="newspaper-plus" size={22} backgroundColor="#0165ff"
+            onPress={() => {
+              Alert.alert("Add New", "Proceed to create new company",
+                [{ text: 'Ok', onPress: () => navigation.navigate("NewCompany") }, { text: 'Cancel', onPress: () => { } }])
+            }} />
+        )
+      }}
+    />
 
-
-  </Stack.Navigator>
-);
-
-const ProfileStackScreen = ({ navigation }) => (
-  <Stack.Navigator screenOptions={{
-    headerStyle: {
-      backgroundColor: '#268d9c',
-    },
-    headerTintColor: '#fff',
-    headerTitleStyle: {
-      fontWeight: 'bold'
-    }
-  }}>
-    <Stack.Screen name="Profile" component={ProfileScreen} options={{
-      headerLeft: () => (
-        <Icon.Button name="bars" size={25} backgroundColor="#268d9c"
-          onPress={() => navigation.openDrawer()} />
-      ),
+    <Stack.Screen name="NewCompany" component={NewCompanyScreen} options={{
+      title: 'Add a New Company'
     }} />
+
   </Stack.Navigator>
 );
+
+// const ManageStackScreen = ({ navigation }) => (
+//   <Stack.Navigator screenOptions={{
+//     headerStyle: {
+//       backgroundColor: '#0165ff',
+//     },
+//     headerTintColor: '#fff',
+//     headerTitleStyle: {
+//       fontWeight: 'bold'
+//     }
+//   }}>
+//     <Stack.Screen
+//       name="Manage"
+//       component={TabStack}
+//       options={{
+//         title: 'Manage',
+//         headerLeft: () => (
+//           <Icon.Button name="bars" size={20} backgroundColor="#0165ff"
+//             onPress={() => navigation.openDrawer()} />
+//         ),
+//         headerRight: () => (
+//           <Iconb.Button name="plus" size={22} backgroundColor="#0165ff"
+//             onPress={() => { }} />
+//         )
+//       }}
+//     />
+//   </Stack.Navigator>
+// );
+
+// const ProfileStackScreen = ({ navigation }) => (
+//   <Stack.Navigator screenOptions={{
+//     headerStyle: {
+//       backgroundColor: '#0165ff',
+//     },
+//     headerTintColor: '#fff',
+//     headerTitleStyle: {
+//       fontWeight: 'bold'
+//     }
+//   }}>
+//     <Stack.Screen name="Profile" component={ProfileScreen} options={{
+//       headerLeft: () => (
+//         <Icon.Button name="bars" size={25} backgroundColor="#0165ff"
+//           onPress={() => navigation.openDrawer()} />
+//       ),
+//     }} />
+//   </Stack.Navigator>
+// );
 
 // const EarnStackScreen = ({ navigation }) => (
 //     <Stack.Navigator screenOptions={{
 //         headerStyle: {
-//             backgroundColor: '#268d9c',
+//             backgroundColor: '#0165ff',
 //         },
 //         headerTintColor: '#fff',
 //         headerTitleStyle: {
@@ -176,7 +241,7 @@ const ProfileStackScreen = ({ navigation }) => (
 //     }}>
 //         <Stack.Screen name="Earn" component={EarnScreen} options={{
 //             headerLeft: () => (
-//                 <Icon.Button name="ios-menu" size={25} backgroundColor="#268d9c"
+//                 <Icon.Button name="ios-menu" size={25} backgroundColor="#0165ff"
 //                     onPress={() => navigation.openDrawer()} />
 //             ),
 //             // headerShown: false,
@@ -185,4 +250,4 @@ const ProfileStackScreen = ({ navigation }) => (
 // );
 
 
-export { HomeStackScreen, ProfileStackScreen };
+export { HomeStackScreen };

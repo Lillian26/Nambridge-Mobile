@@ -11,7 +11,6 @@ import {
   DarkTheme as PaperDarkTheme
 } from 'react-native-paper';
 
-
 import { AuthContext } from './src/components/context';
 
 import RootStackScreen from './src/navigation/RootStackScreen';
@@ -19,6 +18,8 @@ import RootStackScreen from './src/navigation/RootStackScreen';
 import AsyncStorage from '@react-native-community/async-storage';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import DrawerNavigator from './src/navigation/DrawerNavigator';
+import { store } from './src/store/store'
+import { Provider } from "react-redux"
 
 const App = () => {
   // const [isLoading, setIsLoading] = React.useState(true);
@@ -150,7 +151,9 @@ const App = () => {
       <AuthContext.Provider value={authContext}>
         <NavigationContainer theme={theme}>
           {loginState.userToken !== null ? (
-            <DrawerNavigator />
+            <Provider store={store}>
+              <DrawerNavigator />
+            </Provider>
           )
             :
             <RootStackScreen />

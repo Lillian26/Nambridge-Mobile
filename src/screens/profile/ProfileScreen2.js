@@ -131,7 +131,7 @@ const mailStyles = StyleSheet.create({
     marginBottom: 5,
   },
   emailIcon: {
-    color: '#fe4b34',
+    color: '#017eff',
     fontSize: 30,
   },
   emailNameColumn: {
@@ -221,7 +221,7 @@ const telStyles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   telIcon: {
-    color: '#fe4b34',
+    color: '#017eff',
     fontSize: 30,
   },
   telNameColumn: {

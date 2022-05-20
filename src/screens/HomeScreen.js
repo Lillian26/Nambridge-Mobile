@@ -1,51 +1,40 @@
-import React, { useCallback, useState } from 'react';
-import { View, StyleSheet, TouchableOpacity, ScrollView, TextInput, StatusBar, SafeAreaView, FlatList } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { View, StyleSheet, TouchableOpacity, StatusBar, SafeAreaView, FlatList, Alert } from 'react-native';
 import Icon from '../components/common/Icon';
 import colors from '../assets/theme/colors';
 import * as Animatable from 'react-native-animatable';
-import { Container, Header, Content, Card, CardItem, Text, Body } from 'native-base';
-import Iconb from "react-native-vector-icons/Ionicons";
 import Registers from '../model/registers';
 import MenuCard from '../components/MenuCard';
-
-//state, hooks for function based
+import { useSelector } from "react-redux";
 
 const HomeScreen = ({ navigation }) => {
 
-  const [balance, setBalance] = useState('');
-  const [accNum, setAccNum] = useState('');
-  const [registerName, setRegisterName] = useState('');
+  const company = useSelector((state) => state.company);
+
   const [data, setData] = useState(Registers);
+
+  useEffect(() => {
+    
+    const unsubscribe = navigation.addListener('focus', () => {
+      if(!company.companyName){
+        Alert.alert("No active company found!", `This tool is used for digital registers for specific companies.\n\Select a company to start using this tool?`,
+        [{text: 'Continue', onPress: () => navigation.navigate('Manage')}, {text: 'Cancel', onPress: ()=> {}}])
+      }
+    })
+  
+    return unsubscribe
+  }, [navigation, company.companyName])
 
   return (
     <>
-      {/* <View style={styles.container} > */}
-      <StatusBar backgroundColor='#f1f3f2' barStyle="dark-content" />
-      {/* <View style={{ padding: 4 }}>
-        <Card>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-          <TextInput
-            placeholder="What are you looking for"
-            onChangeText={(val) => setRegisterName(val)}
-            style={styles.textInput}>
-          </TextInput>
-          <Iconb.Button name="search-outline" size={22} style={{ alignSelf: 'center'}} color='rgba(118,121,116, .5)' backgroundColor='#fff'
-            onPress={() => { }} />
-          </View>
-        </Card>
-      </View> */}
-      {/* </View> */}
+      <StatusBar backgroundColor='#f5f7fa' barStyle="dark-content" />
       <View
-        style={[styles.footer, {
-          backgroundColor: '#ebebeb',
-        }]}
+        style={[styles.container]}
       >
         <SafeAreaView>
-
           <FlatList
             contentContainerStyle={styles.listContainer}
             data={data}
-            // horizontal={false}
             numColumns={2}
             keyExtractor={(item) => {
               return item.id;
@@ -78,24 +67,7 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    width: "100%", height: "100%",
-    // marginTop: 10,
-    // padding: 5,
-    backgroundColor: "#FCFBF9"
-  },
-  content: {
-    //   backgroundColor: '#fff',
-    borderRadius: 10,
-    //   elevation: 10,
-    padding: 10,
-    margin: 10,
-    justifyContent: "space-between",
-    width: "90%",
-    // height: "85%"
-
+    backgroundColor: '#f5f7fa',
   },
   floatingActionButton: {
     backgroundColor: colors.button,
@@ -108,9 +80,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     elevation: 10
-  },
-  textInput: {
-    paddingLeft: 15,
-    fontSize: 16,
-  },
+  }
 });

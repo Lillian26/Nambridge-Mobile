@@ -22,5 +22,5 @@ export default {
   lightGrayColor: '#eceeef',
   airForceBlueColor: '#5996a8',
   blackMarlinColor: '#39393e',
-  mainColor: '#fe4b34',
+  mainColor: '#017eff',
 };

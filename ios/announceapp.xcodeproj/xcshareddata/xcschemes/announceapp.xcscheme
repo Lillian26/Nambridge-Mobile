@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "announceapp.app"
-               BlueprintName = "announceapp"
-               ReferencedContainer = "container:announceapp.xcodeproj">
+               BuildableName = "nambridge.app"
+               BlueprintName = "nambridge"
+               ReferencedContainer = "container:nambridge.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "announceappTests.xctest"
-               BlueprintName = "announceappTests"
-               ReferencedContainer = "container:announceapp.xcodeproj">
+               BuildableName = "nambridgeTests.xctest"
+               BlueprintName = "nambridgeTests"
+               ReferencedContainer = "container:nambridge.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "announceapp.app"
-            BlueprintName = "announceapp"
-            ReferencedContainer = "container:announceapp.xcodeproj">
+            BuildableName = "nambridge.app"
+            BlueprintName = "nambridge"
+            ReferencedContainer = "container:nambridge.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "announceapp.app"
-            BlueprintName = "announceapp"
-            ReferencedContainer = "container:announceapp.xcodeproj">
+            BuildableName = "nambridge.app"
+            BlueprintName = "nambridge"
+            ReferencedContainer = "container:nambridge.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

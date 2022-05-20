@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { View, StyleSheet, TouchableOpacity, ScrollView, TextInput, StatusBar, SafeAreaView, FlatList } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, ScrollView, TextInput, StatusBar, FlatList } from 'react-native';
 import Icon from '../components/common/Icon';
 import colors from '../assets/theme/colors';
 import * as Animatable from 'react-native-animatable';
@@ -41,7 +41,7 @@ const RegistersList = ({ navigation }) => {
         style={[styles.footer, {
         }]}
       >
-        <SafeAreaView>
+        <ScrollView>
           <Text style={{
             fontSize: actuatedNormalize(18), paddingTop: actuatedNormalize(20),
             paddingLeft: actuatedNormalize(15), marginBottom: actuatedNormalize(5)
@@ -55,7 +55,7 @@ const RegistersList = ({ navigation }) => {
             renderItem={({ item, index }) => {
               return (
                 <TouchableOpacity
-                  style={[selectedRegister == item.id ? { backgroundColor: '#ebebeb' } : { backgroundColor: '#fff' },
+                  style={[selectedRegister == item.id ? { backgroundColor: '#f5f7fa' } : { backgroundColor: '#fff' },
                   {
                     borderColor: 'rgba(118,121,116, .1)',
                     borderTopWidth: 1
@@ -68,7 +68,7 @@ const RegistersList = ({ navigation }) => {
             }}
           />
 
-        </SafeAreaView>
+        </ScrollView>
       </View>
       <TouchableOpacity
         style={styles.floatingActionButton}
