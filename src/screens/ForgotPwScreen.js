@@ -17,7 +17,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const ForgotPwScreen = ({ navigation }) => {
 
-  const [eamil, setEmail] = useState('');
+  const [email, setEmail] = useState('');
 
   const resetHandle = (userEmail) => {
 
@@ -41,7 +41,7 @@ const ForgotPwScreen = ({ navigation }) => {
     <View style={{ paddingHorizontal: 20 }}>
       <Input
         iconPosition="right"
-        placeholder="eamil"
+        placeholder="Email"
         onChangeText={(val) => setEmail(val)}
         style={{ backgroundColor: '#f1f3f2', paddingLeft: 15}}
       />
@@ -50,7 +50,7 @@ const ForgotPwScreen = ({ navigation }) => {
         block
         color="#0165ff"
         onPress={() => {
-          resetHandle(eamil)
+          resetHandle(email)
         }}
         style={{height: 50}}
       >

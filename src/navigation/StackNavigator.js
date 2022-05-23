@@ -7,7 +7,7 @@ import HomeScreen from "../screens/HomeScreen";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Iconb from "react-native-vector-icons/Ionicons";
 import Iconm from "react-native-vector-icons/MaterialCommunityIcons";
-import ProfileScreen from "../screens/profile/ProfileScreen2";
+import ProfileScreen from "../screens/ProfileScreen";
 import RegisterOfShareHolders from "../screens/RegisterViews/RegisterOfShareHolders";
 import ShareHoldersLedger from "../screens/RegisterViews/ShareHoldersLedger";
 import CompaniesScreen from "../screens/Manage/CompaniesScreen";
@@ -150,11 +150,7 @@ const HomeStackScreen = ({ navigation }) => (
     }} />
 
     <Stack.Screen name="Profile" component={ProfileScreen} options={{
-      title: 'Settings',
-      headerRight: () => (
-        <Iconb.Button name="chatbubbles-outline" size={22} backgroundColor="#0165ff"
-          onPress={() => { }} />
-      )
+      title: 'Board Secretary'
     }} />
     <Stack.Screen
       name="Manage"

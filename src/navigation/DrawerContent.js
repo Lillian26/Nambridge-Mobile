@@ -27,44 +27,8 @@ import colors from '../assets/theme/colors';
 
 export function DrawerContent(props) {
 
-  const paperTheme = useTheme();
   const dispatch = useDispatch();
-  const { signOut, toggleTheme } = React.useContext(AuthContext);
-
-  const [userName, setUserName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [firstname, setFirstName] = useState('');
-  const [lastname, setLastName] = useState('');
-  const [location, setLocation] = useState('');
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    getUser()
-  });
-
-  const getUser = () => {
-    AsyncStorage.getItem('user')
-      .then(user => {
-        // console.log(user);
-
-        if (user === null) {
-          // this.setState({loading: false, showLoginForm: true});
-        } else {
-          let usr = JSON.parse(user);
-
-          setLoading(false)
-          setEmail(usr.user_data.email)
-          setPhone(usr.user_data.phone_number)
-          setUserName(usr.user_data.username)
-          setFirstName(usr.user_data.first_name)
-          setLastName(usr.user_data.last_name)
-          setLocation(usr.user_data.location)
-
-        }
-      })
-      .catch(err => console.log(err));
-  }
+  const { signOut } = React.useContext(AuthContext);
 
   const menuItems = [
     {

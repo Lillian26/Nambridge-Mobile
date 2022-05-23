@@ -11,14 +11,22 @@ import Icon from '../../components/common/Icon';
 
 const CompaniesScreen = ({ navigation }) => {
 
+  const company = useSelector((state) => state.company);
   const [data, setData] = useState([]);
   const [selectedCompany, setSelectedCompany] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if(data.length == 0){
+
+    if(company.companyName ) {
+      refreshList()
+    }
+    else if(data.length == 0 ){
       Alert.alert("No companies found!", `This tool is used for digital registers for specific companies.\n\nCreate a company to start using this tool?`,
       [{text: 'Continue', onPress: () => navigation.navigate('NewCompany')}, {text: 'Cancel', onPress: ()=> {}}])
+    }
+    else {
+
     }
   }, [data])
 

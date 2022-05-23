@@ -23,7 +23,7 @@ const HomeScreen = ({ navigation }) => {
     })
   
     return unsubscribe
-  }, [navigation, company.companyName])
+  }, [navigation, company])
 
   return (
     <>

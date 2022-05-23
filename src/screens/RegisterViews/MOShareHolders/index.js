@@ -4,16 +4,14 @@ import colors from '../../../assets/theme/colors';
 import DocumentPicker from 'react-native-document-picker';
 import { Text } from 'native-base';
 import Icona from "react-native-vector-icons/AntDesign";
-import { rOShareHolders } from '../../../model/records';
+import { mOShareHolders } from '../../../model/records';
 import { Button, Menu, Divider, Provider } from 'react-native-paper';
 import Iconsp from "react-native-vector-icons/SimpleLineIcons";
 // import axios from "axios";
 import { Picker } from '@react-native-picker/picker';
 import actuatedNormalize from '../../../helpers/actuatedNormalize';
-import { formatTheDateLabel, defaultDate, formatTheDateText, strtransferDate } from "../../../helpers/helpers";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
 
-const RegisterOfShareHolders = ({ route, navigation }) => {
+const MOShareHolders = ({ route, navigation }) => {
 
   const { entryId, registerId } = route.params ?? {};
 
@@ -23,60 +21,18 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
   const [record, setRecord] = useState(null)
   const [member, setMember] = useState("")
   const [memberAddress, setMemberAddress] = useState("")
-  const [dateOfEntry, setDateOfEntry] = useState(defaultDate);
-  const [isDateOfEntryPickerVisible, setDateOfEntryPickerVisibility] = useState(false);
+  const [dateOfEntry, setDateOfEntry] = useState("")
   const [certNo, setCertNo] = useState("")
   const [sharesNo, setSharesNo] = useState("")
   const [fromWhom, setFromWhom] = useState("")
   const [amtPaid, setAmtPaid] = useState("")
-  const [transferDate, setTransferDate] = useState(defaultDate);
-  const [isTransferDateVisible, setTransferDateVisibility] = useState(false);
+  const [dateOfTransfer, setDateOfTransfer] = useState("")
   const [toWhom, setToWhom] = useState("")
   const [sharesTransfered, setSharesTransfered] = useState("")
   const [shareBalance, setShareBalance] = useState("")
   const [attachments, setAttachments] = useState([])
   const [visible, setVisible] = useState(false);
   const [transferType, setTransferType] = useState(null)
-
-  const showTransferDatePicker = () => {
-    setTransferDateVisibility(true);
-  };
-
-  const hideTransferDatePicker = () => {
-    setTransferDateVisibility(false);
-  };
-
-  const handleTransferConfirm = (e) => {
-    hideTransferDatePicker();
-    var date = new Date(e);
-
-    if (isNaN(date.getTime())) {
-      setTransferDate(defaultDate)
-    }
-    else {
-      setTransferDate(date)
-    }
-  };
-
-  const showDateOfEntryPicker = () => {
-    setDateOfEntryPickerVisibility(true);
-  };
-
-  const hideDateOfEntryPicker = () => {
-    setDateOfEntryPickerVisibility(false);
-  };
-
-  const handleDateOfEntryConfirm = (e) => {
-    hideDateOfEntryPicker();
-    var date = new Date(e);
-
-    if (isNaN(date.getTime())) {
-      setDateOfEntry(defaultDate)
-    }
-    else {
-      setDateOfEntry(date)
-    }
-  };
 
   useEffect(() => {
     if (entryId) {
@@ -88,6 +44,7 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
         navigation.setOptions({
           title: 'Edit Record',
         });
+        alert("Update fields of this record.")
       }
     } else {
       navigation.setOptions({
@@ -105,17 +62,16 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
   const closeMenu = () => setVisible(false);
 
   const getRecordDetails = () => {
-    var theRecord = rOShareHolders.find(x => x.id == entryId);
+    var theRecord = mOShareHolders.find(x => x.id == entryId);
     setRecord(theRecord);
     setMember(theRecord.member);
     setMemberAddress(theRecord.member_address);
-    setDateOfEntry(new Date(theRecord.date_of_entry));
+    setDateOfEntry(theRecord.date_of_entry);
     setCertNo(theRecord.cert_no);
     setSharesNo(theRecord.shares_no);
     setFromWhom(theRecord.from_whom);
     setAmtPaid(theRecord.amount_paid);
-    console.log("theRecord.date_transfered: ", theRecord.date_transfered)
-    setTransferDate(new Date(theRecord.date_transfered));
+    setDateOfTransfer(theRecord.date_transfered);
     setToWhom(theRecord.to_whom);
     setSharesTransfered(theRecord.shares_transfered);
     setShareBalance(theRecord.shares_no_ord);
@@ -195,10 +151,10 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
         <ScrollView showsVerticalScrollIndicator={false} style={{ padding: 4 }}>
           <View style={{ padding: 4 }}>
             {!entryId ?
-              <Text style={[styles.cardTitleEdit, { paddingTop: 20, textDecorationLine: 'underline' }]}>Register of Shareholders</Text>
+              <Text style={[styles.cardTitleEdit, { paddingTop: 20, textDecorationLine: 'underline' }]}>Minutes of Shareholders</Text>
               :
               <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-                <Text style={[styles.cardTitleEdit, { textDecorationLine: 'underline', paddingTop: 20, }]}>Register of Shareholders</Text>
+                <Text style={[styles.cardTitleEdit, { textDecorationLine: 'underline', paddingTop: 20, }]}>Minutes of Shareholders</Text>
                 {editMode ? null :
 
                   <Provider>
@@ -234,61 +190,33 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
           </View>
 
           <View style={[{ paddingTop: 15 }]}>
-            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Name of Member (Shareholder):</Text>
+            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Date of Shareholder Meeting:</Text>
             <TextInput
-              value={member}
-              onChangeText={setMember}
+              value={meetingDate}
+              onChangeText={setMeetingDate}
               style={editMode ? styles.textInputEdit : styles.textInput}
               editable={editMode}>
             </TextInput>
           </View>
           <View style={[{ paddingTop: 15 }]}>
-            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Address of Member (Shareholder):</Text>
+            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>State whether meeting was?:</Text>
             <TextInput
-              value={memberAddress}
-              onChangeText={setMemberAddress}
+              value={typeOfMeeting}
+              onChangeText={setTypeOfMeeting}
               style={editMode ? styles.textInputEdit : styles.textInput}
               editable={editMode}>
             </TextInput>
           </View>
           <View style={[{ paddingTop: 15 }]}>
             <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Date of Entry as Member (Shareholder):</Text>
-            <TextInput style={editMode ? styles.textInputEdit : styles.textInput}
-              editable={editMode} onFocus={showDateOfEntryPicker} onKeyPress={showDateOfEntryPicker} label="Date of Entry" placeholder="Date of Entry"
-              value={dateOfEntry == '' ? '' : formatTheDateLabel(dateOfEntry)}
-              showSoftInputOnFocus={false} />
-            <DateTimePickerModal
-              isVisible={isDateOfEntryPickerVisible}
-              mode="date"
-              date={dateOfEntry}
-              onConfirm={handleDateOfEntryConfirm}
-              onCancel={hideDateOfEntryPicker}
-            />
+            <TextInput
+              value={resolutions}
+              onChangeText={setResolutions}
+              style={editMode ? styles.textInputEdit : styles.textInput}
+              editable={editMode}>
+            </TextInput>
           </View>
-          <Text style={[editMode ? styles.cardTitleEdit : styles.cardTitle, { paddingTop: 15 }]}>Shares:</Text>
 
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <View style={[{ flex: 1 }]}>
-              <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Cert No.</Text>
-              <TextInput
-
-                value={certNo}
-                onChangeText={setCertNo}
-                style={editMode ? styles.textInputEdit : styles.textInput}
-                editable={editMode}>
-              </TextInput>
-            </View>
-            <View style={[{ flex: 1 }]}>
-              <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Shares No.</Text>
-              <TextInput
-
-                value={sharesNo}
-                onChangeText={setSharesNo}
-                style={editMode ? styles.textInputEdit : styles.textInput}
-                editable={editMode}>
-              </TextInput>
-            </View>
-          </View>
           <View style={[{ paddingTop: 15 }]}>
             <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>From whom shares were transfered:</Text>
             {/* <TextInput
@@ -320,16 +248,12 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
           </View>
           <View style={[{ paddingTop: 15 }]}>
             <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Date of Transfer of Ordinary Shares:</Text>
-            <TextInput style={editMode ? styles.textInputEdit : styles.textInput} editable={editMode}
-              onFocus={showTransferDatePicker} onKeyPress={showTransferDatePicker} label="Date of Transfer" placeholder="Date of Transfer"
-              value={transferDate == '' ? '' : formatTheDateLabel(transferDate)} />
-            <DateTimePickerModal
-              isVisible={isTransferDateVisible}
-              mode="date"
-              date={transferDate}
-              onConfirm={handleTransferConfirm}
-              onCancel={hideTransferDatePicker}
-            />
+            <TextInput
+              value={dateOfTransfer}
+              onChangeText={setDateOfTransfer}
+              style={editMode ? styles.textInputEdit : styles.textInput}
+              editable={editMode}>
+            </TextInput>
           </View>
           <View style={[{ paddingTop: 15 }]}>
             <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>To whom Shares are Transferred:</Text>
@@ -398,7 +322,7 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
   );
 };
 
-export default RegisterOfShareHolders;
+export default MOShareHolders;
 
 const styles = StyleSheet.create({
   textInputEdit: {
@@ -421,12 +345,6 @@ const styles = StyleSheet.create({
     paddingBottom: 0,
     color: '#333333',
   },
-  action: {
-    borderBottomColor: "#dedede",
-    borderBottomWidth: 1,
-    fontSize: actuatedNormalize(17),
-    paddingTop: actuatedNormalize(20)
-  },
   action4: {
     paddingTop: actuatedNormalize(5),
     borderBottomColor: "#dedede",
@@ -448,9 +366,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     flexDirection: 'row',
     justifyContent: "space-between"
-  },
-  textSign: {
-    fontWeight: 'bold',
   },
   buttons: {
     paddingVertical: 12,

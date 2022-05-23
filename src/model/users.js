@@ -1,31 +1,27 @@
 export default Users = [
     {
         id: 1,
-        email: 'user1@email.com',
-        username: '1',
-        password: '1',
-        userToken: 'token123'
+        email: 'secretary@example.com',
+        username: 'secretary',
+        password: 'password',
+        userToken: 'token123',
+        nin: 'DM804990000DDDL'
     },
     {
         id: 2,
         email: 'user2@email.com',
-        username: 'user2',
-        password: 'pass1234',
-        userToken: 'token12345'
+        username: '1',
+        password: '1',
+        userToken: 'token12345',
+        nin: '6409G67891234'
     },
     {
         id: 3,
         email: 'testuser@email.com',
         username: 'testuser',
         password: 'testpass',
-        userToken: 'testtoken'
-    },
-    {
-        id: 4,
-        email: 'xtian@gmail.com',
-        username: 'xtian',
-        password: 'testpass',
-        userToken: 'testtoken'
+        userToken: 'testtoken',
+        nin: 'CM21F80000DDDL'
     },
 
 ];
