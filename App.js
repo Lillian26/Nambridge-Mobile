@@ -11,7 +11,6 @@ import {
   DarkTheme as PaperDarkTheme
 } from 'react-native-paper';
 
-
 import { AuthContext } from './src/components/context';
 
 import RootStackScreen from './src/navigation/RootStackScreen';
@@ -19,6 +18,8 @@ import RootStackScreen from './src/navigation/RootStackScreen';
 import AsyncStorage from '@react-native-community/async-storage';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import DrawerNavigator from './src/navigation/DrawerNavigator';
+import { store } from './src/store/store'
+import { Provider } from "react-redux"
 
 const App = () => {
   // const [isLoading, setIsLoading] = React.useState(true);
@@ -29,7 +30,7 @@ const App = () => {
   const initialLoginState = {
     isLoading: true,
     userName: null,
-    userToken: null,
+    userToken: null
   };
 
   const CustomDefaultTheme = {
@@ -67,7 +68,7 @@ const App = () => {
       case 'LOGIN':
         return {
           ...prevState,
-          userName: action.id,
+          userName: action.userName,
           userToken: action.token,
           isLoading: false,
         };
@@ -78,13 +79,6 @@ const App = () => {
           userToken: null,
           isLoading: false,
         };
-      case 'REGISTER':
-        return {
-          ...prevState,
-          userName: action.id,
-          userToken: action.token,
-          isLoading: false,
-        };
     }
   };
 
@@ -93,17 +87,21 @@ const App = () => {
   const authContext = React.useMemo(() => ({
     signIn: async (foundUser) => {
       // setUserToken('fgkj');
+      // console.log('foundusr ', foundUser)
       // setIsLoading(false);
       const userToken = String(foundUser[0].userToken);
       const userName = foundUser[0].username;
 
       try {
         await AsyncStorage.setItem('userToken', userToken);
-      } catch (e) {
+        const items = [['user', JSON.stringify(foundUser)]];
+        await AsyncStorage.multiSet(items);
+
+    } catch (e) {
         console.log(e);
-      }
-      // console.log('user token: ', userToken);
-      dispatch({ type: 'LOGIN', id: userName, token: userToken });
+    }
+      // console.log('user token: ', userToken, 'userName: ', userName);
+      dispatch({ type: 'LOGIN', userName: userName, token: userToken });
     },
     signOut: async () => {
       // setUserToken(null);
@@ -114,10 +112,6 @@ const App = () => {
         console.log(e);
       }
       dispatch({ type: 'LOGOUT' });
-    },
-    signUp: () => {
-      // setUserToken('fgkj');
-      // setIsLoading(false);
     },
     toggleTheme: () => {
       setIsDarkTheme(isDarkTheme => !isDarkTheme);
@@ -150,7 +144,9 @@ const App = () => {
       <AuthContext.Provider value={authContext}>
         <NavigationContainer theme={theme}>
           {loginState.userToken !== null ? (
-            <DrawerNavigator />
+            <Provider store={store}>
+              <DrawerNavigator />
+            </Provider>
           )
             :
             <RootStackScreen />

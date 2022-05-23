@@ -30,6 +30,12 @@ export default Registers = [
   }, {
     id: 9,
     name: 'Company Seal Register',
+  }, {
+    id: 10,
+    name: 'Register of Debentures',
+  }, {
+    id: 11,
+    name: 'Register of Branches',
   },
 
 ];

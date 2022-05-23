@@ -41,7 +41,10 @@ export default MenuCard;
 const styles = StyleSheet.create({
   card: {
     borderRadius: 10,
-    width: 150,
+    width: 160,
+    // padding: 10
+    // margin:10,
+    marginHorizontal: 10
   },
   container: {
     alignItems: 'center',
@@ -55,7 +58,7 @@ const styles = StyleSheet.create({
   },
   sector: {
     fontSize: 15,
-    marginTop: 10,
+    marginVertical: 10,
     // fontWeight: 'bold',
     color: '#000',
     textTransform: 'capitalize'

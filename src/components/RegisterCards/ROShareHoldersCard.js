@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { Card, Divider } from 'react-native-elements';
+import colors from '../../assets/theme/colors';
 // import actuatedNormalize from '../helpers/actuatedNormalize';
 
 const ROShareHoldersCard = (props) => {
@@ -92,7 +93,7 @@ const styles = StyleSheet.create({
   },
   link: {
     fontSize: 15,
-    color: '#268d9c',
+    color: colors.button,
     // textDecorationLine: 'underline',
   },
   labelView: {

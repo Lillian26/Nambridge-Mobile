@@ -21,52 +21,33 @@ import Icon from '../components/common/Icon';
 import { AuthContext } from '../components/context';
 import AsyncStorage from '@react-native-community/async-storage';
 import actuatedNormalize from '../helpers/actuatedNormalize';
+import { useDispatch } from "react-redux";
+import { clearcompany } from "../store/slices/activeCompSlice";
+import colors from '../assets/theme/colors';
 
 export function DrawerContent(props) {
 
-  const paperTheme = useTheme();
-
-  const { signOut, toggleTheme } = React.useContext(AuthContext);
-
-  const [userName, setUserName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [firstname, setFirstName] = useState('');
-  const [lastname, setLastName] = useState('');
-  const [location, setLocation] = useState('');
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    getUser()
-  });
-
-  const getUser = () => {
-    AsyncStorage.getItem('user')
-      .then(user => {
-        // console.log(user);
-
-        if (user === null) {
-          // this.setState({loading: false, showLoginForm: true});
-        } else {
-          let usr = JSON.parse(user);
-
-          setLoading(false)
-          setEmail(usr.user_data.email)
-          setPhone(usr.user_data.phone_number)
-          setUserName(usr.user_data.username)
-          setFirstName(usr.user_data.first_name)
-          setLastName(usr.user_data.last_name)
-          setLocation(usr.user_data.location)
-
-        }
-      })
-      .catch(err => console.log(err));
-  }
+  const dispatch = useDispatch();
+  const { signOut } = React.useContext(AuthContext);
 
   const menuItems = [
     {
+      icon: <Icon type="materialCommunity" size={17} name="folder-table" />,
+      name: 'Home',
+      onPress: () => {
+        props.navigation.navigate('Home');
+      },
+    },
+    {
       icon: <Icon type="fontisto" size={17} name="player-settings" />,
-      name: 'Settings',
+      name: 'Manage',
+      onPress: () => {
+        props.navigation.navigate('Manage');
+      },
+    },
+    {
+      icon: <Icon type="fa5" size={17} name="user-alt" />,
+      name: 'Profile',
       onPress: () => {
         props.navigation.navigate('Profile');
       },
@@ -75,7 +56,9 @@ export function DrawerContent(props) {
       icon: <Icon type="materialCommunity" size={17} name="logout" />,
       name: 'Logout',
       onPress: () => {
-        Alert.alert('Confirm Logout', 'You will be signed out.', [{text: 'Continue', onPress: ()=>signOut()},
+        Alert.alert('Confirm Logout', 'You will be signed out.', [{text: 'Continue', onPress: ()=>{
+          dispatch(clearcompany())
+          signOut()}},
         {text: 'Cancel', onPress: ()=> {}}])
       },
     },
@@ -89,8 +72,9 @@ export function DrawerContent(props) {
         <Image
           height={70}
           width={70}
-          source={require('../assets/logos.png')}
-          
+          source={require('../assets/logos1.png')}
+          style={{ height: undefined, width: undefined, flex: 1 }}
+          resizeMode="contain"
         />
         </View>
         <View style={{ paddingHorizontal: 7 }}>
@@ -157,7 +141,7 @@ const styles = StyleSheet.create({
   },
   bottomDrawerSection: {
     marginBottom: 15,
-    borderTopColor: '#268d9c',
+    borderTopColor: colors.button,
     borderTopWidth: 1
   },
   preference: {

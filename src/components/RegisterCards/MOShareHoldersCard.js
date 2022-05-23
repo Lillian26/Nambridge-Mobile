@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { Card, Divider } from 'react-native-elements';
+import colors from '../../assets/theme/colors';
 import actuatedNormalize from '../../helpers/actuatedNormalize';
 // import actuatedNormalize from '../helpers/actuatedNormalize';
 
-const ROShareHoldersCard = (props) => {
+const MOShareHoldersCard = (props) => {
 
   const { item, onOpen} = props
 
@@ -62,7 +63,7 @@ const ROShareHoldersCard = (props) => {
 
   );
 }
-export default ROShareHoldersCard;
+export default MOShareHoldersCard;
 
 const styles = StyleSheet.create({
   card: {
@@ -87,7 +88,7 @@ const styles = StyleSheet.create({
   },
   link: {
     fontSize: 15,
-    color: '#268d9c',
+    color: colors.button,
     // textDecorationLine: 'underline',
   },
   labelView: {
