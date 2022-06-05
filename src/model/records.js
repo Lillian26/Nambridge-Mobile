@@ -12,6 +12,8 @@ export const rOShareHolders = [
     to_whom: 'Lillian Namusisi',
     shares_transfered: '10',
     shares_no_ord: '40',
+    transfer_type: 'original_issue',
+    original_issue: '20'
   },
   {
     id: 2,
@@ -26,6 +28,8 @@ export const rOShareHolders = [
     to_whom: 'Lillian Namusisi',
     shares_transfered: '8',
     shares_no_ord: '62',
+    transfer_type: 'from_someone',
+    from_someone: 'Nambi Jacki'
   },
   {
     id: 3,
@@ -40,6 +44,8 @@ export const rOShareHolders = [
     to_whom: 'Lillian Namusisi',
     shares_transfered: '15',
     shares_no_ord: '45',
+    transfer_type: 'original_issue',
+    original_issue: '20'
   }]
 
 export const mOShareHolders = [
@@ -70,3 +76,116 @@ export const mOShareHolders = [
     registration_date: '2021-08-20',
     location_of_registration: 'Jon sno'
   }]
+
+export const rODirectors = [
+  {
+    id: 1,
+    director: 'Otim Fredrick',
+    director_address: 'Mutungo Hill',
+    date_of_birth: '2002-04-01',
+    nationality: '12344',
+    appointment_date: '50',
+    resignation_date: 'Otim Fredrick',
+    office_held: '150.00',
+    date_resolution_appointment: '2021-04-05',
+    office_cessation_date: 'Lillian Namusisi',
+    no_of_attachments: '10',
+  },
+  {
+    id: 2,
+    director: 'Anne Mery',
+    director_address: 'Mutungo Hill',
+    date_of_birth: '2012-01-05',
+    nationality: '12345',
+    appointment_date: '70',
+    resignation_date: 'Anne Mery',
+    office_held: '150.00',
+    date_resolution_appointment: '2022-04-20',
+    office_cessation_date: 'Lillian Namusisi',
+    no_of_attachments: '8',
+  },
+  {
+    id: 3,
+    director: 'Jon sno',
+    director_address: 'Mutungo Hill',
+    date_of_birth: '2020-08-20',
+    nationality: '12346',
+    appointment_date: '60',
+    resignation_date: 'Jon sno',
+    office_held: '120.00',
+    date_resolution_appointment: '2022-03-21',
+    office_cessation_date: 'Lillian Namusisi',
+    no_of_attachments: '15',
+  }]
+
+export const rODInterest = [
+  {
+    id: 1,
+    director: 'Otim Fredrick',
+    interest_description: 'Mutungo Hill',
+    date_notified: '2002-04-01',
+    director_related_interest: '12344',
+    remarks: '50',
+    no_of_attachments: '10',
+  },
+  {
+    id: 2,
+    director: 'Anne Mery',
+    interest_description: 'Mutungo Hill',
+    date_notified: '2012-01-05',
+    director_related_interest: '12345',
+    remarks: '70',
+    no_of_attachments: '8',
+  },
+  {
+    id: 3,
+    director: 'Jon sno',
+    interest_description: 'Mutungo Hill',
+    date_notified: '2020-08-20',
+    director_related_interest: '12346',
+    remarks: '60',
+    no_of_attachments: '15',
+  }]
+
+  export const rODirectorsSHg = [
+    {
+      id: 1,
+      director: 'Otim Fredrick',
+      date_of_entry: '2002-04-01',
+      notification_date: '50',
+      nature: 'Otim Fredrick',
+      amount_of_class: '150.00',
+      grant_right_date: '2021-04-05',
+      period_of_grant: 'Lillian Namusisi',
+      consideration: 'Kind',
+      registered_name: 'Lillian N',
+      no_of_attachments: '10',
+    },
+    {
+      id: 2,
+      director: 'Anne Mery',
+      date_of_entry: '2012-01-05',
+      nationality: '12345',
+      notification_date: '70',
+      nature: 'Anne Mery',
+      amount_of_class: '150.00',
+      grant_right_date: '2022-04-20',
+      period_of_grant: 'Lillian Namusisi',
+      consideration: 'Cash',
+      registered_name: 'Lillian N',
+      no_of_attachments: '8',
+    },
+    {
+      id: 3,
+      director: 'Jon sno',
+      date_of_entry: '2020-08-20',
+      nationality: '12346',
+      notification_date: '60',
+      nature: 'Jon sno',
+      amount_of_class: '120.00',
+      grant_right_date: '2022-03-21',
+      period_of_grant: 'Lillian Namusisi',
+      consideration: 'Kind',
+      registered_name: 'Lillian N',
+      no_of_attachments: '15',
+    }]

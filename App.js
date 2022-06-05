@@ -18,8 +18,25 @@ import RootStackScreen from './src/navigation/RootStackScreen';
 import AsyncStorage from '@react-native-community/async-storage';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import DrawerNavigator from './src/navigation/DrawerNavigator';
-import { store } from './src/store/store'
-import { Provider } from "react-redux"
+// import { store } from './src/store/store'
+// import { Provider } from "react-redux"
+
+// REDUX
+import store, { persistor } from './src/store/store';
+import { Provider as ReduxProvider } from 'react-redux';
+
+// REDUX-PERSIST
+import { PersistGate } from 'redux-persist/integration/react';
+
+const LoadingMarkup = () => (
+  <View
+    style={{
+      flex: 1,
+      justifyContent: 'center',
+    }}>
+    <ActivityIndicator size="large" color="#0000ff" />
+  </View>
+);
 
 const App = () => {
   // const [isLoading, setIsLoading] = React.useState(true);
@@ -97,9 +114,9 @@ const App = () => {
         const items = [['user', JSON.stringify(foundUser)]];
         await AsyncStorage.multiSet(items);
 
-    } catch (e) {
+      } catch (e) {
         console.log(e);
-    }
+      }
       // console.log('user token: ', userToken, 'userName: ', userName);
       dispatch({ type: 'LOGIN', userName: userName, token: userToken });
     },
@@ -140,20 +157,24 @@ const App = () => {
     );
   }
   return (
-    <PaperProvider theme={theme}>
-      <AuthContext.Provider value={authContext}>
-        <NavigationContainer theme={theme}>
-          {loginState.userToken !== null ? (
-            <Provider store={store}>
-              <DrawerNavigator />
-            </Provider>
-          )
-            :
-            <RootStackScreen />
-          }
-        </NavigationContainer>
-      </AuthContext.Provider>
-    </PaperProvider>
+    <AuthContext.Provider value={authContext}>
+      <NavigationContainer theme={theme}>
+        {loginState.userToken !== null ? (
+          <ReduxProvider store={store}>
+            <PersistGate loading={<LoadingMarkup />} persistor={persistor}>
+              <PaperProvider theme={theme}>
+
+                <DrawerNavigator />
+              </PaperProvider>
+
+            </PersistGate>
+          </ReduxProvider>
+        )
+          :
+          <RootStackScreen />
+        }
+      </NavigationContainer>
+    </AuthContext.Provider>
   );
 };
 
