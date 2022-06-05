@@ -12,7 +12,7 @@ import {
   Text
 } from "@99xt/first-born";
 import actuatedNormalize from '../../../helpers/actuatedNormalize';
-import ROShareHoldersCard from '../../../components/RegisterCards/ROShareHoldersCard';
+import {ROShareHoldersCard} from '../../../components/ListCard';
 import { rOShareHolders } from '../../../model/records';
 
 const ShareHoldersLedger = ({ route, navigation, props }) => {

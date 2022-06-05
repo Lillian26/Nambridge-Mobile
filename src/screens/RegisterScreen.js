@@ -18,10 +18,9 @@ import * as Animatable from 'react-native-animatable';
 import { useTheme } from '@react-navigation/native';
 import actuatedNormalize from '../helpers/actuatedNormalize';
 import grayColor from '../constants/Colors';
-import ROShareHoldersCard from '../components/RegisterCards/ROShareHoldersCard';
-import MOShareHoldersCard from '../components/RegisterCards/MOShareHoldersCard';
+import {ROShareHoldersCard, MOShareHoldersCard, RODirectorsCard, RODInterestCard, RODirectorsSHg} from '../components/ListCard';
 
-import { rOShareHolders, mOShareHolders } from '../model/records';
+import { rOShareHolders, mOShareHolders, rODirectors, rODInterest, rODirectorsSHg } from '../model/records';
 import registers from '../model/registers';
 
 const RegisterScreen = ({ route, navigation, props }) => {
@@ -40,6 +39,18 @@ const RegisterScreen = ({ route, navigation, props }) => {
         break;
       case "Index of Minutes of Shareholders":
         setData(mOShareHolders);
+        setRegisterRoute('NotFound');
+        break;
+      case "Register of Directors":
+        setData(rODirectors);
+        setRegisterRoute('NotFound');
+        break;
+      case "Register of Directors Interest":
+        setData(rODInterest);
+        setRegisterRoute('NotFound');
+        break;
+      case "Directors Shareholding & Related Particulars":
+        setData(rODirectorsSHg);
         setRegisterRoute('NotFound');
         break;
       default:
@@ -66,6 +77,25 @@ const RegisterScreen = ({ route, navigation, props }) => {
             item={item}
             onOpen={() => navigation.navigate(registerRoute, { entryId: item.id, registerId: registerId })}
           />)
+
+      case "Register of Directors":
+        return(
+          <RODirectorsCard
+              item={item}
+              onOpen={() => navigation.navigate(registerRoute, { entryId: item.id, registerId: registerId })}
+            />)
+      case "Register of Directors Interest":
+        return(
+          <RODInterestCard
+              item={item}
+              onOpen={() => navigation.navigate(registerRoute, { entryId: item.id, registerId: registerId })}
+            />)
+      case "Directors Shareholding & Related Particulars":
+        return(
+          <RODirectorsSHg
+              item={item}
+              onOpen={() => navigation.navigate(registerRoute, { entryId: item.id, registerId: registerId })}
+            />)
       default:
         return(
           <ROShareHoldersCard

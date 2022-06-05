@@ -8,7 +8,8 @@ import { rOShareHolders } from '../../../model/records';
 import { Button, Menu, Divider, Provider } from 'react-native-paper';
 import Iconsp from "react-native-vector-icons/SimpleLineIcons";
 // import axios from "axios";
-import { Picker } from '@react-native-picker/picker';
+// import { Picker } from '@react-native-picker/picker';
+import RNPickerSelect from "react-native-picker-select";
 import actuatedNormalize from '../../../helpers/actuatedNormalize';
 import { formatTheDateLabel, defaultDate, formatTheDateText, strtransferDate } from "../../../helpers/helpers";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -36,7 +37,9 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
   const [shareBalance, setShareBalance] = useState("")
   const [attachments, setAttachments] = useState([])
   const [visible, setVisible] = useState(false);
-  const [transferType, setTransferType] = useState(null)
+  const [transferType, setTransferType] = useState(null);
+  const [transferFrom, setTransferFrom] = useState(null);
+  const [originalIssue, setOriginalIssue] = useState(null);
 
   const showTransferDatePicker = () => {
     setTransferDateVisibility(true);
@@ -98,7 +101,7 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
 
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
     setLoading(false)
-  }, [editMode, loading]);
+  }, [editMode, loading, transferType]);
 
   const openMenu = () => setVisible(true);
 
@@ -114,11 +117,13 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
     setSharesNo(theRecord.shares_no);
     setFromWhom(theRecord.from_whom);
     setAmtPaid(theRecord.amount_paid);
-    console.log("theRecord.date_transfered: ", theRecord.date_transfered)
     setTransferDate(new Date(theRecord.date_transfered));
     setToWhom(theRecord.to_whom);
     setSharesTransfered(theRecord.shares_transfered);
     setShareBalance(theRecord.shares_no_ord);
+    setTransferType(theRecord.transfer_type);
+    if (theRecord.transfer_type == "original_issue") {setOriginalIssue(theRecord.original_issue)};
+    if (theRecord.transfer_type == "from_someone") {setTransferFrom(theRecord.from_someone)};
 
     // getAttachments()
 
@@ -291,23 +296,38 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
           </View>
           <View style={[{ paddingTop: 15 }]}>
             <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>From whom shares were transfered:</Text>
-            {/* <TextInput
-          value={fromWhom}
-          onChangeText={setFromWhom}
+            <View style={editMode ? styles.pickerEdit : styles.picker}>
+            <RNPickerSelect
+              useNativeAndroidPickerStyle={false}
+              placeholder={{ label: "Select Transfer Type", value: null }}
+              onValueChange={(value) => setTransferType(value)}
+              items={[
+                { label: "Allotment / Original Issue", value: "original_issue" },
+                { label: "Transfer from Someone", value: "from_someone" },
+              ]}
+              disabled={!editMode}
+              value={transferType}
+              style={pickerStyle}
+            />
+            </View>
+          <View style={{marginTop: actuatedNormalize(5)}}>
+          {transferType == "original_issue" && 
+            <TextInput
+            placeholder='Allotment / Original Issue'
+            value={`Allotment / Original Issue value: ${originalIssue}`}
+            onChangeText={setOriginalIssue}
+            style={editMode ? styles.textInputEdit : styles.textInput}
+            editable={editMode}>
+          </TextInput>}
+          {transferType == "from_someone" && 
+          <TextInput
+          placeholder='From Someone'
+          value={`From: ${transferFrom}`}
+          onChangeText={setTransferFrom}
           style={editMode ? styles.textInputEdit : styles.textInput}
           editable={editMode}>
-        </TextInput> */}
-            {/* <View style={[styles.action4, { height: actuatedNormalize(50), marginVertical: actuatedNormalize(15), width: '100%', alignSelf: 'center' }]} >
-              <Picker style={{
-                color: transferType === null ? '#A9A9A9' : '#000', height: '100%', width: '90%', fontSize: actuatedNormalize(18), fontWeight: '100',
-                transform: [{ scaleX: 1.12 }, { scaleY: 1.12 }], left: '4%', position: 'absolute',
-              }}
-                onValueChange={(itemValue, itemIndex) => setTransferType(itemValue)} itemStyle={{ fontSize: actuatedNormalize(18) }} >
-                <Picker.Item value={null} label="Select Transfer Type" />
-                <Picker.Item value="original_issue" label="Allotment / Original Issue" />
-                <Picker.Item value="from_someone" label="Transfer from Someone" />
-              </Picker>
-            </View> */}
+        </TextInput>}
+          </View>
           </View>
           <View style={[{ paddingTop: 15 }]}>
             <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Amount Paid thereon in UGX</Text>
@@ -399,7 +419,35 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
 };
 
 export default RegisterOfShareHolders;
-
+const pickerStyle = {
+	inputIOS: {
+		color: '#333',
+		paddingTop: 10,
+		paddingHorizontal: 10,
+		paddingBottom: 10,
+    fontSize: 16,
+	},
+	inputAndroid: {
+		color: '#333',
+    fontSize: 16,
+	},
+	placeholderColor: 'grey',
+	underline: { borderTopWidth: 0 },
+	icon: {
+		position: 'absolute',
+		backgroundColor: 'transparent',
+		borderTopWidth: 5,
+		borderTopColor: '#00000099',
+		borderRightWidth: 5,
+		borderRightColor: 'transparent',
+		borderLeftWidth: 5,
+		borderLeftColor: 'transparent',
+		width: 0,
+		height: 0,
+		top: 20,
+		right: 15,
+	},
+};
 const styles = StyleSheet.create({
   textInputEdit: {
     marginHorizontal: 10,
@@ -456,5 +504,46 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 50,
     width: 130,
-  }
+  },
+  inputIOS: {
+    fontSize: 16,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    borderWidth: 1,
+    borderColor: 'green',
+    borderRadius: 8,
+    color: 'black',
+    paddingRight: 30, // to ensure the text is never behind the icon
+  },
+  inputAndroid: {
+    fontSize: 16,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    borderWidth: 1,
+    borderColor: 'blue',
+    borderRadius: 8,
+    color: 'black',
+    paddingRight: 30, // to ensure the text is never behind the icon
+  },
+  pickerEdit: {
+    marginHorizontal: 10,
+    marginVertical: 3,
+    fontSize: 16,
+    borderColor: 'rgba(118,121,116, .3)',
+    borderWidth: .3,
+    borderRadius: 1,
+    paddingLeft: 15,
+    // paddingBottom: 5,
+    marginBottom: 5,
+    color: '#333333'
+  },
+  picker: {
+    marginHorizontal: 10,
+    fontSize: 16,
+    borderColor: 'rgba(118,121,116, .1)',
+    borderBottomWidth: .1,
+    borderRadius: 1,
+    paddingBottom: 0,
+    color: '#333333',
+  },
 });

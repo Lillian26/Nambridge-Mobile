@@ -27,6 +27,18 @@ const RegistersList = ({ navigation }) => {
         // navigation.navigate('RegisterOfShareHolders');
         navigation.navigate('NotFound');
         break;
+      case "Register of Directors":
+        // navigation.navigate('RegisterOfShareHolders');
+        navigation.navigate('NotFound');
+        break;
+      case "Register of Directors Interest":
+        // navigation.navigate('RegisterOfShareHolders');
+        navigation.navigate('NotFound');
+        break;
+      case "Directors Shareholding & Related Particulars":
+        // navigation.navigate('RegisterOfShareHolders');
+        navigation.navigate('NotFound');
+        break;
       default:
         navigation.navigate('NotFound');
         break;
