@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from 'react';
-import { View, StyleSheet, TouchableOpacity, ScrollView, TextInput, StatusBar, FlatList } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { View, StyleSheet, TouchableOpacity, ScrollView, LogBox, StatusBar, FlatList } from 'react-native';
 import Icon from '../components/common/Icon';
 import colors from '../assets/theme/colors';
 import * as Animatable from 'react-native-animatable';
@@ -45,6 +45,11 @@ const RegistersList = ({ navigation }) => {
     }
 
   }
+
+  useEffect(() => {
+    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+
+  }, [])
 
   return (
     <>

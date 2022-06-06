@@ -7,20 +7,18 @@ import Icona from "react-native-vector-icons/AntDesign";
 import { rOShareHolders } from '../../../model/records';
 import { Button, Menu, Divider, Provider } from 'react-native-paper';
 import Iconsp from "react-native-vector-icons/SimpleLineIcons";
-// import axios from "axios";
-// import { Picker } from '@react-native-picker/picker';
 import RNPickerSelect from "react-native-picker-select";
 import actuatedNormalize from '../../../helpers/actuatedNormalize';
 import { formatTheDateLabel, defaultDate, formatTheDateText, strtransferDate } from "../../../helpers/helpers";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import registers from '../../../model/registers';
 
 const RegisterOfShareHolders = ({ route, navigation }) => {
 
-  const { entryId, registerId } = route.params ?? {};
+  const { entryId, registerId } = route.params ?? {};//common
+  const [loading, setLoading] = useState(true);//common
+  const [editMode, setEditMode] = useState(false);//common
 
-  const [loading, setLoading] = useState(true);
-
-  const [editMode, setEditMode] = useState(false);
   const [record, setRecord] = useState(null)
   const [member, setMember] = useState("")
   const [memberAddress, setMemberAddress] = useState("")
@@ -40,6 +38,10 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
   const [transferType, setTransferType] = useState(null);
   const [transferFrom, setTransferFrom] = useState(null);
   const [originalIssue, setOriginalIssue] = useState(null);
+  const [uploads, setUploads] = useState([]);
+  const [validUploads, setValidUploads] = useState(false);
+
+  const [documentTypes, setDocumentTypes] = useState([])//common
 
   const showTransferDatePicker = () => {
     setTransferDateVisibility(true);
@@ -81,7 +83,49 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
     }
   };
 
+  //common------------------------------ file upload methods
+
+  function handleChangeInput(i, value, name, uploads, setUploads, setValidUploads) {
+    const values = [...uploads];
+    // console.log(uploads);
+
+    values[i][name] = value;
+    setValidUploads(values.filter(x => Object.values(x).some(x => x === '')).length == 0)
+    setUploads(values);
+    // console.log(fields);
+  }
+
+  function handleAdd(uploads, setUploads, setValidUploads) {
+    const values = [...uploads];
+    // values.push({ value: null });
+    values.push({
+      Type: '',
+      Document: '',
+    });
+    setValidUploads(false)
+    setUploads(values);
+  }
+
+  function handleRemove(i, uploads, setUploads, setValidUploads) {
+    const values = [...uploads];
+    values.splice(i, 1);
+    setValidUploads(values.filter(x => Object.values(x).some(x => x === '')).length == 0)
+    setUploads(values);
+  }
+
+  const fetchDocumentTypes = () => {
+    let dTypes = []
+    registers.forEach(x => {
+      dTypes.push({ label: x.name, value: x.id })
+    })
+    setDocumentTypes(dTypes);
+  }
+  // -------------------------------------------------------
+
+
   useEffect(() => {
+    fetchDocumentTypes(); //common
+
     if (entryId) {
       navigation.setOptions({
         title: 'View Record',
@@ -96,7 +140,7 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
       navigation.setOptions({
         title: 'Create New Record',
       });
-      setEditMode(true)
+      setEditMode(true);
     }
 
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
@@ -122,8 +166,8 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
     setSharesTransfered(theRecord.shares_transfered);
     setShareBalance(theRecord.shares_no_ord);
     setTransferType(theRecord.transfer_type);
-    if (theRecord.transfer_type == "original_issue") {setOriginalIssue(theRecord.original_issue)};
-    if (theRecord.transfer_type == "from_someone") {setTransferFrom(theRecord.from_someone)};
+    if (theRecord.transfer_type == "original_issue") { setOriginalIssue(theRecord.original_issue) };
+    if (theRecord.transfer_type == "from_someone") { setTransferFrom(theRecord.from_someone) };
 
     // getAttachments()
 
@@ -135,14 +179,14 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
   // Document attachment list component
 
   //*************************************************************picker and display , click link************************************************** */
-  const selectOneFile = async (setFile) => {
+  const selectOneFile = async () => {
     //Opening Document Picker for selection of one file
     try {
       const res = await DocumentPicker.pick({
         type: [DocumentPicker.types.allFiles],
       });
 
-      setFile(res);
+      return res;
     } catch (err) {
       //Handling any exception (If any)
       if (DocumentPicker.isCancel(err)) {
@@ -153,6 +197,7 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
         alert('Unknown Error: ' + JSON.stringify(err));
         throw err;
       }
+      return null
     }
   };
 
@@ -184,7 +229,7 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
       });
   }
 
-  const createSH = async () => {
+  const submitRecord = async () => {
 
     // alert('Saved!'); navigation.navigate('Home')
     Alert.alert("Saved!", "Proceed to add ledger?", [
@@ -204,6 +249,7 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
               :
               <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
                 <Text style={[styles.cardTitleEdit, { textDecorationLine: 'underline', paddingTop: 20, }]}>Register of Shareholders</Text>
+                {/* menu */}
                 {editMode ? null :
 
                   <Provider>
@@ -238,6 +284,7 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
             }
           </View>
 
+          {/*  */}
           <View style={[{ paddingTop: 15 }]}>
             <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Name of Member (Shareholder):</Text>
             <TextInput
@@ -297,37 +344,37 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
           <View style={[{ paddingTop: 15 }]}>
             <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>From whom shares were transfered:</Text>
             <View style={editMode ? styles.pickerEdit : styles.picker}>
-            <RNPickerSelect
-              useNativeAndroidPickerStyle={false}
-              placeholder={{ label: "Select Transfer Type", value: null }}
-              onValueChange={(value) => setTransferType(value)}
-              items={[
-                { label: "Allotment / Original Issue", value: "original_issue" },
-                { label: "Transfer from Someone", value: "from_someone" },
-              ]}
-              disabled={!editMode}
-              value={transferType}
-              style={pickerStyle}
-            />
+              <RNPickerSelect
+                useNativeAndroidPickerStyle={false}
+                placeholder={{ label: "Select Transfer Type", value: null }}
+                onValueChange={(value) => setTransferType(value)}
+                items={[
+                  { label: "Allotment / Original Issue", value: "original_issue" },
+                  { label: "Transfer from Someone", value: "from_someone" },
+                ]}
+                disabled={!editMode}
+                value={transferType}
+                style={pickerStyle}
+              />
             </View>
-          <View style={{marginTop: actuatedNormalize(5)}}>
-          {transferType == "original_issue" && 
-            <TextInput
-            placeholder='Allotment / Original Issue'
-            value={`Allotment / Original Issue value: ${originalIssue}`}
-            onChangeText={setOriginalIssue}
-            style={editMode ? styles.textInputEdit : styles.textInput}
-            editable={editMode}>
-          </TextInput>}
-          {transferType == "from_someone" && 
-          <TextInput
-          placeholder='From Someone'
-          value={`From: ${transferFrom}`}
-          onChangeText={setTransferFrom}
-          style={editMode ? styles.textInputEdit : styles.textInput}
-          editable={editMode}>
-        </TextInput>}
-          </View>
+            <View style={{ marginTop: actuatedNormalize(5) }}>
+              {transferType == "original_issue" &&
+                <TextInput
+                  placeholder='Allotment / Original Issue'
+                  value={`Allotment / Original Issue value: ${originalIssue}`}
+                  onChangeText={setOriginalIssue}
+                  style={editMode ? styles.textInputEdit : styles.textInput}
+                  editable={editMode}>
+                </TextInput>}
+              {transferType == "from_someone" &&
+                <TextInput
+                  placeholder='From Someone'
+                  value={`From: ${transferFrom}`}
+                  onChangeText={setTransferFrom}
+                  style={editMode ? styles.textInputEdit : styles.textInput}
+                  editable={editMode}>
+                </TextInput>}
+            </View>
           </View>
           <View style={[{ paddingTop: 15 }]}>
             <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Amount Paid thereon in UGX</Text>
@@ -380,12 +427,53 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
           </View>
           <View style={[{ paddingTop: 15 }]}>
             <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Attach Relevant Documents:</Text>
-            <TextInput
-              value={attachments.length.toString()}
-              // onChangeText={setAttachments}
-              style={editMode ? styles.textInputEdit : styles.textInput}
-              editable={editMode}>
-            </TextInput>
+
+            <TouchableOpacity onPress={() => handleAdd(uploads, setUploads, setValidUploads)} style={[{ backgroundColor: "green", marginVertical: 10 }, styles.buttons]}>
+              <Text style={{ color: '#fff', alignSelf: 'center' }}>{`Add Upload`}</Text>
+            </TouchableOpacity>
+
+            {uploads.map((field, idx) => {
+              return (
+                <View key={`${field}-${idx}`} style={{
+                  borderRadius: 2, borderWidth: 1, borderStyle: 'dotted',
+                  borderColor: 'green', marginBottom: 10,
+                }}>
+
+                  <View style={editMode ? styles.pickerEdit : styles.picker}>
+                    <RNPickerSelect
+                      useNativeAndroidPickerStyle={false}
+                      placeholder={{ label: "Select Document Type", value: null }}
+                      onValueChange={(val) => {
+                        handleChangeInput(idx, val, 'Type', uploads, setUploads, setValidUploads);
+                      }}
+                      items={documentTypes}
+                      disabled={!editMode}
+                      value={transferType}
+                      style={pickerStyle}
+                    />
+                  </View>
+
+                  <View style={[styles.action3]}>
+                    <TouchableOpacity onPress={() => handleChangeInput(idx, selectOneFile(), 'Document', uploads, setUploads, setValidUploads)}>
+                      <TextInput style={{ fontSize: 17 }} onFocus={() => handleChangeInput(idx, selectOneFile(), 'Document', uploads, setUploads, setValidUploads)}
+                        label="schMgtMinutes" placeholder="Click here to upload document" onChangeText={(val) => { setSchMgtMinutes(val) }}
+                        value={uploads[idx]['Document'].name} />
+                    </TouchableOpacity>
+                  </View>
+
+                  <View style={{
+                    justifyContent: 'center',
+                    marginVertical: 5,
+                    alignSelf: 'flex-end',
+                  }}>
+                    <TouchableOpacity onPress={() => handleRemove(idx, uploads, setUploads, setValidUploads)} style={[{ backgroundColor: "red" }, styles.button2]}>
+                      <Text style={{ color: '#fff', alignSelf: 'center' }}>{`Remove`}</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              );
+            })}
+
           </View>
           {entryId ?
             editMode ? <View style={styles.button}>
@@ -409,7 +497,7 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
                 <Text style={{ color: colors.button, alignSelf: 'center', fontWeight: 'bold' }}>{`Cancel`}</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity onPress={createSH} style={[{ backgroundColor: colors.button }, styles.buttons]}>
+              <TouchableOpacity onPress={submitRecord} style={[{ backgroundColor: colors.button }, styles.buttons]}>
                 <Text style={{ color: '#fff', alignSelf: 'center', fontWeight: 'bold' }}>{`Create`}</Text>
               </TouchableOpacity>
             </View>}
@@ -420,33 +508,39 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
 
 export default RegisterOfShareHolders;
 const pickerStyle = {
-	inputIOS: {
-		color: '#333',
-		paddingTop: 10,
-		paddingHorizontal: 10,
-		paddingBottom: 10,
+  inputIOS: {
+    color: '#333',
+    paddingTop: 10,
+    paddingHorizontal: 10,
+    paddingBottom: 10,
     fontSize: 16,
-	},
-	inputAndroid: {
-		color: '#333',
+  },
+  action3: {
+    paddingTop: 5,
+    borderBottomColor: '#dedede',
+    borderBottomWidth: 1,
+    paddingBottom: 10,
+  },
+  inputAndroid: {
+    color: '#333',
     fontSize: 16,
-	},
-	placeholderColor: 'grey',
-	underline: { borderTopWidth: 0 },
-	icon: {
-		position: 'absolute',
-		backgroundColor: 'transparent',
-		borderTopWidth: 5,
-		borderTopColor: '#00000099',
-		borderRightWidth: 5,
-		borderRightColor: 'transparent',
-		borderLeftWidth: 5,
-		borderLeftColor: 'transparent',
-		width: 0,
-		height: 0,
-		top: 20,
-		right: 15,
-	},
+  },
+  placeholderColor: 'grey',
+  underline: { borderTopWidth: 0 },
+  icon: {
+    position: 'absolute',
+    backgroundColor: 'transparent',
+    borderTopWidth: 5,
+    borderTopColor: '#00000099',
+    borderRightWidth: 5,
+    borderRightColor: 'transparent',
+    borderLeftWidth: 5,
+    borderLeftColor: 'transparent',
+    width: 0,
+    height: 0,
+    top: 20,
+    right: 15,
+  },
 };
 const styles = StyleSheet.create({
   textInputEdit: {
@@ -502,6 +596,11 @@ const styles = StyleSheet.create({
   },
   buttons: {
     paddingVertical: 12,
+    borderRadius: 50,
+    width: 130,
+  },
+  button2: {
+    paddingVertical: 10,
     borderRadius: 50,
     width: 130,
   },
