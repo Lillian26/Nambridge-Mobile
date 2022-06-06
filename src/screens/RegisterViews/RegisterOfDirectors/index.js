@@ -4,7 +4,7 @@ import colors from '../../../assets/theme/colors';
 import DocumentPicker from 'react-native-document-picker';
 import { Text } from 'native-base';
 import Icona from "react-native-vector-icons/AntDesign";
-import { rOShareHolders } from '../../../model/records';
+import { rODirectors } from '../../../model/records';
 import { Button, Menu, Divider, Provider } from 'react-native-paper';
 import Iconsp from "react-native-vector-icons/SimpleLineIcons";
 // import axios from "axios";
@@ -14,7 +14,7 @@ import actuatedNormalize from '../../../helpers/actuatedNormalize';
 import { formatTheDateLabel, defaultDate, formatTheDateText, strtransferDate } from "../../../helpers/helpers";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
-const RegisterOfShareHolders = ({ route, navigation }) => {
+const RegisterOfDirector = ({ route, navigation }) => {
 
   const { entryId, registerId } = route.params ?? {};
 
@@ -108,20 +108,20 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
   const closeMenu = () => setVisible(false);
 
   const getRecordDetails = () => {
-    var theRecord = rOShareHolders.find(x => x.id == entryId);
+    var theRecord = rODirectors.find(x => x.id == entryId);
     setRecord(theRecord);
-    setMember(theRecord.member);
-    setMemberAddress(theRecord.member_address);
-    setDateOfEntry(new Date(theRecord.date_of_entry));
-    setCertNo(theRecord.cert_no);
-    setSharesNo(theRecord.shares_no);
-    setFromWhom(theRecord.from_whom);
-    setAmtPaid(theRecord.amount_paid);
-    setTransferDate(new Date(theRecord.date_transfered));
+    setDirector(theRecord.director);
+    setDirectorAddress(theRecord. director_address);
+    setDateOfEntry(new Date(theRecord.date_of_birth));
+    setNationality(theRecord.nationality);
+    setSharesNo(new Date(theRecord.appointment_date));
+    setFromWhom(new Date(theRecord.resignation_date));
+    setOfficeHeld(theRecord.office_held);
+    setOfficeCessationDate(new Date(theRecord.office_cessation_date));
     setToWhom(theRecord.to_whom);
-    setSharesTransfered(theRecord.shares_transfered);
-    setShareBalance(theRecord.shares_no_ord);
-    setTransferType(theRecord.transfer_type);
+    setSharesTransfered(theRecord.no_of_attachments);
+    // setShareBalance(theRecord);
+    // setTransferType(theRecord.transfer_type);
     if (theRecord.transfer_type == "original_issue") {setOriginalIssue(theRecord.original_issue)};
     if (theRecord.transfer_type == "from_someone") {setTransferFrom(theRecord.from_someone)};
 
@@ -221,7 +221,7 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
                         anchor={<TouchableOpacity style={{ backgroundColor: '#f5f7fa', paddingHorizontal: 5, paddingVertical: 5, borderRadius: 5 }} onPress={openMenu}>
                           <Iconsp name="options-vertical" size={22} color="#017eff" />
                         </TouchableOpacity>}>
-                        <Menu.Item onPress={() => { closeMenu(); navigation.navigate("ShareHoldersLedger") }} icon="folder-account-outline" title="Shareholders Ledger" />
+                        <Menu.Item onPress={() => { closeMenu(); navigation.navigate("DirectorLedger") }} icon="folder-account-outline" title="Directors Ledger" />
                         <Divider />
                         <Menu.Item onPress={() => { closeMenu(); setEditMode(true) }} icon="file-document-edit-outline" title="Edit Record" />
                         <Divider />
@@ -239,10 +239,10 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
           </View>
 
           <View style={[{ paddingTop: 15 }]}>
-            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Name of Member (Shareholder):</Text>
+            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Name of Member (Director):</Text>
             <TextInput
-              value={member}
-              onChangeText={setMember}
+              value={director}
+              onChangeText={setDirector}
               style={editMode ? styles.textInputEdit : styles.textInput}
               editable={editMode}>
             </TextInput>
@@ -250,14 +250,14 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
           <View style={[{ paddingTop: 15 }]}>
             <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Address of Member (Shareholder):</Text>
             <TextInput
-              value={memberAddress}
-              onChangeText={setMemberAddress}
+              value={DirectorsAddress}
+              onChangeText={ setDirectorAddress}
               style={editMode ? styles.textInputEdit : styles.textInput}
               editable={editMode}>
             </TextInput>
           </View>
           <View style={[{ paddingTop: 15 }]}>
-            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Date of Entry as Member (Shareholder):</Text>
+            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Date of Entry as Director (Director):</Text>
             <TextInput style={editMode ? styles.textInputEdit : styles.textInput}
               editable={editMode} onFocus={showDateOfEntryPicker} onKeyPress={showDateOfEntryPicker} label="Date of Entry" placeholder="Date of Entry"
               value={dateOfEntry == '' ? '' : formatTheDateLabel(dateOfEntry)}
@@ -274,11 +274,11 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
 
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
             <View style={[{ flex: 1 }]}>
-              <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Cert No.</Text>
+              <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Office Held.</Text>
               <TextInput
 
-                value={certNo}
-                onChangeText={setCertNo}
+                value={officeHeld}
+                onChangeText={setOfficeHeld}
                 style={editMode ? styles.textInputEdit : styles.textInput}
                 editable={editMode}>
               </TextInput>
@@ -331,12 +331,13 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
           </View>
           <View style={[{ paddingTop: 15 }]}>
             <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Amount Paid thereon in UGX</Text>
-            <TextInput
+            {/* <TextInput
               value={amtPaid}
               onChangeText={setAmtPaid}
               style={editMode ? styles.textInputEdit : styles.textInput}
               editable={editMode}>
-            </TextInput>
+            </TextInput> */} 
+            
           </View>
           <View style={[{ paddingTop: 15 }]}>
             <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Date of Transfer of Ordinary Shares:</Text>
@@ -363,20 +364,20 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
           <View style={[{ paddingTop: 15 }]}>
             <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Shares transfered:</Text>
             <TextInput
-              value={sharesTransfered}
-              onChangeText={setSharesTransfered}
+              value={nationality}
+              onChangeText={ setNationality}
               style={editMode ? styles.textInputEdit : styles.textInput}
               editable={editMode}>
             </TextInput>
           </View>
           <View style={[{ paddingTop: 15 }]}>
             <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Number of Shares Held (balance):</Text>
-            <TextInput
+            {/* <TextInput
               value={shareBalance}
               onChangeText={setShareBalance}
               style={editMode ? styles.textInputEdit : styles.textInput}
               editable={editMode}>
-            </TextInput>
+            </TextInput> */}
           </View>
           <View style={[{ paddingTop: 15 }]}>
             <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Attach Relevant Documents:</Text>
@@ -418,7 +419,7 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
   );
 };
 
-export default RegisterOfShareHolders;
+export default RegisterOfDirector;
 const pickerStyle = {
 	inputIOS: {
 		color: '#333',
