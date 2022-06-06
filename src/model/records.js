@@ -188,4 +188,4 @@ export const rODInterest = [
       consideration: 'Kind',
       registered_name: 'Lillian N',
       no_of_attachments: '15',
-    }]
+  }]

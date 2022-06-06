@@ -1,11 +1,11 @@
 export default Registers = [
   {
     id: 1,
-    name: 'Register of Shareholders',
+    name: 'Register of Shareholders',// done
   },
   {
     id: 2,
-    name: 'Index of Minutes of Shareholders',
+    name: 'Index of Minutes of Shareholders', //start here...
   },
   {
     id: 3,
