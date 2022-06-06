@@ -4,14 +4,17 @@ import colors from '../../../assets/theme/colors';
 import DocumentPicker from 'react-native-document-picker';
 import { Text } from 'native-base';
 import Icona from "react-native-vector-icons/AntDesign";
-import { mOShareHolders } from '../../../model/records';
+import { rOShareHolders } from '../../../model/records';
 import { Button, Menu, Divider, Provider } from 'react-native-paper';
 import Iconsp from "react-native-vector-icons/SimpleLineIcons";
 // import axios from "axios";
-import { Picker } from '@react-native-picker/picker';
+// import { Picker } from '@react-native-picker/picker';
+import RNPickerSelect from "react-native-picker-select";
 import actuatedNormalize from '../../../helpers/actuatedNormalize';
+import { formatTheDateLabel, defaultDate, formatTheDateText, strtransferDate } from "../../../helpers/helpers";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
-const RegisterOfDirector = ({ route, navigation }) => {
+const RegisterOfShareHolders = ({ route, navigation }) => {
 
   const { entryId, registerId } = route.params ?? {};
 
@@ -21,18 +24,62 @@ const RegisterOfDirector = ({ route, navigation }) => {
   const [record, setRecord] = useState(null)
   const [member, setMember] = useState("")
   const [memberAddress, setMemberAddress] = useState("")
-  const [dateOfEntry, setDateOfEntry] = useState("")
+  const [dateOfEntry, setDateOfEntry] = useState(defaultDate);
+  const [isDateOfEntryPickerVisible, setDateOfEntryPickerVisibility] = useState(false);
   const [certNo, setCertNo] = useState("")
   const [sharesNo, setSharesNo] = useState("")
   const [fromWhom, setFromWhom] = useState("")
   const [amtPaid, setAmtPaid] = useState("")
-  const [dateOfTransfer, setDateOfTransfer] = useState("")
+  const [transferDate, setTransferDate] = useState(defaultDate);
+  const [isTransferDateVisible, setTransferDateVisibility] = useState(false);
   const [toWhom, setToWhom] = useState("")
   const [sharesTransfered, setSharesTransfered] = useState("")
   const [shareBalance, setShareBalance] = useState("")
   const [attachments, setAttachments] = useState([])
   const [visible, setVisible] = useState(false);
-  const [transferType, setTransferType] = useState(null)
+  const [transferType, setTransferType] = useState(null);
+  const [transferFrom, setTransferFrom] = useState(null);
+  const [originalIssue, setOriginalIssue] = useState(null);
+
+  const showTransferDatePicker = () => {
+    setTransferDateVisibility(true);
+  };
+
+  const hideTransferDatePicker = () => {
+    setTransferDateVisibility(false);
+  };
+
+  const handleTransferConfirm = (e) => {
+    hideTransferDatePicker();
+    var date = new Date(e);
+
+    if (isNaN(date.getTime())) {
+      setTransferDate(defaultDate)
+    }
+    else {
+      setTransferDate(date)
+    }
+  };
+
+  const showDateOfEntryPicker = () => {
+    setDateOfEntryPickerVisibility(true);
+  };
+
+  const hideDateOfEntryPicker = () => {
+    setDateOfEntryPickerVisibility(false);
+  };
+
+  const handleDateOfEntryConfirm = (e) => {
+    hideDateOfEntryPicker();
+    var date = new Date(e);
+
+    if (isNaN(date.getTime())) {
+      setDateOfEntry(defaultDate)
+    }
+    else {
+      setDateOfEntry(date)
+    }
+  };
 
   useEffect(() => {
     if (entryId) {
@@ -44,7 +91,6 @@ const RegisterOfDirector = ({ route, navigation }) => {
         navigation.setOptions({
           title: 'Edit Record',
         });
-        alert("Update fields of this record.")
       }
     } else {
       navigation.setOptions({
@@ -55,27 +101,29 @@ const RegisterOfDirector = ({ route, navigation }) => {
 
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
     setLoading(false)
-  }, [editMode, loading]);
+  }, [editMode, loading, transferType]);
 
   const openMenu = () => setVisible(true);
 
   const closeMenu = () => setVisible(false);
 
   const getRecordDetails = () => {
-    var theRecord = RegisterOfDirector.find(x => x.id == entryId);
-    
+    var theRecord = rOShareHolders.find(x => x.id == entryId);
     setRecord(theRecord);
     setMember(theRecord.member);
     setMemberAddress(theRecord.member_address);
-    setDateOfEntry(theRecord.date_of_entry);
+    setDateOfEntry(new Date(theRecord.date_of_entry));
     setCertNo(theRecord.cert_no);
     setSharesNo(theRecord.shares_no);
     setFromWhom(theRecord.from_whom);
     setAmtPaid(theRecord.amount_paid);
-    setDateOfTransfer(theRecord.date_transfered);
+    setTransferDate(new Date(theRecord.date_transfered));
     setToWhom(theRecord.to_whom);
     setSharesTransfered(theRecord.shares_transfered);
     setShareBalance(theRecord.shares_no_ord);
+    setTransferType(theRecord.transfer_type);
+    if (theRecord.transfer_type == "original_issue") {setOriginalIssue(theRecord.original_issue)};
+    if (theRecord.transfer_type == "from_someone") {setTransferFrom(theRecord.from_someone)};
 
     // getAttachments()
 
@@ -152,10 +200,10 @@ const RegisterOfDirector = ({ route, navigation }) => {
         <ScrollView showsVerticalScrollIndicator={false} style={{ padding: 4 }}>
           <View style={{ padding: 4 }}>
             {!entryId ?
-              <Text style={[styles.cardTitleEdit, { paddingTop: 20, textDecorationLine: 'underline' }]}>Minutes of Shareholders</Text>
+              <Text style={[styles.cardTitleEdit, { paddingTop: 20, textDecorationLine: 'underline' }]}>Register of Shareholders</Text>
               :
               <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-                <Text style={[styles.cardTitleEdit, { textDecorationLine: 'underline', paddingTop: 20, }]}>Minutes of Shareholders</Text>
+                <Text style={[styles.cardTitleEdit, { textDecorationLine: 'underline', paddingTop: 20, }]}>Register of Shareholders</Text>
                 {editMode ? null :
 
                   <Provider>
@@ -191,52 +239,95 @@ const RegisterOfDirector = ({ route, navigation }) => {
           </View>
 
           <View style={[{ paddingTop: 15 }]}>
-            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Date of Shareholder Meeting:</Text>
+            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Name of Member (Shareholder):</Text>
             <TextInput
-              value={meetingDate}
-              onChangeText={setMeetingDate}
+              value={member}
+              onChangeText={setMember}
               style={editMode ? styles.textInputEdit : styles.textInput}
               editable={editMode}>
             </TextInput>
           </View>
           <View style={[{ paddingTop: 15 }]}>
-            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>State whether meeting was?:</Text>
+            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Address of Member (Shareholder):</Text>
             <TextInput
-              value={typeOfMeeting}
-              onChangeText={setTypeOfMeeting}
+              value={memberAddress}
+              onChangeText={setMemberAddress}
               style={editMode ? styles.textInputEdit : styles.textInput}
               editable={editMode}>
             </TextInput>
           </View>
           <View style={[{ paddingTop: 15 }]}>
             <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Date of Entry as Member (Shareholder):</Text>
-            <TextInput
-              value={resolutions}
-              onChangeText={setResolutions}
-              style={editMode ? styles.textInputEdit : styles.textInput}
-              editable={editMode}>
-            </TextInput>
+            <TextInput style={editMode ? styles.textInputEdit : styles.textInput}
+              editable={editMode} onFocus={showDateOfEntryPicker} onKeyPress={showDateOfEntryPicker} label="Date of Entry" placeholder="Date of Entry"
+              value={dateOfEntry == '' ? '' : formatTheDateLabel(dateOfEntry)}
+              showSoftInputOnFocus={false} />
+            <DateTimePickerModal
+              isVisible={isDateOfEntryPickerVisible}
+              mode="date"
+              date={dateOfEntry}
+              onConfirm={handleDateOfEntryConfirm}
+              onCancel={hideDateOfEntryPicker}
+            />
           </View>
+          <Text style={[editMode ? styles.cardTitleEdit : styles.cardTitle, { paddingTop: 15 }]}>Shares:</Text>
 
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <View style={[{ flex: 1 }]}>
+              <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Cert No.</Text>
+              <TextInput
+
+                value={certNo}
+                onChangeText={setCertNo}
+                style={editMode ? styles.textInputEdit : styles.textInput}
+                editable={editMode}>
+              </TextInput>
+            </View>
+            <View style={[{ flex: 1 }]}>
+              <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Shares No.</Text>
+              <TextInput
+
+                value={sharesNo}
+                onChangeText={setSharesNo}
+                style={editMode ? styles.textInputEdit : styles.textInput}
+                editable={editMode}>
+              </TextInput>
+            </View>
+          </View>
           <View style={[{ paddingTop: 15 }]}>
             <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>From whom shares were transfered:</Text>
-            {/* <TextInput
-          value={fromWhom}
-          onChangeText={setFromWhom}
+            <View style={editMode ? styles.pickerEdit : styles.picker}>
+            <RNPickerSelect
+              useNativeAndroidPickerStyle={false}
+              placeholder={{ label: "Select Transfer Type", value: null }}
+              onValueChange={(value) => setTransferType(value)}
+              items={[
+                { label: "Allotment / Original Issue", value: "original_issue" },
+                { label: "Transfer from Someone", value: "from_someone" },
+              ]}
+              disabled={!editMode}
+              value={transferType}
+              style={pickerStyle}
+            />
+            </View>
+          <View style={{marginTop: actuatedNormalize(5)}}>
+          {transferType == "original_issue" && 
+            <TextInput
+            placeholder='Allotment / Original Issue'
+            value={`Allotment / Original Issue value: ${originalIssue}`}
+            onChangeText={setOriginalIssue}
+            style={editMode ? styles.textInputEdit : styles.textInput}
+            editable={editMode}>
+          </TextInput>}
+          {transferType == "from_someone" && 
+          <TextInput
+          placeholder='From Someone'
+          value={`From: ${transferFrom}`}
+          onChangeText={setTransferFrom}
           style={editMode ? styles.textInputEdit : styles.textInput}
           editable={editMode}>
-        </TextInput> */}
-            {/* <View style={[styles.action4, { height: actuatedNormalize(50), marginVertical: actuatedNormalize(15), width: '100%', alignSelf: 'center' }]} >
-              <Picker style={{
-                color: transferType === null ? '#A9A9A9' : '#000', height: '100%', width: '90%', fontSize: actuatedNormalize(18), fontWeight: '100',
-                transform: [{ scaleX: 1.12 }, { scaleY: 1.12 }], left: '4%', position: 'absolute',
-              }}
-                onValueChange={(itemValue, itemIndex) => setTransferType(itemValue)} itemStyle={{ fontSize: actuatedNormalize(18) }} >
-                <Picker.Item value={null} label="Select Transfer Type" />
-                <Picker.Item value="original_issue" label="Allotment / Original Issue" />
-                <Picker.Item value="from_someone" label="Transfer from Someone" />
-              </Picker>
-            </View> */}
+        </TextInput>}
+          </View>
           </View>
           <View style={[{ paddingTop: 15 }]}>
             <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Amount Paid thereon in UGX</Text>
@@ -249,12 +340,16 @@ const RegisterOfDirector = ({ route, navigation }) => {
           </View>
           <View style={[{ paddingTop: 15 }]}>
             <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Date of Transfer of Ordinary Shares:</Text>
-            <TextInput
-              value={dateOfTransfer}
-              onChangeText={setDateOfTransfer}
-              style={editMode ? styles.textInputEdit : styles.textInput}
-              editable={editMode}>
-            </TextInput>
+            <TextInput style={editMode ? styles.textInputEdit : styles.textInput} editable={editMode}
+              onFocus={showTransferDatePicker} onKeyPress={showTransferDatePicker} label="Date of Transfer" placeholder="Date of Transfer"
+              value={transferDate == '' ? '' : formatTheDateLabel(transferDate)} />
+            <DateTimePickerModal
+              isVisible={isTransferDateVisible}
+              mode="date"
+              date={transferDate}
+              onConfirm={handleTransferConfirm}
+              onCancel={hideTransferDatePicker}
+            />
           </View>
           <View style={[{ paddingTop: 15 }]}>
             <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>To whom Shares are Transferred:</Text>
@@ -323,8 +418,36 @@ const RegisterOfDirector = ({ route, navigation }) => {
   );
 };
 
-export default RegisterOfDirector;
-
+export default RegisterOfShareHolders;
+const pickerStyle = {
+	inputIOS: {
+		color: '#333',
+		paddingTop: 10,
+		paddingHorizontal: 10,
+		paddingBottom: 10,
+    fontSize: 16,
+	},
+	inputAndroid: {
+		color: '#333',
+    fontSize: 16,
+	},
+	placeholderColor: 'grey',
+	underline: { borderTopWidth: 0 },
+	icon: {
+		position: 'absolute',
+		backgroundColor: 'transparent',
+		borderTopWidth: 5,
+		borderTopColor: '#00000099',
+		borderRightWidth: 5,
+		borderRightColor: 'transparent',
+		borderLeftWidth: 5,
+		borderLeftColor: 'transparent',
+		width: 0,
+		height: 0,
+		top: 20,
+		right: 15,
+	},
+};
 const styles = StyleSheet.create({
   textInputEdit: {
     marginHorizontal: 10,
@@ -345,6 +468,12 @@ const styles = StyleSheet.create({
     borderRadius: 1,
     paddingBottom: 0,
     color: '#333333',
+  },
+  action: {
+    borderBottomColor: "#dedede",
+    borderBottomWidth: 1,
+    fontSize: actuatedNormalize(17),
+    paddingTop: actuatedNormalize(20)
   },
   action4: {
     paddingTop: actuatedNormalize(5),
@@ -368,9 +497,53 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: "space-between"
   },
+  textSign: {
+    fontWeight: 'bold',
+  },
   buttons: {
     paddingVertical: 12,
     borderRadius: 50,
     width: 130,
-  }
+  },
+  inputIOS: {
+    fontSize: 16,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    borderWidth: 1,
+    borderColor: 'green',
+    borderRadius: 8,
+    color: 'black',
+    paddingRight: 30, // to ensure the text is never behind the icon
+  },
+  inputAndroid: {
+    fontSize: 16,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    borderWidth: 1,
+    borderColor: 'blue',
+    borderRadius: 8,
+    color: 'black',
+    paddingRight: 30, // to ensure the text is never behind the icon
+  },
+  pickerEdit: {
+    marginHorizontal: 10,
+    marginVertical: 3,
+    fontSize: 16,
+    borderColor: 'rgba(118,121,116, .3)',
+    borderWidth: .3,
+    borderRadius: 1,
+    paddingLeft: 15,
+    // paddingBottom: 5,
+    marginBottom: 5,
+    color: '#333333'
+  },
+  picker: {
+    marginHorizontal: 10,
+    fontSize: 16,
+    borderColor: 'rgba(118,121,116, .1)',
+    borderBottomWidth: .1,
+    borderRadius: 1,
+    paddingBottom: 0,
+    color: '#333333',
+  },
 });
