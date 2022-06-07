@@ -90,6 +90,7 @@ export const rODirectors = [
     date_resolution_appointment: '2021-04-05',
     office_cessation_date: 'Lillian Namusisi',
     no_of_attachments: '10',
+    amount_paid:'$200',
   },
   {
     id: 2,
@@ -103,6 +104,7 @@ export const rODirectors = [
     date_resolution_appointment: '2022-04-20',
     office_cessation_date: 'Lillian Namusisi',
     no_of_attachments: '8',
+    amount_paid:'$200'
   },
   {
     id: 3,

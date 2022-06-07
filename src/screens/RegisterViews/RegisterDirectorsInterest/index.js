@@ -23,7 +23,7 @@ const RegisterDirectorsInterest = ({ route, navigation }) => {
   const [editMode, setEditMode] = useState(false);
   const [record, setRecord] = useState(null)
   const [director, setDirector] = useState("")
-  const [interestDescription, setInteresDescription] = useState("")
+  const [interestDescription, setInterestDescription] = useState("")
   const [dateOfEntry, setDateOfEntry] = useState(defaultDate);
   const [isDateOfEntryPickerVisible, setDateOfEntryPickerVisibility] = useState(false);
   const [certNo, setCertNo] = useState("")
@@ -111,7 +111,7 @@ const RegisterDirectorsInterest = ({ route, navigation }) => {
     var theRecord =  rODInterest.find(x => x.id == entryId);
     setRecord(theRecord);
     setDirector(theRecord.director);
-    setInteresDescription(theRecord.interest_description);
+    setInterestDescription(theRecord.interest_description);
     setDateOfEntry(new Date(theRecord.date_notified));
     setCertNo(theRecord.director_related_interest);
     setSharesNo(theRecord.remarks);
@@ -200,10 +200,10 @@ const RegisterDirectorsInterest = ({ route, navigation }) => {
         <ScrollView showsVerticalScrollIndicator={false} style={{ padding: 4 }}>
           <View style={{ padding: 4 }}>
             {!entryId ?
-              <Text style={[styles.cardTitleEdit, { paddingTop: 20, textDecorationLine: 'underline' }]}>Register of Shareholders</Text>
+              <Text style={[styles.cardTitleEdit, { paddingTop: 20, textDecorationLine: 'underline' }]}>Register of Director's Interest  </Text>
               :
               <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-                <Text style={[styles.cardTitleEdit, { textDecorationLine: 'underline', paddingTop: 20, }]}>Register of Shareholders</Text>
+                <Text style={[styles.cardTitleEdit, { textDecorationLine: 'underline', paddingTop: 20, }]}>Register of Director's Interest</Text>
                 {editMode ? null :
 
                   <Provider>
@@ -221,7 +221,7 @@ const RegisterDirectorsInterest = ({ route, navigation }) => {
                         anchor={<TouchableOpacity style={{ backgroundColor: '#f5f7fa', paddingHorizontal: 5, paddingVertical: 5, borderRadius: 5 }} onPress={openMenu}>
                           <Iconsp name="options-vertical" size={22} color="#017eff" />
                         </TouchableOpacity>}>
-                        <Menu.Item onPress={() => { closeMenu(); navigation.navigate("ShareHoldersLedger") }} icon="folder-account-outline" title="Shareholders Ledger" />
+                        <Menu.Item onPress={() => { closeMenu(); navigation.navigate("RegisterDirectorInterest") }} icon="folder-account-outline" title="Director Of Interest" />
                         <Divider />
                         <Menu.Item onPress={() => { closeMenu(); setEditMode(true) }} icon="file-document-edit-outline" title="Edit Record" />
                         <Divider />
@@ -250,8 +250,8 @@ const RegisterDirectorsInterest = ({ route, navigation }) => {
           <View style={[{ paddingTop: 15 }]}>
             <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Address of Member (Register Of DirectorInterest):</Text>
             <TextInput
-              value={InteresDescripti}
-              onChangeText={setInteresDescription}
+              value={interestDescription}
+              onChangeText={setInterestDescription}
               style={editMode ? styles.textInputEdit : styles.textInput}
               editable={editMode}>
             </TextInput>

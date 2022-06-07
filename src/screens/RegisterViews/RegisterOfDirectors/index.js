@@ -22,8 +22,8 @@ const RegisterDirectorsInterest = ({ route, navigation }) => {
 
   const [editMode, setEditMode] = useState(false);
   const [record, setRecord] = useState(null)
-  const [member, setMember] = useState("")
-  const [memberAddress, setMemberAddress] = useState("")
+  const [director, setDirector] = useState("")
+  const [directorAddress, setDirectorAddress] = useState("")
   const [dateOfEntry, setDateOfEntry] = useState(defaultDate);
   const [isDateOfEntryPickerVisible, setDateOfEntryPickerVisibility] = useState(false);
   const [certNo, setCertNo] = useState("")
@@ -110,13 +110,14 @@ const RegisterDirectorsInterest = ({ route, navigation }) => {
   const getRecordDetails = () => {
     var theRecord = rODirectors.find(x => x.id == entryId);
     setRecord(theRecord);
-    setMember(theRecord.director);
-    setMemberAddress(theRecord.director_address);
-    setDateOfEntry(new Date(theRecord.nationality));
+    setDirector(theRecord.director);
+    setDirectorAddress(theRecord.director_address);
+    setDateBirth(new Date(theRecord.date_of_birth));
     setCertNo(theRecord.no_of_attachments);
-    setSharesNo(theRecord.office_cessation_date);
+    setNationality(theRecord.nationality);
     setFromWhom(theRecord.no_of_attachments);
-    setAmtPaid(theRecord.date_of_birth);
+    setAttachments(theRecord.no_of_attachments);
+    setAmtPaid(theRecord.amount_paid);
     setTransferDate(new Date(theRecord.resignation_date));
     setToWhom(theRecord.to_whom);
     setSharesTransfered(theRecord.shares_transfered);
@@ -241,8 +242,8 @@ const RegisterDirectorsInterest = ({ route, navigation }) => {
           <View style={[{ paddingTop: 15 }]}>
             <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Name of Member (Register Of Director):</Text>
             <TextInput
-              value={member}
-              onChangeText={setMember}
+              value={director}
+              onChangeText={setDirector}
               style={editMode ? styles.textInputEdit : styles.textInput}
               editable={editMode}>
             </TextInput>
@@ -250,8 +251,8 @@ const RegisterDirectorsInterest = ({ route, navigation }) => {
           <View style={[{ paddingTop: 15 }]}>
             <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Address of Member (Register Of Director ):</Text>
             <TextInput
-              value={memberAddress}
-              onChangeText={setMemberAddress}
+              value={directorAddress}
+              onChangeText={setDirectorAddress}
               style={editMode ? styles.textInputEdit : styles.textInput}
               editable={editMode}>
             </TextInput>
