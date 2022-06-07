@@ -17,6 +17,7 @@ import RegistersList from "../screens/RegistersList";
 import NotFound from "../screens/NotFound";
 import 'react-native-gesture-handler';
 import Director from'../screens/RegisterViews/RegisterOfDirectors';
+import RegisterDirectorInterest from'../screens/RegisterViews/RegisterDirectorsInterest'
 import {
   createMaterialTopTabNavigator
 } from '@react-navigation/material-top-tabs';
@@ -128,6 +129,10 @@ const HomeStackScreen = ({ navigation }) => (
     }} />
     
     <Stack.Screen name="Director" component={Director} options={{
+      title: '...'
+    }} />
+     
+     <Stack.Screen name="RegisterDirectorInterest" component={RegisterDirectorInterest} options={{
       title: '...'
     }} />
 

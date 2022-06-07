@@ -4,7 +4,7 @@ import colors from '../../../assets/theme/colors';
 import DocumentPicker from 'react-native-document-picker';
 import { Text } from 'native-base';
 import Icona from "react-native-vector-icons/AntDesign";
-import { rOShareHolders } from '../../../model/records';
+import {  rODInterest } from '../../../model/records';
 import { Button, Menu, Divider, Provider } from 'react-native-paper';
 import Iconsp from "react-native-vector-icons/SimpleLineIcons";
 // import axios from "axios";
@@ -22,8 +22,8 @@ const RegisterDirectorsInterest = ({ route, navigation }) => {
 
   const [editMode, setEditMode] = useState(false);
   const [record, setRecord] = useState(null)
-  const [member, setMember] = useState("")
-  const [memberAddress, setMemberAddress] = useState("")
+  const [director, setDirector] = useState("")
+  const [interestDescription, setInteresDescription] = useState("")
   const [dateOfEntry, setDateOfEntry] = useState(defaultDate);
   const [isDateOfEntryPickerVisible, setDateOfEntryPickerVisibility] = useState(false);
   const [certNo, setCertNo] = useState("")
@@ -108,19 +108,19 @@ const RegisterDirectorsInterest = ({ route, navigation }) => {
   const closeMenu = () => setVisible(false);
 
   const getRecordDetails = () => {
-    var theRecord = rOShareHolders.find(x => x.id == entryId);
+    var theRecord =  rODInterest.find(x => x.id == entryId);
     setRecord(theRecord);
-    setMember(theRecord.member);
-    setMemberAddress(theRecord.member_address);
-    setDateOfEntry(new Date(theRecord.date_of_entry));
-    setCertNo(theRecord.cert_no);
-    setSharesNo(theRecord.shares_no);
-    setFromWhom(theRecord.from_whom);
+    setDirector(theRecord.director);
+    setInteresDescription(theRecord.interest_description);
+    setDateOfEntry(new Date(theRecord.date_notified));
+    setCertNo(theRecord.director_related_interest);
+    setSharesNo(theRecord.remarks);
+    setFromWhom(theRecord.no_of_attachments);
     setAmtPaid(theRecord.amount_paid);
     setTransferDate(new Date(theRecord.date_transfered));
     setToWhom(theRecord.to_whom);
     setSharesTransfered(theRecord.shares_transfered);
-    setShareBalance(theRecord.shares_no_ord);
+    setShareBalance(theRecord.shares_no_ordss);
     setTransferType(theRecord.transfer_type);
     if (theRecord.transfer_type == "original_issue") {setOriginalIssue(theRecord.original_issue)};
     if (theRecord.transfer_type == "from_someone") {setTransferFrom(theRecord.from_someone)};
@@ -188,7 +188,7 @@ const RegisterDirectorsInterest = ({ route, navigation }) => {
 
     // alert('Saved!'); navigation.navigate('Home')
     Alert.alert("Saved!", "Proceed to add ledger?", [
-      { text: 'Add Ledger', onPress: () => { navigation.navigate("ShareHoldersLedger") } },
+      { text: 'Add Ledger', onPress: () => { navigation.navigate("RegisterDirectorInterest") } },
       { text: 'Cancel', onPress: () => { navigation.navigate('Home') } }])
   }
 
@@ -239,25 +239,25 @@ const RegisterDirectorsInterest = ({ route, navigation }) => {
           </View>
 
           <View style={[{ paddingTop: 15 }]}>
-            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Name of Member (Shareholder):</Text>
+            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Name of Member (Register Of DirectorInterest):</Text>
             <TextInput
-              value={member}
-              onChangeText={setMember}
+              value={director}
+              onChangeText={setDirector}
               style={editMode ? styles.textInputEdit : styles.textInput}
               editable={editMode}>
             </TextInput>
           </View>
           <View style={[{ paddingTop: 15 }]}>
-            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Address of Member (Shareholder):</Text>
+            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Address of Member (Register Of DirectorInterest):</Text>
             <TextInput
-              value={memberAddress}
-              onChangeText={setMemberAddress}
+              value={InteresDescripti}
+              onChangeText={setInteresDescription}
               style={editMode ? styles.textInputEdit : styles.textInput}
               editable={editMode}>
             </TextInput>
           </View>
           <View style={[{ paddingTop: 15 }]}>
-            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Date of Entry as Member (Shareholder):</Text>
+            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Date of Entry as Member (Register of DirectorInterest):</Text>
             <TextInput style={editMode ? styles.textInputEdit : styles.textInput}
               editable={editMode} onFocus={showDateOfEntryPicker} onKeyPress={showDateOfEntryPicker} label="Date of Entry" placeholder="Date of Entry"
               value={dateOfEntry == '' ? '' : formatTheDateLabel(dateOfEntry)}
