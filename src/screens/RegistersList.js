@@ -29,7 +29,7 @@ const RegistersList = ({ navigation }) => {
         break;
       case "Register of Directors":
         // navigation.navigate('RegisterOfShareHolders');
-        navigation.navigate('NotFound');
+        navigation.navigate('Director');
         break;
       case "Register of Directors Interest":
         // navigation.navigate('RegisterOfShareHolders');

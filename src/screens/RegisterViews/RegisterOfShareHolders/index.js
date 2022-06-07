@@ -83,7 +83,7 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
 
   useEffect(() => {
     if (entryId) {
-      navigation.setOptions({
+      navigation.setOptionss({
         title: 'View Record',
       });
       getRecordDetails();

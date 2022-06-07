@@ -43,7 +43,7 @@ const RegisterScreen = ({ route, navigation, props }) => {
         break;
       case "Register of Directors":
         setData(rODirectors);
-        setRegisterRoute('NotFound');
+        setRegisterRoute('Director');
         break;
       case "Register of Directors Interest":
         setData(rODInterest);
