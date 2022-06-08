@@ -4,7 +4,7 @@ import colors from '../../../assets/theme/colors';
 import DocumentPicker from 'react-native-document-picker';
 import { Text } from 'native-base';
 import Icona from "react-native-vector-icons/AntDesign";
-import {  rODInterest } from '../../../model/records';
+import {   rODirectorsSHg } from '../../../model/records';
 import { Button, Menu, Divider, Provider } from 'react-native-paper';
 import Iconsp from "react-native-vector-icons/SimpleLineIcons";
 // import axios from "axios";
@@ -14,7 +14,7 @@ import actuatedNormalize from '../../../helpers/actuatedNormalize';
 import { formatTheDateLabel, defaultDate, formatTheDateText, strtransferDate } from "../../../helpers/helpers";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
-const RegisterDirectorsInterest = ({ route, navigation }) => {
+const DirectorShareHolderParticular = ({ route, navigation }) => {
 
   const { entryId, registerId } = route.params ?? {};
 
@@ -108,13 +108,13 @@ const RegisterDirectorsInterest = ({ route, navigation }) => {
   const closeMenu = () => setVisible(false);
 
   const getRecordDetails = () => {
-    var theRecord =  rODInterest.find(x => x.id == entryId);
+    var theRecord =   rODirectorsSHg.find(x => x.id == entryId);
     setRecord(theRecord);
     setDirector(theRecord.director);
-    setInterestDescription(theRecord.interest_description);
-    setDateOfEntry(new Date(theRecord.date_notified));
-    setCertNo(theRecord.director_related_interest);
-    setSharesNo(theRecord.remarks);
+    setInterestDescription(theRecord.consideration);
+    setDateOfEntry(new Date(theRecord.date_of_entry));
+    setCertNo(theRecord.registered_name);
+    setSharesNo(theRecord.nature);
     setFromWhom(theRecord.no_of_attachments);
     setAmtPaid(theRecord.amount_paid);
     setTransferDate(new Date(theRecord.date_transfered));
@@ -221,7 +221,7 @@ const RegisterDirectorsInterest = ({ route, navigation }) => {
                         anchor={<TouchableOpacity style={{ backgroundColor: '#f5f7fa', paddingHorizontal: 5, paddingVertical: 5, borderRadius: 5 }} onPress={openMenu}>
                           <Iconsp name="options-vertical" size={22} color="#017eff" />
                         </TouchableOpacity>}>
-                        <Menu.Item onPress={() => { closeMenu(); navigation.navigate("RegisterDirectorInterest") }} icon="folder-account-outline" title="Director Of Interest" />
+                        <Menu.Item onPress={() => { closeMenu(); navigation.navigate("DirectorShareHolderParticular") }} icon="folder-account-outline" title="Director Of Interest" />
                         <Divider />
                         <Menu.Item onPress={() => { closeMenu(); setEditMode(true) }} icon="file-document-edit-outline" title="Edit Record" />
                         <Divider />
@@ -418,7 +418,7 @@ const RegisterDirectorsInterest = ({ route, navigation }) => {
   );
 };
 
-export default RegisterDirectorsInterest;
+export default DirectorShareHolderParticular;
 const pickerStyle = {
 	inputIOS: {
 		color: '#333',

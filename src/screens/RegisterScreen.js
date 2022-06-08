@@ -51,7 +51,7 @@ const RegisterScreen = ({ route, navigation, props }) => {
         break;
       case "Directors Shareholding & Related Particulars":
         setData(rODirectorsSHg);
-        setRegisterRoute('NotFound');
+        setRegisterRoute('DirectorShareHolderParticular');
         break;
       default:
         setData(null);

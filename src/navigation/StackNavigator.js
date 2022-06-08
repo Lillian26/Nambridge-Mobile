@@ -19,7 +19,7 @@ import 'react-native-gesture-handler';
 import Director from'../screens/RegisterViews/RegisterOfDirectors';
 import RegisterDirectorInterest from'../screens/RegisterViews/RegisterDirectorsInterest'
 import MinutesOfshareholder from '../screens/RegisterViews/ShareHoldersLedger/index';
-
+ import DirectorShareHolderParticular from'../screens/RegisterViews/DirectorShareRelated/index';
 import {
   createMaterialTopTabNavigator
 } from '@react-navigation/material-top-tabs';
@@ -111,6 +111,7 @@ const HomeStackScreen = ({ navigation }) => (
         //   <Iconb.Button name="chatbubbles-outline" size={22} backgroundColor="#0165ff"
         //     onPress={() => {}} />
         // ) 
+
       }}
     />
 
@@ -131,6 +132,9 @@ const HomeStackScreen = ({ navigation }) => (
     }} />
     
     <Stack.Screen name="Director" component={Director} options={{
+      title: '...'
+    }} />
+       <Stack.Screen name="DirectorShareHolderParticular" component={DirectorShareHolderParticular} options={{
       title: '...'
     }} />
      

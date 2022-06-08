@@ -37,7 +37,7 @@ const RegistersList = ({ navigation }) => {
         break;
       case "Directors Shareholding & Related Particulars":
         // navigation.navigate('RegisterOfShareHolders');
-        navigation.navigate('NotFound');
+        navigation.navigate('DirectorShareHolderParticular');
         break;
       default:
         navigation.navigate('NotFound');
