@@ -19,7 +19,7 @@ import 'react-native-gesture-handler';
 import Director from'../screens/RegisterViews/RegisterOfDirectors';
 import RegisterDirectorInterest from'../screens/RegisterViews/RegisterDirectorsInterest'
 import MinutesOfshareholder from '../screens/RegisterViews/ShareHoldersLedger/index';
- import DirectorShareHolderParticular from'../screens/RegisterViews/DirectorShareRelated/index';
+ import DirectorShareHolderParticular from'../screens/RegisterViews/DirectorShareParticular/index';
 import {
   createMaterialTopTabNavigator
 } from '@react-navigation/material-top-tabs';

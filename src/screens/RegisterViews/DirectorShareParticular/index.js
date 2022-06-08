@@ -200,7 +200,7 @@ const DirectorShareHolderParticular = ({ route, navigation }) => {
         <ScrollView showsVerticalScrollIndicator={false} style={{ padding: 4 }}>
           <View style={{ padding: 4 }}>
             {!entryId ?
-              <Text style={[styles.cardTitleEdit, { paddingTop: 20, textDecorationLine: 'underline' }]}>Register of Director's Interest  </Text>
+              <Text style={[styles.cardTitleEdit, { paddingTop: 20, textDecorationLine: 'underline',color:'blue' }]}>Register Of Directors shareholding & Related Particular </Text>
               :
               <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
                 <Text style={[styles.cardTitleEdit, { textDecorationLine: 'underline', paddingTop: 20, }]}>Register of Director's Interest</Text>
@@ -221,7 +221,7 @@ const DirectorShareHolderParticular = ({ route, navigation }) => {
                         anchor={<TouchableOpacity style={{ backgroundColor: '#f5f7fa', paddingHorizontal: 5, paddingVertical: 5, borderRadius: 5 }} onPress={openMenu}>
                           <Iconsp name="options-vertical" size={22} color="#017eff" />
                         </TouchableOpacity>}>
-                        <Menu.Item onPress={() => { closeMenu(); navigation.navigate("DirectorShareHolderParticular") }} icon="folder-account-outline" title="Director Of Interest" />
+                        <Menu.Item onPress={() => { closeMenu(); navigation.navigate("DirectorShareHolderParticular") }} icon="folder-account-outline" title="Register Of Directors shareholding & Related Particular" />
                         <Divider />
                         <Menu.Item onPress={() => { closeMenu(); setEditMode(true) }} icon="file-document-edit-outline" title="Edit Record" />
                         <Divider />
@@ -239,7 +239,7 @@ const DirectorShareHolderParticular = ({ route, navigation }) => {
           </View>
 
           <View style={[{ paddingTop: 15 }]}>
-            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Name of Member (Register Of DirectorInterest):</Text>
+            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Name of Member (Register Of Directors shareholding & Related Particular):</Text>
             <TextInput
               value={director}
               onChangeText={setDirector}
@@ -248,7 +248,7 @@ const DirectorShareHolderParticular = ({ route, navigation }) => {
             </TextInput>
           </View>
           <View style={[{ paddingTop: 15 }]}>
-            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Address of Member (Register Of DirectorInterest):</Text>
+            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Address of Member (Register Of Directors shareholding & Related Particular):</Text>
             <TextInput
               value={interestDescription}
               onChangeText={setInterestDescription}
@@ -257,7 +257,7 @@ const DirectorShareHolderParticular = ({ route, navigation }) => {
             </TextInput>
           </View>
           <View style={[{ paddingTop: 15 }]}>
-            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Date of Entry as Member (Register of DirectorInterest):</Text>
+            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Date of Entry as Member (Register Of Directors shareholding & Related Particular):</Text>
             <TextInput style={editMode ? styles.textInputEdit : styles.textInput}
               editable={editMode} onFocus={showDateOfEntryPicker} onKeyPress={showDateOfEntryPicker} label="Date of Entry" placeholder="Date of Entry"
               value={dateOfEntry == '' ? '' : formatTheDateLabel(dateOfEntry)}
