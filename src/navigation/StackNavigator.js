@@ -20,6 +20,7 @@ import Director from'../screens/RegisterViews/RegisterOfDirectors';
 import RegisterDirectorInterest from'../screens/RegisterViews/RegisterDirectorsInterest'
 import MinutesOfshareholder from '../screens/RegisterViews/ShareHoldersLedger/index';
  import DirectorShareHolderParticular from'../screens/RegisterViews/DirectorShareParticular/index';
+ import MinutesOfDirectors from '../screens/RegisterViews/MinutesOfDrectors/index'
 import {
   createMaterialTopTabNavigator
 } from '@react-navigation/material-top-tabs';
@@ -139,6 +140,9 @@ const HomeStackScreen = ({ navigation }) => (
     }} />
      
      <Stack.Screen name="RegisterDirectorInterest" component={RegisterDirectorInterest} options={{
+      title: '...'
+    }} />
+    <Stack.Screen name=" MinutesOfDirectors" component={ MinutesOfDirectors} options={{
       title: '...'
     }} />
 

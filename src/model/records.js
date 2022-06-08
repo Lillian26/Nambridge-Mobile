@@ -190,4 +190,21 @@ export const rODInterest = [
       consideration: 'Kind',
       registered_name: 'Lillian N',
       no_of_attachments: '15',
-    }]
+    },
+  
+  
+  
+  
+  ]
+  export const  mDirectors =[{
+    id:1,
+    date_of_booard_meeting:'2020-09-20',
+    state_whether_meeting_was:'Yes',
+    summary_of_key_resolutions:'Accounting for all activities',
+    date_on_which_resoltion_extracted:'20_09_2021',
+    location_of_the_orgin_issue:'kampala',
+   attachments_relevant_documment:'15',
+   document_type:'budget',
+
+
+  }]

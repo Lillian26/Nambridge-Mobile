@@ -53,6 +53,11 @@ const RegisterScreen = ({ route, navigation, props }) => {
         setData(rODirectorsSHg);
         setRegisterRoute('DirectorShareHolderParticular');
         break;
+        case "MinutesOfDirectors":
+           setData(mDirector);
+           setRegisterRoute('MinutesOfDirectors');
+           
+          break;
       default:
         setData(null);
         setRegisterRoute('NotFound');
@@ -91,6 +96,12 @@ const RegisterScreen = ({ route, navigation, props }) => {
               onOpen={() => navigation.navigate(registerRoute, { entryId: item.id, registerId: registerId })}
             />)
       case "Directors Shareholding & Related Particulars":
+        return(
+          <RODirectorsSHg
+              item={item}
+              onOpen={() => navigation.navigate(registerRoute, { entryId: item.id, registerId: registerId })}
+            />)
+            case "MinutesOfDirectors":
         return(
           <RODirectorsSHg
               item={item}
