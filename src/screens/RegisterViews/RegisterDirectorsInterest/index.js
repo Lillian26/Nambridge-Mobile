@@ -244,7 +244,7 @@ const RegisterDirectorsInterest = ({ route, navigation }) => {
               value={director}
               onChangeText={setDirector}
               style={editMode ? styles.textInputEdit : styles.textInput}
-              editable={editMode}>
+              editable={editMode}>v
             </TextInput>
           </View>
           <View style={[{ paddingTop: 15 }]}>

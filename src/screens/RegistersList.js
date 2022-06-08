@@ -25,7 +25,7 @@ const RegistersList = ({ navigation }) => {
         break;
       case "Index of Minutes of Shareholders":
         // navigation.navigate('RegisterOfShareHolders');
-        navigation.navigate('ShareHoldersLedger');
+        navigation.navigate('MinutesOfshareholder');
         break;
       case "Register of Directors":
         // navigation.navigate('RegisterOfShareHolders');

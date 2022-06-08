@@ -39,7 +39,7 @@ const RegisterScreen = ({ route, navigation, props }) => {
         break;
       case "Index of Minutes of Shareholders":
         setData(mOShareHolders);
-        setRegisterRoute('NotFound');
+        setRegisterRoute('MinutesOfshareholder');
         break;
       case "Register of Directors":
         setData(rODirectors);

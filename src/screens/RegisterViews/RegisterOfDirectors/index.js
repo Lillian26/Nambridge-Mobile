@@ -14,7 +14,7 @@ import actuatedNormalize from '../../../helpers/actuatedNormalize';
 import { formatTheDateLabel, defaultDate, formatTheDateText, strtransferDate } from "../../../helpers/helpers";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
-const RegisterDirectorsInterest = ({ route, navigation }) => {
+const RegisterOfDirectors = ({ route, navigation }) => {
 
   const { entryId, registerId } = route.params ?? {};
 
@@ -419,7 +419,7 @@ const RegisterDirectorsInterest = ({ route, navigation }) => {
   );
 };
 
-export default RegisterDirectorsInterest;
+export default RegisterOfDirectors ;
 const pickerStyle = {
 	inputIOS: {
 		color: '#333',

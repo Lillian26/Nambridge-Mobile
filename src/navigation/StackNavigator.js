@@ -18,6 +18,8 @@ import NotFound from "../screens/NotFound";
 import 'react-native-gesture-handler';
 import Director from'../screens/RegisterViews/RegisterOfDirectors';
 import RegisterDirectorInterest from'../screens/RegisterViews/RegisterDirectorsInterest'
+import MinutesOfshareholder from '../screens/RegisterViews/ShareHoldersLedger/index';
+
 import {
   createMaterialTopTabNavigator
 } from '@react-navigation/material-top-tabs';
@@ -136,7 +138,8 @@ const HomeStackScreen = ({ navigation }) => (
       title: '...'
     }} />
 
-    <Stack.Screen name="ShareHoldersLedger" component={ShareHoldersLedger} options={{
+
+    <Stack.Screen name="MinutesOfshareholder" component={MinutesOfshareholder} options={{
       title: 'ShareHolders Ledger',
       headerRight: () => (
         <Iconm.Button name="folder-plus-outline" size={28} backgroundColor="#0165ff"
