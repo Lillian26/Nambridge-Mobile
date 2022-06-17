@@ -53,7 +53,7 @@ const RegistersList = ({ navigation }) => {
 
   return (
     <>
-      <StatusBar backgroundColor='#f1f3f2' barStyle="dark-content" />
+      <StatusBar backgroundColor='#4d505b' barStyle="light-content" />
       <View
         style={[styles.footer, {
         }]}

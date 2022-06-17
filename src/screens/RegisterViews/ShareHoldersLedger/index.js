@@ -35,7 +35,7 @@ const ShareHoldersLedger = ({ route, navigation, props }) => {
   
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor='#ffffff' barStyle="dark-content" />
+      <StatusBar backgroundColor='#4d505b' barStyle="light-content" />
       {loading ?
         <ActivityIndicator animating={loading} color="#268d9c" />
         :
