@@ -4,6 +4,25 @@ import { Card, Divider } from 'react-native-elements';
 import colors from '../assets/theme/colors';
 import actuatedNormalize from '../helpers/actuatedNormalize';
 
+const next = (onOpen, theStyles = {
+  marginTop: 15, flex: 1, shadowColor: '#000',
+  shadowOffset: {
+    width: 0,
+    height: 1,
+  },
+  shadowOpacity: 0.22,
+  shadowRadius: 2.22,
+  elevation: 3,
+  backgroundColor: '#fff', borderRadius: 10, padding: 5, alignItems: 'center'
+}) => {
+  return (
+    <TouchableOpacity style={theStyles}
+      onPress={() => onOpen()}>
+      <Text style={styles.link}>{'View Record'}</Text>
+    </TouchableOpacity>
+  )
+}
+
 const ROShareHoldersCard = (props) => {
 
   const { item, onOpen } = props
@@ -43,21 +62,7 @@ const ROShareHoldersCard = (props) => {
         <Text style={[styles.labelView, styles.sector]}>To Whom Ordinary: {item.to_whom}</Text>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingTop: 5 }}>
           <Text style={[styles.labelView, { flex: 2 }]}>Shares Transfered: {item.shares_transfered}</Text>
-
-          <TouchableOpacity style={{
-            marginTop: 15, flex: 1, shadowColor: '#000',
-            shadowOffset: {
-              width: 0,
-              height: 1,
-            },
-            shadowOpacity: 0.22,
-            shadowRadius: 2.22,
-            elevation: 3,
-            backgroundColor: '#fff', borderRadius: 10, padding: 5, alignItems: 'center'
-          }}
-            onPress={() => onOpen()}>
-            <Text style={styles.link}>{'View Record'}</Text>
-          </TouchableOpacity>
+          {next(onOpen)}
         </View>
       </View>
 
@@ -101,10 +106,8 @@ const MOShareHoldersCard = (props) => {
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingTop: 6 }}>
           <Text style={[styles.labelView]}>{item.location_of_registration}</Text>
 
-          <TouchableOpacity style={styles.viewBtn}
-            onPress={() => onOpen()}>
-            <Text style={styles.link}>{'View Record'}</Text>
-          </TouchableOpacity>
+          {next(onOpen, styles.viewBtn)}
+
         </View>
       </View>
 
@@ -158,20 +161,8 @@ const RODirectorsCard = (props) => {
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingTop: 5 }}>
           <Text style={[styles.labelView, { flex: 2 }]}>Documents: {item.no_of_attachments}</Text>
 
-          <TouchableOpacity style={{
-            marginTop: 15, flex: 1, shadowColor: '#000',
-            shadowOffset: {
-              width: 0,
-              height: 1,
-            },
-            shadowOpacity: 0.22,
-            shadowRadius: 2.22,
-            elevation: 3,
-            backgroundColor: '#fff', borderRadius: 10, padding: 5, alignItems: 'center'
-          }}
-            onPress={() => onOpen()}>
-            <Text style={styles.link}>{'View Record'}</Text>
-          </TouchableOpacity>
+          {next(onOpen)}
+
         </View>
       </View>
 
@@ -199,20 +190,8 @@ const RODInterestCard = (props) => {
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingTop: 5 }}>
           <Text style={[styles.labelView, { flex: 2 }]}>Documents: {item.no_of_attachments}</Text>
 
-          <TouchableOpacity style={{
-            marginTop: 15, flex: 1, shadowColor: '#000',
-            shadowOffset: {
-              width: 0,
-              height: 1,
-            },
-            shadowOpacity: 0.22,
-            shadowRadius: 2.22,
-            elevation: 3,
-            backgroundColor: '#fff', borderRadius: 10, padding: 5, alignItems: 'center'
-          }}
-            onPress={() => onOpen()}>
-            <Text style={styles.link}>{'View Record'}</Text>
-          </TouchableOpacity>
+          {next(onOpen)}
+
         </View>
       </View>
 
@@ -221,7 +200,7 @@ const RODInterestCard = (props) => {
 
   );
 }
-const RODirectorsSHg = (props) => {
+const RODirectorsSHgCard = (props) => {
 
   const { item, onOpen } = props
 
@@ -229,7 +208,7 @@ const RODirectorsSHg = (props) => {
 
     <View >
       <View style={styles.container}>
-      <View style={[styles.sector, { flexDirection: 'row' }]}>
+        <View style={[styles.sector, { flexDirection: 'row' }]}>
           <Text style={[styles.labelView]}>{`Director: `}</Text>
           <Text style={[styles.labelView, { fontWeight: 'bold' }]}>{`${item.director}`}</Text>
         </View>
@@ -257,20 +236,8 @@ const RODirectorsSHg = (props) => {
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingTop: 5 }}>
           <Text style={[styles.labelView, { flex: 2 }]}>Documents: {item.no_of_attachments}</Text>
 
-          <TouchableOpacity style={{
-            marginTop: 15, flex: 1, shadowColor: '#000',
-            shadowOffset: {
-              width: 0,
-              height: 1,
-            },
-            shadowOpacity: 0.22,
-            shadowRadius: 2.22,
-            elevation: 3,
-            backgroundColor: '#fff', borderRadius: 10, padding: 5, alignItems: 'center'
-          }}
-            onPress={() => onOpen()}>
-            <Text style={styles.link}>{'View Record'}</Text>
-          </TouchableOpacity>
+          {next(onOpen)}
+
         </View>
       </View>
 
@@ -279,7 +246,259 @@ const RODirectorsSHg = (props) => {
 
   );
 }
-export { MOShareHoldersCard, ROShareHoldersCard, RODirectorsCard, RODInterestCard, RODirectorsSHg };
+const MODirectorsCard = (props) => {
+
+  const { item, onOpen } = props
+
+  return (
+
+    <View >
+      <View style={styles.container}>
+        <View style={[styles.titleView, { alignSelf: 'center', width: actuatedNormalize(80) }]}>
+          <Text style={[styles.labelView, { fontWeight: 'bold' }]}>{`${item.date_of_board_meeting}`}</Text>
+        </View>
+
+        <View style={[styles.sector, { flexDirection: 'row' }]}>
+          <Text style={[styles.labelView]}>{` Meeting was `}</Text>
+          <Text style={[styles.labelView]}>{`${item.venue_type}.`}</Text>
+        </View>
+
+        <View style={styles.sector}>
+          <Text style={[styles.labelView]}>Resolution Extracted Date: {item.resolution_extracted_date}</Text>
+        </View>
+
+        <View style={styles.sector}>
+          <Text style={styles.labelView}>Resolution Registration Date: {item.resolution_registration_date}</Text>
+        </View>
+        <View style={{ paddingVertical: 6 }}>
+          <Text style={styles.labelView}>Location of the Original Resolution: {item.location_of_the_orgin_issue}</Text>
+        </View>
+
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingTop: 5 }}>
+          <Text style={[styles.labelView, { flex: 2 }]}>Documents: {item.no_of_attachments}</Text>
+
+          {next(onOpen, styles.viewBtn)}
+        </View>
+      </View>
+
+      <Divider style={{ backgroundColor: '#808B96', marginVertical: 1 }} />
+    </View>
+
+  );
+}
+const ROSecretatriesCard = (props) => {
+
+  const { item, onOpen } = props
+
+  return (
+
+    <View >
+      <View style={styles.container}>
+        <View style={[{ flexDirection: 'row' }, styles.sector]}>
+          <Text style={[styles.labelView]}>{`Name of Secretary: `}</Text>
+          <Text style={[styles.labelView, { fontWeight: 'bold' }]}>{`${item.secretary}`}</Text>
+        </View>
+        <View style={[{ flexDirection: 'row' }, styles.sector]}>
+          <Text style={[styles.labelView]}>Address:</Text>
+          <Text style={[styles.labelView]}> {item.secretary_address}</Text>
+        </View>
+        <View style={[{ flexDirection: 'row' }, styles.sector]}>
+          <Text style={styles.labelView}>Office Held: {item.office_held}</Text>
+        </View>
+        <View style={[{ flexDirection: 'row' }, styles.sector]}>
+          <Text style={styles.labelView}>Appointment Effective Date: {item.appointment_date}</Text>
+        </View>
+        <View style={[{ flexDirection: 'row' }, styles.sector]}>
+          <Text style={styles.labelView}>Notification of Appointment: {item.appointment_date}</Text>
+        </View>
+        <View style={[{ flexDirection: 'row' }, styles.sector]}>
+          <Text style={styles.labelView}>Resignation Effective Date: {item.resignation_date}</Text>
+        </View>
+        <View style={[{ flexDirection: 'row' }, styles.sector]}>
+          <Text style={styles.labelView}> Notification of Resignation: {item.date_notificatn_resignation}</Text>
+        </View>
+
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingTop: 5 }}>
+          <Text style={[styles.labelView, { flex: 2 }]}>Documents: {item.no_of_attachments}</Text>
+
+          {next(onOpen)}
+
+        </View>
+      </View>
+
+      <Divider style={{ backgroundColor: '#808B96', marginVertical: 1 }} />
+    </View>
+
+  );
+}
+const ROMortgagesCard = (props) => {
+
+  const { item, onOpen } = props
+
+  return (
+
+    <View >
+      <View style={styles.container}>
+        <View style={[styles.sector, { flexDirection: 'row' }]}>
+          <Text style={[styles.labelView]}>{`Chargor / Mortgagor: `}</Text>
+          <Text style={[styles.labelView, { fontWeight: 'bold' }]}>{`${item.chargor}`}</Text>
+        </View>
+        <View style={[{ flexDirection: 'row' }, styles.sector]}>
+          <Text style={styles.labelView}>Date of Creation: {item.creation_date}</Text>
+        </View>
+        <View style={[{ flexDirection: 'row' }, styles.sector]}>
+          <Text style={[styles.labelView]}>Address of Charger:</Text>
+          <Text style={[styles.labelView]}> {item.chargor_address}</Text>
+        </View>
+        <View style={[{ flexDirection: 'row' }, styles.sector]}>
+          <Text style={styles.labelView}>Date of Discharge of Property: {item.property_discharge_date}</Text>
+        </View>
+
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingTop: 5 }}>
+          <Text style={[styles.labelView, { flex: 2 }]}>Documents: {item.no_of_attachments}</Text>
+
+          {next(onOpen)}
+
+        </View>
+      </View>
+
+      <Divider style={{ backgroundColor: '#808B96', marginVertical: 1 }} />
+    </View>
+
+  );
+}
+const CoSealRegisterCard = (props) => {
+
+  const { item, onOpen } = props
+
+  return (
+
+    <View >
+      <View style={styles.container}>
+
+        <View style={[styles.sector, { flexDirection: 'row' }]}>
+          <Text style={[styles.labelView]}>{` Date when the Seal was affixed: `}</Text>
+          <Text style={[styles.labelView]}>{`${item.seal_affixation_date}`}</Text>
+        </View>
+
+        <View style={styles.sector}>
+          <Text style={[styles.labelView]}>Particulars of Parties: {item.parties_particulars}</Text>
+        </View>
+
+        <View style={{ paddingVertical: 6 }}>
+          <Text style={styles.labelView}>Location of Executed Documents: {item.executed_doc_location}</Text>
+        </View>
+
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingTop: 5 }}>
+          <Text style={[styles.labelView, { flex: 2 }]}>Documents: {item.no_of_attachments}</Text>
+
+          {next(onOpen)}
+
+        </View>
+      </View>
+
+      <Divider style={{ backgroundColor: '#808B96', marginVertical: 1 }} />
+    </View>
+
+  );
+}
+const RODebenturesCard = (props) => {
+
+  const { item, onOpen } = props
+
+  return (
+
+    <View >
+      <View style={styles.container}>
+          <View style={[{ flexDirection: 'row' }, styles.sector]}>
+            <Text style={[styles.labelView]}>{`Number of Debenture (Series): ${item.debenture_no}`}</Text>
+          </View>
+        <View style={[{ flexDirection: 'row' }, styles.sector]}>
+          <Text style={styles.labelView}>Date of Debenture (Series): {item.date_of_debenture}</Text>
+        </View>
+        <View style={[{ flexDirection: 'row' }, styles.sector]}>
+          <Text style={styles.labelView}>Date of Resolutions Authorizing the Issue of Debentures: {item.debenture_authorization_date}</Text>
+        </View>
+        <View style={[{ flexDirection: 'row' }, styles.sector]}>
+          <Text style={[styles.labelView]}>Amount Secured:</Text>
+          <Text style={[styles.labelView]}> {item.amount_secured}</Text>
+        </View>
+        <View style={[{ flexDirection: 'row' }, styles.sector]}>
+          <Text style={styles.labelView}>Name of Debenture Holder: {item.debenture_holder}</Text>
+        </View>
+        <View style={[{ flexDirection: 'row' }, styles.sector]}>
+          <Text style={styles.labelView}>Address of Debenture Holder: {item.debenture_holder_address}</Text>
+        </View>
+        <View style={[{ flexDirection: 'row' }, styles.sector]}>
+          <Text style={styles.labelView}>Rate of Interest per Annum: {item.yearly_interest_rate}</Text>
+        </View>
+        <View style={[{ flexDirection: 'row' }, styles.sector]}>
+          <Text style={styles.labelView}>Interest per annum: {item.yearly_interest}</Text>
+        </View>
+        <View style={[{ flexDirection: 'row' }, styles.sector]}>
+          <Text style={styles.labelView}>Date of Interest Becoming Due: {item.date_interest_becoming_due}</Text>
+        </View>
+        <View style={[{ flexDirection: 'row' }, styles.sector]}>
+          <Text style={styles.labelView}>Date of Redemption: {item.redemption_date}</Text>
+        </View>
+
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingTop: 5 }}>
+          <Text style={[styles.labelView, { flex: 2 }]}>Documents: {item.no_of_attachments}</Text>
+
+          {next(onOpen)}
+
+        </View>
+      </View>
+
+      <Divider style={{ backgroundColor: '#808B96', marginVertical: 1 }} />
+    </View>
+
+  );
+}
+const ROBranchesCard = (props) => {
+
+  const { item, onOpen } = props
+
+  return (
+
+    <View >
+      <View style={styles.container}>
+          <View style={[{ flexDirection: 'row' }, styles.sector]}>
+            <Text style={[styles.labelView]}>{`Name of Member: `}</Text>
+            <Text style={[styles.labelView, { fontWeight: 'bold' }]}>{`${item.member}`}</Text>
+          </View>
+        <View style={[{ flexDirection: 'row' }, styles.sector]}>
+          <Text style={[styles.labelView]}>Address:</Text>
+          <Text style={[styles.labelView]}> {item.member_address}</Text>
+        </View>
+
+          <View style={[{ flexDirection: 'row' }, styles.sector]}>
+            <Text style={styles.labelView}>Date of Entry of Member: {item.date_of_entry}</Text>
+          </View>
+          <View style={[{ flexDirection: 'row' }, styles.sector]}>
+            <Text style={styles.labelView}>Class Of Shareholding: {item.shareholding_class}</Text>
+          </View>
+
+          <View style={[{ flexDirection: 'row' }, styles.sector]}>
+          <Text style={[styles.labelView]}> Number Of Shares Held: {item.shares_no}</Text>
+          </View>
+
+          <Text style={[styles.labelView, styles.sectorL]}>Membership End Date: {item.membership_end_date}</Text>
+
+        <View style={{ alignItems: 'flex-end', paddingTop: 5 }}>
+          {next(onOpen, styles.viewBtn)}
+        </View>
+      </View>
+
+      <Divider style={{ backgroundColor: '#808B96', marginVertical: 1 }} />
+    </View>
+
+  );
+}
+export {
+  MOShareHoldersCard, ROShareHoldersCard, RODirectorsCard, RODInterestCard, RODirectorsSHgCard,
+  MODirectorsCard, ROSecretatriesCard, ROMortgagesCard, CoSealRegisterCard, RODebenturesCard, ROBranchesCard
+};
 
 const styles = StyleSheet.create({
   card: {
@@ -325,6 +544,9 @@ const styles = StyleSheet.create({
     borderColor: '#f1f3f2',
     paddingBottom: 10,
     paddingTop: 5
+  },
+  sectorL: {
+    paddingTop: 7
   },
   viewBtn: {
     width: actuatedNormalize(120),

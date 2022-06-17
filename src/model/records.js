@@ -13,7 +13,8 @@ export const rOShareHolders = [
     shares_transfered: '10',
     shares_no_ord: '40',
     transfer_type: 'original_issue',
-    original_issue: '20'
+    original_issue: '20',
+    no_of_attachments: '2'
   },
   {
     id: 2,
@@ -147,45 +148,124 @@ export const rODInterest = [
     no_of_attachments: '15',
   }]
 
-  export const rODirectorsSHg = [
-    {
-      id: 1,
-      director: 'Otim Fredrick',
-      date_of_entry: '2002-04-01',
-      notification_date: '50',
-      nature: 'Otim Fredrick',
-      amount_of_class: '150.00',
-      grant_right_date: '2021-04-05',
-      period_of_grant: 'Lillian Namusisi',
-      consideration: 'Kind',
-      registered_name: 'Lillian N',
-      no_of_attachments: '10',
-    },
-    {
-      id: 2,
-      director: 'Anne Mery',
-      date_of_entry: '2012-01-05',
-      nationality: '12345',
-      notification_date: '70',
-      nature: 'Anne Mery',
-      amount_of_class: '150.00',
-      grant_right_date: '2022-04-20',
-      period_of_grant: 'Lillian Namusisi',
-      consideration: 'Cash',
-      registered_name: 'Lillian N',
-      no_of_attachments: '8',
-    },
-    {
-      id: 3,
-      director: 'Jon sno',
-      date_of_entry: '2020-08-20',
-      nationality: '12346',
-      notification_date: '60',
-      nature: 'Jon sno',
-      amount_of_class: '120.00',
-      grant_right_date: '2022-03-21',
-      period_of_grant: 'Lillian Namusisi',
-      consideration: 'Kind',
-      registered_name: 'Lillian N',
-      no_of_attachments: '15',
+export const rODirectorsSHg = [
+  {
+    id: 1,
+    director: 'Otim Fredrick',
+    date_of_entry: '2002-04-01',
+    notification_date: '50',
+    nature: 'Otim Fredrick',
+    amount_of_class: '150.00',
+    grant_right_date: '2021-04-05',
+    period_of_grant: 'Lillian Namusisi',
+    consideration: 'Kind',
+    registered_name: 'Lillian N',
+    no_of_attachments: '10',
+  },
+  {
+    id: 2,
+    director: 'Anne Mery',
+    date_of_entry: '2012-01-05',
+    nationality: '12345',
+    notification_date: '70',
+    nature: 'Anne Mery',
+    amount_of_class: '150.00',
+    grant_right_date: '2022-04-20',
+    period_of_grant: 'Lillian Namusisi',
+    consideration: 'Cash',
+    registered_name: 'Lillian N',
+    no_of_attachments: '8',
+  },
+  {
+    id: 3,
+    director: 'Jon sno',
+    date_of_entry: '2020-08-20',
+    nationality: '12346',
+    notification_date: '60',
+    nature: 'Jon sno',
+    amount_of_class: '120.00',
+    grant_right_date: '2022-03-21',
+    period_of_grant: 'Lillian Namusisi',
+    consideration: 'Kind',
+    registered_name: 'Lillian N',
+    no_of_attachments: '15',
+  }]
+
+export const mODirectors = [
+  {
+    id: 1,
+    date_of_board_meeting: '2020-09-20',
+    venue_type: 'physical',
+    summary_of_key_resolutions: 'Accounting for all activities',
+    resolution_extracted_date: '2021-04-05',
+    resolution_registration_date: '2021-04-05',
+    location_of_the_orgin_issue: 'kampala',
+    no_of_attachments: '5'
+  }]
+
+export const rOSecretatries = [
+  {
+    id: 1,
+    secretary: 'Otim Fredrick',
+    secretary_address: 'Mutungo Hill',
+    office_held: '150.00',
+    appointment_date: '2002-04-01',
+    date_notificatn_appointment: '2002-04-01',
+    resignation_date: '2021-04-05',
+    resignation_effective_date: '2021-04-05',
+    date_notificatn_resignation: '2021-04-05',
+    no_of_attachments: '4',
+  }]
+
+export const rOMortgages = [
+  {
+    id: 1,
+    creation_date: '2002-04-01',
+    instrument_description: 'Mutungo Hill',
+    chargor: 'Otim Fredrick',
+    chargor_address: 'Mutungo Hill',
+    property_description: 'Mutungo Hill',
+    property_discharge_date: '2002-04-01',
+    no_of_attachments: '10',
+  },]
+
+export const coSealRegister = [
+  {
+    id: 1,
+    seal_affixation_date: '2002-04-01',
+    document_description: 'Mutungo Hill',
+    parties_particulars: 'Otim Fredrick',
+    executed_doc_location: 'Mutungo Hill',
+    no_of_attachments: '10',
+  },]
+
+export const rODebentures = [
+  {
+    id: 1,
+    debenture_no: '73773',
+    date_of_debenture: '2002-04-01',
+    debenture_authorization_date: '2021-04-05',
+    amount_secured: '1264',
+    debenture_holder: 'Alice Hill',
+    debenture_holder_address: 'Mutungo Hill',
+    property_charged_description: 'Mutungo Hill',
+    yearly_interest_rate: '5',
+    yearly_interest: '1000',
+    office_held: '150.00',
+    date_interest_becoming_due: '2021-04-05',
+    redemption_date: 'Lillian Namusisi',
+    remarks: '50 percent increase',
+    no_of_attachments: '3',
+  }]
+
+export const rOBranches = [
+  {
+    id: 1,
+    member: 'Entebbe',
+    member_address: 'Entebbe Hill',
+    date_of_entry: '2002-04-01',
+    shareholding_class: '12344',
+    shares_no: '50',
+    membership_end_date: '2021-04-05',
+    no_of_attachments: '20'
   }]

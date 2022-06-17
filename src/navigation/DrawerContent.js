@@ -32,28 +32,29 @@ export function DrawerContent(props) {
 
   const menuItems = [
     {
-      icon: <Icon type="materialCommunity" size={17} name="folder-table" />,
+      icon: <Icon type="materialCommunity" size={17} name="folder-table" color ="#f1f3f2" />,
       name: 'Home',
+      // name: <Text style={{color: "#f1f3f2"}}>Home</Text>,
       onPress: () => {
         props.navigation.navigate('Home');
       },
     },
     {
-      icon: <Icon type="fontisto" size={17} name="player-settings" />,
+      icon: <Icon type="fontisto" size={17} name="player-settings" color ="#f1f3f2"/>,
       name: 'Manage',
       onPress: () => {
         props.navigation.navigate('Manage');
       },
     },
     {
-      icon: <Icon type="fa5" size={17} name="user-alt" />,
+      icon: <Icon type="fa5" size={17} name="user-alt" color ="#f1f3f2"/>,
       name: 'Profile',
       onPress: () => {
         props.navigation.navigate('Profile');
       },
     },
     {
-      icon: <Icon type="materialCommunity" size={17} name="logout" />,
+      icon: <Icon type="materialCommunity" size={17} name="logout" color ="#f1f3f2"/>,
       name: 'Logout',
       onPress: () => {
         Alert.alert('Confirm Logout', 'You will be signed out.', [{text: 'Continue', onPress: ()=>{
@@ -72,8 +73,8 @@ export function DrawerContent(props) {
         <Image
           height={70}
           width={70}
-          source={require('../assets/logos1.png')}
-          style={{ height: undefined, width: undefined, flex: 1 }}
+          source={require('../assets/ic_launcher_adaptive_fore.png')}
+          style={{ height: undefined, width: undefined, flex: 1}}
           resizeMode="contain"
         />
         </View>
@@ -84,7 +85,7 @@ export function DrawerContent(props) {
                 icon={({ color, size }) => (
                   <View style={styles.icon}>{icon}</View>
                 )}
-                label={name}
+                label={()=>(<Text style={{color: '#f1f3f3'}}>{name}</Text>)}
                 onPress={onPress}
               />
             </Drawer.Section>
@@ -97,7 +98,8 @@ export function DrawerContent(props) {
 const styles = StyleSheet.create({
   container2: {
     padding: 0,
-    backgroundColor: "#f1f3f2",
+    backgroundColor: "#4d505b",
+    // backgroundColor: "#f1f3f2",
     height: "100%"
   },
   logoImage: {

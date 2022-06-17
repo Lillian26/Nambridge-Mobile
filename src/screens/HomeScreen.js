@@ -27,7 +27,7 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <>
-      <StatusBar backgroundColor='#f5f7fa' barStyle="dark-content" />
+      <StatusBar backgroundColor='#4d505b' barStyle="light-content" />
       <View
         style={[styles.container]}
       >

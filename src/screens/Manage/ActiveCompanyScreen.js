@@ -51,7 +51,7 @@ const ActiveCompanyScreen = ({ navigation }) => {
 
   return (
     <>
-      <StatusBar backgroundColor='#f1f3f2' barStyle="dark-content" />
+      <StatusBar backgroundColor='#4d505b' barStyle="light-content" />
       {company.companyName ?
       <>
         <ScrollView style={{ padding: 4 }}>

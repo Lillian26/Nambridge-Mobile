@@ -26,7 +26,7 @@ const NewCompanyScreen = ({ navigation }) => {
 
   return (
     <>
-      <StatusBar backgroundColor='#f1f3f2' barStyle="dark-content" />
+      <StatusBar backgroundColor='#4d505b' barStyle="light-content" />
       <ScrollView style={{ padding: 4 }}>
         <Text style={[{ paddingTop: 20, fontSize: 16, color: '#333333', textDecorationLine: 'underline', textTransform: 'capitalize', alignSelf: 'center' }]}>Key Company Particulars</Text>
 

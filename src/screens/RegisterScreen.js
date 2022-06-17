@@ -18,9 +18,16 @@ import * as Animatable from 'react-native-animatable';
 import { useTheme } from '@react-navigation/native';
 import actuatedNormalize from '../helpers/actuatedNormalize';
 import grayColor from '../constants/Colors';
-import {ROShareHoldersCard, MOShareHoldersCard, RODirectorsCard, RODInterestCard, RODirectorsSHg} from '../components/ListCard';
+import {
+  ROShareHoldersCard, MOShareHoldersCard, RODirectorsCard, RODInterestCard, RODirectorsSHgCard
+  , MODirectorsCard, ROSecretatriesCard, ROMortgagesCard, CoSealRegisterCard, RODebenturesCard,
+  ROBranchesCard
+} from '../components/ListCard';
 
-import { rOShareHolders, mOShareHolders, rODirectors, rODInterest, rODirectorsSHg } from '../model/records';
+import {
+  rOShareHolders, mOShareHolders, rODirectors, rODInterest, rODirectorsSHg
+  , mODirectors, rOSecretatries, rOMortgages, coSealRegister, rODebentures, rOBranches
+} from '../model/records';
 import registers from '../model/registers';
 
 const RegisterScreen = ({ route, navigation, props }) => {
@@ -53,6 +60,30 @@ const RegisterScreen = ({ route, navigation, props }) => {
         setData(rODirectorsSHg);
         setRegisterRoute('NotFound');
         break;
+      case "Index of Minutes of Directors":
+        setData(mODirectors);
+        setRegisterRoute('NotFound');
+        break;
+      case "Register of Secretaries":
+        setData(rOSecretatries);
+        setRegisterRoute('NotFound');
+        break;
+      case "Register of Mortgages & Charges":
+        setData(rOMortgages);
+        setRegisterRoute('NotFound');
+        break;
+      case "Company Seal Register":
+        setData(coSealRegister);
+        setRegisterRoute('NotFound');
+        break;
+      case "Register of Debentures":
+        setData(rODebentures);
+        setRegisterRoute('NotFound');
+        break;
+        case "Register of Branches":
+          setData(rOBranches);
+          setRegisterRoute('NotFound');
+          break;
       default:
         setData(null);
         setRegisterRoute('NotFound');
@@ -61,7 +92,7 @@ const RegisterScreen = ({ route, navigation, props }) => {
 
   }
 
-  const renderSpecificItem = (item) =>{
+  const renderSpecificItem = (item) => {
     var tRecordName = registers.find(x => x.id == registerId).name;
     switch (tRecordName) {
       case "Register of Shareholders":
@@ -72,32 +103,68 @@ const RegisterScreen = ({ route, navigation, props }) => {
           />
         );
       case "Index of Minutes of Shareholders":
-        return(
-        <MOShareHoldersCard
+        return (
+          <MOShareHoldersCard
             item={item}
             onOpen={() => navigation.navigate(registerRoute, { entryId: item.id, registerId: registerId })}
-          />)
-
+          />);
       case "Register of Directors":
-        return(
+        return (
           <RODirectorsCard
-              item={item}
-              onOpen={() => navigation.navigate(registerRoute, { entryId: item.id, registerId: registerId })}
-            />)
+            item={item}
+            onOpen={() => navigation.navigate(registerRoute, { entryId: item.id, registerId: registerId })}
+          />);
       case "Register of Directors Interest":
-        return(
+        return (
           <RODInterestCard
-              item={item}
-              onOpen={() => navigation.navigate(registerRoute, { entryId: item.id, registerId: registerId })}
-            />)
+            item={item}
+            onOpen={() => navigation.navigate(registerRoute, { entryId: item.id, registerId: registerId })}
+          />);
       case "Directors Shareholding & Related Particulars":
-        return(
-          <RODirectorsSHg
-              item={item}
-              onOpen={() => navigation.navigate(registerRoute, { entryId: item.id, registerId: registerId })}
-            />)
+        return (
+          <RODirectorsSHgCard
+            item={item}
+            onOpen={() => navigation.navigate(registerRoute, { entryId: item.id, registerId: registerId })}
+          />);
+      case "Index of Minutes of Directors":
+        return (
+          <MODirectorsCard
+            item={item}
+            onOpen={() => navigation.navigate(registerRoute, { entryId: item.id, registerId: registerId })}
+          />);
+      case "Register of Secretaries":
+        return (
+          <ROSecretatriesCard
+            item={item}
+            onOpen={() => navigation.navigate(registerRoute, { entryId: item.id, registerId: registerId })}
+          />);
+      case "Register of Mortgages & Charges":
+        return (
+          <ROMortgagesCard
+            item={item}
+            onOpen={() => navigation.navigate(registerRoute, { entryId: item.id, registerId: registerId })}
+          />);
+      case "Company Seal Register":
+        return (
+          <CoSealRegisterCard
+            item={item}
+            onOpen={() => navigation.navigate(registerRoute, { entryId: item.id, registerId: registerId })}
+          />);
+      case "Register of Debentures":
+        return (
+          <RODebenturesCard
+            item={item}
+            onOpen={() => navigation.navigate(registerRoute, { entryId: item.id, registerId: registerId })}
+          />);
+          case "Register of Branches":
+            return (
+              <ROBranchesCard
+                item={item}
+                onOpen={() => navigation.navigate(registerRoute, { entryId: item.id, registerId: registerId })}
+              />
+            );
       default:
-        return(
+        return (
           <ROShareHoldersCard
             item={item}
             onOpen={() => navigation.navigate(registerRoute, { entryId: item.id, registerId: registerId })}
@@ -119,7 +186,7 @@ const RegisterScreen = ({ route, navigation, props }) => {
   })
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor='#ffffff' barStyle="dark-content" />
+      <StatusBar backgroundColor='#4d505b' barStyle="light-content" />
       {loading ?
         <ActivityIndicator animating={loading} color="#268d9c" />
         :

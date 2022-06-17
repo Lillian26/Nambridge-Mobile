@@ -34,6 +34,7 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
   const [sharesTransfered, setSharesTransfered] = useState("")
   const [shareBalance, setShareBalance] = useState("")
   const [attachments, setAttachments] = useState([])
+  const [attachmentNo, setAttachmentNo] = useState("0")
   const [visible, setVisible] = useState(false);
   const [transferType, setTransferType] = useState(null);
   const [transferFrom, setTransferFrom] = useState(null);
@@ -168,6 +169,7 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
     setTransferType(theRecord.transfer_type);
     if (theRecord.transfer_type == "original_issue") { setOriginalIssue(theRecord.original_issue) };
     if (theRecord.transfer_type == "from_someone") { setTransferFrom(theRecord.from_someone) };
+    setAttachmentNo(theRecord.no_of_attachments)
 
     // getAttachments()
 
@@ -426,13 +428,13 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
             </TextInput>
           </View>
           <View style={[{ paddingTop: 15 }]}>
-            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Attach Relevant Documents:</Text>
+            <Text style={editMode ? styles.cardTitleEdit : [styles.cardTitle, {paddingBottom: 25}]}>{editMode ? `Attach ` : null}Relevant Documents: {attachmentNo}</Text>
 
-            <TouchableOpacity onPress={() => handleAdd(uploads, setUploads, setValidUploads)} style={[{ backgroundColor: "green", marginVertical: 10 }, styles.buttons]}>
+            {editMode && <TouchableOpacity onPress={() => handleAdd(uploads, setUploads, setValidUploads)} style={[{ backgroundColor: "green", marginVertical: 10 }, styles.buttons]}>
               <Text style={{ color: '#fff', alignSelf: 'center' }}>{`Add Upload`}</Text>
-            </TouchableOpacity>
+            </TouchableOpacity>}
 
-            {uploads.map((field, idx) => {
+            {editMode && uploads.map((field, idx) => {
               return (
                 <View key={`${field}-${idx}`} style={{
                   borderRadius: 2, borderWidth: 1, borderStyle: 'dotted',
