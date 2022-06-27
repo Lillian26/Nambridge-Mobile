@@ -9,6 +9,10 @@ import Iconb from "react-native-vector-icons/Ionicons";
 import Iconm from "react-native-vector-icons/MaterialCommunityIcons";
 import ProfileScreen from "../screens/ProfileScreen";
 import RegisterOfShareHolders from "../screens/RegisterViews/RegisterOfShareHolders";
+import RODirectors from "../screens/RegisterViews/RODirectors";
+import ROBranches from "../screens/RegisterViews/ROBranches";
+import RODebentures from "../screens/RegisterViews/RODebentures";
+import CoSealRegister from "../screens/RegisterViews/CoSealRegister";
 import ShareHoldersLedger from "../screens/RegisterViews/ShareHoldersLedger";
 import CompaniesScreen from "../screens/Manage/CompaniesScreen";
 import ActiveCompanyScreen from "../screens/Manage/ActiveCompanyScreen";
@@ -123,6 +127,22 @@ const HomeStackScreen = ({ navigation }) => (
     }} /> */}
 
     <Stack.Screen name="RegisterOfShareHolders" component={RegisterOfShareHolders} options={{
+      title: '...'
+    }} />
+
+    <Stack.Screen name="RODirectors" component={RODirectors} options={{
+      title: '...'
+    }} />
+
+    <Stack.Screen name="ROBranches" component={ROBranches} options={{
+      title: '...'
+    }} />
+
+    <Stack.Screen name="RODebentures" component={RODebentures} options={{
+      title: '...'
+    }} />
+
+    <Stack.Screen name="CoSealRegister" component={CoSealRegister} options={{
       title: '...'
     }} />
 

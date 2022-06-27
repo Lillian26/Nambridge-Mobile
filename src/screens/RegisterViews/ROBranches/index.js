@@ -4,64 +4,43 @@ import colors from '../../../assets/theme/colors';
 import DocumentPicker from 'react-native-document-picker';
 import { Text } from 'native-base';
 import Icona from "react-native-vector-icons/AntDesign";
-import { rOShareHolders } from '../../../model/records';
+import { rOBranches } from '../../../model/records';
 import { Button, Menu, Divider, Provider } from 'react-native-paper';
 import Iconsp from "react-native-vector-icons/SimpleLineIcons";
+// import axios from "axios";
+// import { Picker } from '@react-native-picker/picker';
 import RNPickerSelect from "react-native-picker-select";
 import actuatedNormalize from '../../../helpers/actuatedNormalize';
-import { formatTheDateLabel, defaultDate, formatTheDateText, convertArrayToObject } from "../../../helpers/helpers";
+import { formatTheDateLabel, defaultDate, formatTheDateText } from "../../../helpers/helpers";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { docTypes } from '../../../model/docTypes';
 import { pickerStyle, styles } from '../../../styles/common';
 
-const RegisterOfShareHolders = ({ route, navigation }) => {
+const ROBranches = ({ route, navigation }) => {
 
-  const { entryId, registerId } = route.params ?? {};//common
-  const [loading, setLoading] = useState(true);//common
-  const [editMode, setEditMode] = useState(false);//common
+  const { entryId, registerId } = route.params ?? {};
 
+  const [loading, setLoading] = useState(true);
+
+  const [editMode, setEditMode] = useState(false);
   const [record, setRecord] = useState(null)
   const [member, setMember] = useState("")
   const [memberAddress, setMemberAddress] = useState("")
   const [dateOfEntry, setDateOfEntry] = useState(defaultDate);
   const [isDateOfEntryPickerVisible, setDateOfEntryPickerVisibility] = useState(false);
-  const [certNo, setCertNo] = useState("")
+  const [shareholdingClass, setShareholdingClass] = useState("")
   const [sharesNo, setSharesNo] = useState("")
-  const [amtPaid, setAmtPaid] = useState("")
-  const [transferDate, setTransferDate] = useState(defaultDate);
-  const [isTransferDateVisible, setTransferDateVisibility] = useState(false);
-  const [toWhom, setToWhom] = useState("")
-  const [sharesTransfered, setSharesTransfered] = useState("")
-  const [shareBalance, setShareBalance] = useState("")
-  const [attachmentNo, setAttachmentNo] = useState("0")
+  const [memberShipEndDate, setMemberShipEndDate] = useState(defaultDate);
+  const [isMemberShipEndDateVisible, setMemberShipEndDateVisibility] = useState(false);
+  
   const [visible, setVisible] = useState(false);
-  const [transferType, setTransferType] = useState(null);
-  const [transferFrom, setTransferFrom] = useState(null);
-  const [originalIssue, setOriginalIssue] = useState(null);
+  const [attachmentNo, setAttachmentNo] = useState("0")
   const [uploads, setUploads] = useState([]);
   const [validUploads, setValidUploads] = useState(false);
-
   const [documentTypes, setDocumentTypes] = useState([])//common
 
-  const showTransferDatePicker = () => {
-    setTransferDateVisibility(true);
-  };
 
-  const hideTransferDatePicker = () => {
-    setTransferDateVisibility(false);
-  };
-
-  const handleTransferConfirm = (e) => {
-    hideTransferDatePicker();
-    var date = new Date(e);
-
-    if (isNaN(date.getTime())) {
-      setTransferDate(defaultDate)
-    }
-    else {
-      setTransferDate(date)
-    }
-  };
+// -------------------------- handlers for Date of Entry Picker --------------------------------------------
 
   const showDateOfEntryPicker = () => {
     setDateOfEntryPickerVisibility(true);
@@ -83,31 +62,27 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
     }
   };
 
-  //common------------------------------ file upload methods
+  // -------------------------- handlers for Date of Membership End Picker --------------------------------------------
 
+  const showMemberShipEndDatePicker = () => {
+    setMemberShipEndDatePickerVisibility(true);
+  };
 
-  function handleChangeInput(i, value, name, uploads, setUploads, setValidUploads) {
-  if (value){    
-    const values = [...uploads];
+  const hideMemberShipEndDatePicker = () => {
+    setMemberShipEndDatePickerVisibility(false);
+  };
 
-    // console.log('values[i][name]', values[i][name])
-    const thisVal = name === "Type" ? value : value[0]
-    const otherVal = name === "Type" ? values[i]["Document"] : values[i]["Type"]
+  const handleMemberShipEndDateConfirm = (e) => {
+    hideMemberShipEndDatePicker();
+    var date = new Date(e);
 
-    if(values[i] && name === "Document"){
-      values[i]["Document"] = thisVal
-      values[i]["Type"] = otherVal
+    if (isNaN(date.getTime())) {
+      setMemberShipEndDate(defaultDate)
     }
-    else{
-      values[i]["Type"] = thisVal
-      values[i]["Document"] = otherVal
+    else {
+      setMemberShipEndDate(date)
     }
-
-    setValidUploads(values.filter(x => Object.values(x).some(x => x === '')).length == 0)
-    setUploads(values);
-    // console.log(uploads);
-  }
-  }
+  };
 
   function handleAdd(uploads, setUploads, setValidUploads) {
     const values = [...uploads];
@@ -138,7 +113,6 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
 
   useEffect(() => {
     fetchDocumentTypes(); //common
-
     if (entryId) {
       navigation.setOptions({
         title: 'View Record',
@@ -153,33 +127,26 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
       navigation.setOptions({
         title: 'Create New Record',
       });
-      setEditMode(true);
+      setEditMode(true)
     }
 
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
     setLoading(false)
-  }, [editMode, loading, transferType]);
+  }, [editMode, loading]);
 
   const openMenu = () => setVisible(true);
 
   const closeMenu = () => setVisible(false);
 
   const getRecordDetails = () => {
-    var theRecord = rOShareHolders.find(x => x.id == entryId);
+    var theRecord = rOBranches.find(x => x.id == entryId);
     setRecord(theRecord);
     setMember(theRecord.member);
     setMemberAddress(theRecord.member_address);
     setDateOfEntry(new Date(theRecord.date_of_entry));
-    setCertNo(theRecord.cert_no);
     setSharesNo(theRecord.shares_no);
-    setAmtPaid(theRecord.amount_paid);
-    setTransferDate(new Date(theRecord.date_transfered));
-    setToWhom(theRecord.to_whom);
-    setSharesTransfered(theRecord.shares_transfered);
-    setShareBalance(theRecord.shares_no_ord);
-    setTransferType(theRecord.transfer_type);
-    if (theRecord.transfer_type == "original_issue") { setOriginalIssue(theRecord.original_issue) };
-    if (theRecord.transfer_type == "from_someone") { setTransferFrom(theRecord.from_someone) };
+    setShareholdingClass(theRecord.shareholding_class)
+    setMemberShipEndDate(new Date(theRecord.membership_end_date));
     setAttachmentNo(theRecord.no_of_attachments)
 
     // getAttachments()
@@ -246,32 +213,9 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
 
   const submitRecord = async () => {
 
-    const data = [
-      {"member": member},
-      {"memberAddress": memberAddress},
-      {"dateOfEntry": dateOfEntry},
-      {"isDateOfEntryPickerVisible": isDateOfEntryPickerVisible},
-      {"certNo": certNo},
-      {"sharesNo": sharesNo},
-      {"amtPaid": amtPaid},
-      {"transferDate": transferDate},
-      {"isTransferDateVisible": isTransferDateVisible},
-      {"toWhom": toWhom},
-      {"sharesTransfered": sharesTransfered},
-      {"shareBalance": shareBalance},
-      {"attachmentNo": attachmentNo},
-      {"visible": visible},
-      {"transferType": transferType},
-      {"transferFrom": transferFrom},
-      {"originalIssue": originalIssue},
-      {"uploads": uploads}
-    ]
-
-    console.log("to submit: ", data)
-
     // alert('Saved!'); navigation.navigate('Home')
     Alert.alert("Saved!", "Proceed to add ledger?", [
-      { text: 'Add Ledger', onPress: () => { navigation.navigate("ShareHoldersLedger") } },
+      { text: 'Add Ledger', onPress: () => { navigation.navigate("RegisterDirectorInterest") } },
       { text: 'Cancel', onPress: () => { navigation.navigate('Home') } }])
   }
 
@@ -283,11 +227,10 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
         <ScrollView showsVerticalScrollIndicator={false} style={{ padding: 4 }}>
           <View style={{ padding: 4 }}>
             {!entryId ?
-              <Text style={[styles.cardTitleEdit, { paddingTop: 20, textDecorationLine: 'underline' }]}>Register of Shareholders</Text>
+              <Text style={[styles.cardTitleEdit, { paddingTop: 20, textDecorationLine: 'underline' }]}>Register of Directors</Text>
               :
               <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-                <Text style={[styles.cardTitleEdit, { textDecorationLine: 'underline', paddingTop: 20, }]}>Register of Shareholders</Text>
-                {/* menu */}
+                <Text style={[styles.cardTitleEdit, { textDecorationLine: 'underline', paddingTop: 20, }]}>Register of Directors</Text>
                 {editMode ? null :
 
                   <Provider>
@@ -297,7 +240,7 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
                         flexDirection: 'row',
                         justifyContent: 'center',
                         marginLeft: 50,
-                        marginBottom: visible ? 200 : 0
+                        marginBottom: visible ? 155 : 0
                       }}>
                       <Menu
                         visible={visible}
@@ -305,8 +248,6 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
                         anchor={<TouchableOpacity style={{ backgroundColor: '#f5f7fa', paddingHorizontal: 5, paddingVertical: 5, borderRadius: 5 }} onPress={openMenu}>
                           <Iconsp name="options-vertical" size={22} color="#017eff" />
                         </TouchableOpacity>}>
-                        <Menu.Item onPress={() => { closeMenu(); navigation.navigate("ShareHoldersLedger") }} icon="folder-account-outline" title="Shareholders Ledger" />
-                        <Divider />
                         <Menu.Item onPress={() => { closeMenu(); setEditMode(true) }} icon="file-document-edit-outline" title="Edit Record" />
                         <Divider />
                         <Menu.Item onPress={() => {
@@ -322,9 +263,8 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
             }
           </View>
 
-          {/*  */}
           <View style={[{ paddingTop: 15 }]}>
-            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Name of Member (Shareholder):</Text>
+            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Name of Member:</Text>
             <TextInput
               value={member}
               onChangeText={setMember}
@@ -333,7 +273,7 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
             </TextInput>
           </View>
           <View style={[{ paddingTop: 15 }]}>
-            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Address of Member (Shareholder):</Text>
+            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Address of Member:</Text>
             <TextInput
               value={memberAddress}
               onChangeText={setMemberAddress}
@@ -342,7 +282,7 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
             </TextInput>
           </View>
           <View style={[{ paddingTop: 15 }]}>
-            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Date of Entry as Member (Shareholder):</Text>
+            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Date of Entry:</Text>
             <TextInput style={editMode ? styles.textInputEdit : styles.textInput}
               editable={editMode} onFocus={showDateOfEntryPicker} onKeyPress={showDateOfEntryPicker} label="Date of Entry" placeholder="Date of Entry"
               value={dateOfEntry == '' ? '' : formatTheDateLabel(dateOfEntry)}
@@ -355,113 +295,37 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
               onCancel={hideDateOfEntryPicker}
             />
           </View>
-          <Text style={[editMode ? styles.cardTitleEdit : styles.cardTitle, { paddingTop: 15 }]}>Shares:</Text>
-
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <View style={[{ flex: 1 }]}>
-              <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Cert No.</Text>
-              <TextInput
-
-                value={certNo}
-                onChangeText={setCertNo}
-                style={editMode ? styles.textInputEdit : styles.textInput}
-                editable={editMode}>
-              </TextInput>
-            </View>
-            <View style={[{ flex: 1 }]}>
-              <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Shares No.</Text>
-              <TextInput
-
-                value={sharesNo}
-                onChangeText={setSharesNo}
-                style={editMode ? styles.textInputEdit : styles.textInput}
-                editable={editMode}>
-              </TextInput>
-            </View>
-          </View>
           <View style={[{ paddingTop: 15 }]}>
-            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>From whom shares were transfered:</Text>
-            <View style={editMode ? [styles.pickerEdit, {marginHorizontal: 10}] : styles.picker}>
-              <RNPickerSelect
-                useNativeAndroidPickerStyle={false}
-                placeholder={{ label: "Select Transfer Type", value: null }}
-                onValueChange={(value) => setTransferType(value)}
-                items={[
-                  { label: "Allotment / Original Issue", value: "original_issue" },
-                  { label: "Transfer from Someone", value: "from_someone" },
-                ]}
-                disabled={!editMode}
-                value={transferType}
-                style={pickerStyle}
-              />
-            </View>
-            <View style={{ marginTop: actuatedNormalize(5) }}>
-              {transferType == "original_issue" &&
-                <TextInput
-                  placeholder='Allotment / Original Issue'
-                  value={`Allotment / Original Issue value: ${originalIssue}`}
-                  onChangeText={setOriginalIssue}
-                  style={editMode ? styles.textInputEdit : styles.textInput}
-                  editable={editMode}>
-                </TextInput>}
-              {transferType == "from_someone" &&
-                <TextInput
-                  placeholder='From Someone'
-                  value={`From: ${transferFrom}`}
-                  onChangeText={setTransferFrom}
-                  style={editMode ? styles.textInputEdit : styles.textInput}
-                  editable={editMode}>
-                </TextInput>}
-            </View>
-          </View>
-          <View style={[{ paddingTop: 15 }]}>
-            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Amount Paid thereon in UGX</Text>
+            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Class Of Shareholding:</Text>
             <TextInput
-              value={amtPaid}
-              onChangeText={setAmtPaid}
+              value={shareholdingClass}
+              onChangeText={setShareholdingClass}
               style={editMode ? styles.textInputEdit : styles.textInput}
               editable={editMode}>
             </TextInput>
           </View>
           <View style={[{ paddingTop: 15 }]}>
-            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Date of Transfer of Ordinary Shares:</Text>
+            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Number Of Shares Held:</Text>
+            <TextInput
+              value={sharesNo}
+              onChangeText={setSharesNo}
+              style={editMode ? styles.textInputEdit : styles.textInput}
+              editable={editMode}>
+            </TextInput>
+          </View>
+
+          <View style={[{ paddingTop: 15 }]}>
+            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Date When Membership Ended:</Text>
             <TextInput style={editMode ? styles.textInputEdit : styles.textInput} editable={editMode}
-              onFocus={showTransferDatePicker} onKeyPress={showTransferDatePicker} label="Date of Transfer" placeholder="Date of Transfer"
-              value={transferDate == '' ? '' : formatTheDateLabel(transferDate)} />
+              onFocus={showMemberShipEndDatePicker} onKeyPress={showMemberShipEndDatePicker} label="Date When Membership Ended" placeholder="Date When Membership Ended"
+              value={memberShipEndDate == '' ? '' : formatTheDateLabel(memberShipEndDate)} />
             <DateTimePickerModal
-              isVisible={isTransferDateVisible}
+              isVisible={isMemberShipEndDateVisible}
               mode="date"
-              date={transferDate}
-              onConfirm={handleTransferConfirm}
-              onCancel={hideTransferDatePicker}
+              date={memberShipEndDate}
+              onConfirm={handleMemberShipEndDateConfirm}
+              onCancel={hideMemberShipEndDatePicker}
             />
-          </View>
-          <View style={[{ paddingTop: 15 }]}>
-            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>To whom Shares are Transferred:</Text>
-            <TextInput
-              value={toWhom}
-              onChangeText={setToWhom}
-              style={editMode ? styles.textInputEdit : styles.textInput}
-              editable={editMode}>
-            </TextInput>
-          </View>
-          <View style={[{ paddingTop: 15 }]}>
-            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Shares transfered:</Text>
-            <TextInput
-              value={sharesTransfered}
-              onChangeText={setSharesTransfered}
-              style={editMode ? styles.textInputEdit : styles.textInput}
-              editable={editMode}>
-            </TextInput>
-          </View>
-          <View style={[{ paddingTop: 15 }]}>
-            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Number of Shares Held (balance):</Text>
-            <TextInput
-              value={shareBalance}
-              onChangeText={setShareBalance}
-              style={editMode ? styles.textInputEdit : styles.textInput}
-              editable={editMode}>
-            </TextInput>
           </View>
 
           {!editMode ?
@@ -549,4 +413,4 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
   );
 };
 
-export default RegisterOfShareHolders;
+export default ROBranches ;

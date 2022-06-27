@@ -41,3 +41,13 @@ export const strToDate = (dateStr) => {
 // var mydate = new Date(parts[0], parts[1] - 1, parts[2]); 
 return defaultDate
 }
+
+export const convertArrayToObject = (array) => {
+  const initialValue = {};
+  return array.reduce((obj, item) => {
+    return {
+      ...obj,
+      [item]: item,
+    };
+  }, initialValue);
+};
