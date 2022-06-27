@@ -50,7 +50,7 @@ const RegisterScreen = ({ route, navigation, props }) => {
         break;
       case "Register of Directors":
         setData(rODirectors);
-        setRegisterRoute('NotFound');
+        setRegisterRoute('RODirectors');
         break;
       case "Register of Directors Interest":
         setData(rODInterest);
@@ -74,16 +74,16 @@ const RegisterScreen = ({ route, navigation, props }) => {
         break;
       case "Company Seal Register":
         setData(coSealRegister);
-        setRegisterRoute('NotFound');
+        setRegisterRoute('CoSealRegister');
         break;
       case "Register of Debentures":
         setData(rODebentures);
-        setRegisterRoute('NotFound');
+        setRegisterRoute('RODebentures');
         break;
-        case "Register of Branches":
-          setData(rOBranches);
-          setRegisterRoute('NotFound');
-          break;
+      case "Register of Branches":
+        setData(rOBranches);
+        setRegisterRoute('ROBranches');
+        break;
       default:
         setData(null);
         setRegisterRoute('NotFound');
@@ -156,13 +156,13 @@ const RegisterScreen = ({ route, navigation, props }) => {
             item={item}
             onOpen={() => navigation.navigate(registerRoute, { entryId: item.id, registerId: registerId })}
           />);
-          case "Register of Branches":
-            return (
-              <ROBranchesCard
-                item={item}
-                onOpen={() => navigation.navigate(registerRoute, { entryId: item.id, registerId: registerId })}
-              />
-            );
+      case "Register of Branches":
+        return (
+          <ROBranchesCard
+            item={item}
+            onOpen={() => navigation.navigate(registerRoute, { entryId: item.id, registerId: registerId })}
+          />
+        );
       default:
         return (
           <ROShareHoldersCard
