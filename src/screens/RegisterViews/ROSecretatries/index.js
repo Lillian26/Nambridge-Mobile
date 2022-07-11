@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, ScrollView, ActivityIndicator, LogBox, TextInput, Alert } from 'react-native';
 import { Text } from 'native-base';
-import { rODirectors } from '../../../model/records';
+import { rOSecretatries } from '../../../model/records';
 // import axios from "axios";
 import { MenuGroup } from '../../../components/MenuGroup';
 import { formatTheDateLabel, defaultDate } from "../../../helpers/helpers";
@@ -11,7 +11,7 @@ import { styles } from '../../../styles/common';
 import OutroComponent from '../../../components/OutroComponent';
 import { handleAdd, handleRemove, handleChangeInput, fetchDocumentTypes, selectOneFile } from '../../../helpers/uploadMethods';
 
-const RODirectors = ({ route, navigation }) => {
+const ROSecretatries = ({ route, navigation }) => {
 
   const { entryId, registerId } = route.params ?? {};
 
@@ -19,21 +19,18 @@ const RODirectors = ({ route, navigation }) => {
 
   const [editMode, setEditMode] = useState(false);
   const [record, setRecord] = useState(null)
-  const [director, setDirector] = useState("")  
-  const [nationality, setNationality] = useState("")
-  const [dateOfBirth, setDateOfBirth] = useState(defaultDate);
-  const [isDateOfBirthPickerVisible, setDateOfBirthPickerVisibility] = useState(false);
-  const [directorAddress, setDirectorAddress] = useState("")
+  const [secretary, setSecretary] = useState("")  
+  const [secretaryAddress, setSecretaryAddress] = useState("")
   const [officeHeld, setOfficeHeld] = useState("")
   const [appointmentDate, setAppointmentDate] = useState(defaultDate);
   const [isAppointmentDateVisible, setAppointmentDateVisibility] = useState(false);
+  const [appointNotifnDate, setAppointNotifnDate] = useState(defaultDate);
+  const [isAppointNotifnDateVisible, setAppointNotifnDateVisibility] = useState(false);
+
   const [resignationDate, setResignationDate] = useState(defaultDate);
   const [isResignationDateVisible, setResignationDateVisibility] = useState(false);
-  const [appBoardResolnDate, setAppBoardResolnDate] = useState(defaultDate);
-  const [isAppBoardResolnDateVisible, setAppBoardResolnVisibility] = useState(false);
-  const [cessationDate, setCessationDate] = useState(defaultDate);
-  const [isCessationDateVisible, setCessationDateVisibility] = useState(false);
-  const [cessationReason, setCessationReason] = useState("")
+  const [resignatnNotificatnDate, setResignatnNotificatnDate] = useState(defaultDate);
+  const [isResignatnNotificatnDateVisible, setResignatnNotificatnVisibility] = useState(false);
 
   const [visible, setVisible] = useState(false);
   const [attachmentNo, setAttachmentNo] = useState("0")
@@ -64,47 +61,47 @@ const handleResignationConfirm = (e) => {
   }
 };
 
-// -------------------------- handlers for Date of Cessation Picker --------------------------------------------
+// -------------------------- handlers for Date of AppointNotifn Picker --------------------------------------------
 
-const showCessationDatePicker = () => {
-  setCessationDateVisibility(true);
+const showAppointNotifnDatePicker = () => {
+  setAppointNotifnDateVisibility(true);
 };
 
-const hideCessationDatePicker = () => {
-  setCessationDateVisibility(false);
+const hideAppointNotifnDatePicker = () => {
+  setAppointNotifnDateVisibility(false);
 };
 
 const handleCessationConfirm = (e) => {
-  hideCessationDatePicker();
+  hideAppointNotifnDatePicker();
   var date = new Date(e);
 
   if (isNaN(date.getTime())) {
-    setCessationDate(defaultDate)
+    setAppointNotifnDate(defaultDate)
   }
   else {
-    setCessationDate(date)
+    setAppointNotifnDate(date)
   }
 };
 
-// -------------------------- handlers for Date of Appointment Board Resoln Picker --------------------------------------------
+// -------------------------- handlers for Date of ResignatnNotificatn Picker --------------------------------------------
 
-  const showAppBoardResolnPicker = () => {
-    setAppBoardResolnVisibility(true);
+  const showResignatnNotificatnPicker = () => {
+    setResignatnNotificatnVisibility(true);
   };
 
-  const hideAppBoardResolnPicker = () => {
-    setAppBoardResolnVisibility(false);
+  const hideResignatnNotificatnPicker = () => {
+    setResignatnNotificatnVisibility(false);
   };
 
-  const handleAppBoardResolnConfirm = (e) => {
-    hideAppBoardResolnPicker();
+  const handleResignatnNotificatnConfirm = (e) => {
+    hideResignatnNotificatnPicker();
     var date = new Date(e);
 
     if (isNaN(date.getTime())) {
-      setAppBoardResoln(defaultDate)
+      setResignatnNotificatn(defaultDate)
     }
     else {
-      setAppBoardResoln(date)
+      setResignatnNotificatn(date)
     }
   };
 
@@ -128,28 +125,6 @@ const handleCessationConfirm = (e) => {
     }
     else {
       setAppointmentDate(date)
-    }
-  };
-
-  // -------------------------- handlers for Date of Birth Picker --------------------------------------------
-
-  const showDateOfBirthPicker = () => {
-    setDateOfBirthPickerVisibility(true);
-  };
-
-  const hideDateOfBirthPicker = () => {
-    setDateOfBirthPickerVisibility(false);
-  };
-
-  const handleDateOfBirthConfirm = (e) => {
-    hideDateOfBirthPicker();
-    var date = new Date(e);
-
-    if (isNaN(date.getTime())) {
-      setDateOfBirth(defaultDate)
-    }
-    else {
-      setDateOfBirth(date)
     }
   };
 
@@ -182,24 +157,20 @@ const handleCessationConfirm = (e) => {
   const closeMenu = () => setVisible(false);
 
   const getRecordDetails = () => {
-    var theRecord = rODirectors.find(x => x.id == entryId);
-    setRecord("Register of Directors");
-    setDirector(theRecord.director);
-    setDirectorAddress(theRecord.director_address);
-    setDateOfBirth(new Date(theRecord.date_of_birth));
-    setNationality(theRecord.nationality);
+    var theRecord = rOSecretatries.find(x => x.id == entryId);
+    setRecord("Register of Secretaries");
+    setSecretary(theRecord.secretary);
+    setSecretaryAddress(theRecord.secretary_address);
     setOfficeHeld(theRecord.office_held)
-    setAppointmentDate(new Date(theRecord.appointment_date));
-    setResignationDate(new Date(theRecord.resignation_date));
-    setAppBoardResolnDate(new Date(theRecord.date_resolution_appointment));
-    setCessationDate(new Date(theRecord.office_cessation_date));
-    setCessationReason(theRecord.cessation_reason)
+    setAppointmentDate(new Date(theRecord.appointment_effective_date));
+    setResignationDate(new Date(theRecord.resignation_effective_date));
+    setResignatnNotificatnDate(new Date(theRecord.date_notificatn_resignation));
+    setAppointNotifnDate(new Date(theRecord.date_notificatn_appointment));
     setAttachmentNo(theRecord.no_of_attachments)
 
     // getAttachments()
 
   }
-
 
   // TODO
   // submit + axios config + loading
@@ -251,42 +222,19 @@ const handleCessationConfirm = (e) => {
           navigation={navigation} />
 
           <View style={[{ paddingTop: 15 }]}>
-            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Name of Director:</Text>
+            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Name:</Text>
             <TextInput
-              value={director}
-              onChangeText={setDirector}
+              value={secretary}
+              onChangeText={setSecretary}
               style={editMode ? styles.textInputEdit : styles.textInput}
               editable={editMode}>
             </TextInput>
-          </View>
-          <View style={[{ paddingTop: 15 }]}>
-            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Nationality:</Text>
-            <TextInput
-              value={nationality}
-              onChangeText={setNationality}
-              style={editMode ? styles.textInputEdit : styles.textInput}
-              editable={editMode}>
-            </TextInput>
-          </View>
-          <View style={[{ paddingTop: 15 }]}>
-            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Date of Birth:</Text>
-            <TextInput style={editMode ? styles.textInputEdit : styles.textInput}
-              editable={editMode} onFocus={showDateOfBirthPicker} onKeyPress={showDateOfBirthPicker} label="Date of Entry" placeholder="Date of Entry"
-              value={dateOfBirth == '' ? '' : formatTheDateLabel(dateOfBirth)}
-              showSoftInputOnFocus={false} />
-            <DateTimePickerModal
-              isVisible={isDateOfBirthPickerVisible}
-              mode="date"
-              date={dateOfBirth}
-              onConfirm={handleDateOfBirthConfirm}
-              onCancel={hideDateOfBirthPicker}
-            />
           </View>
           <View style={[{ paddingTop: 15 }]}>
             <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Address:</Text>
             <TextInput
-              value={directorAddress}
-              onChangeText={setDirectorAddress}
+              value={secretaryAddress}
+              onChangeText={setSecretaryAddress}
               style={editMode ? styles.textInputEdit : styles.textInput}
               editable={editMode}>
             </TextInput>
@@ -316,6 +264,20 @@ const handleCessationConfirm = (e) => {
           </View>
 
           <View style={[{ paddingTop: 15 }]}>
+            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Notification of Appointment:</Text>
+            <TextInput style={editMode ? styles.textInputEdit : styles.textInput} editable={editMode}
+              onFocus={showAppointNotifnDatePicker} onKeyPress={showAppointNotifnDatePicker} 
+              value={appointNotifnDate == '' ? '' : formatTheDateLabel(appointNotifnDate)} />
+            <DateTimePickerModal
+              isVisible={isAppointNotifnDateVisible}
+              mode="date"
+              date={appointNotifnDate}
+              onConfirm={handleCessationConfirm}
+              onCancel={hideAppointNotifnDatePicker}
+            />
+          </View>
+
+          <View style={[{ paddingTop: 15 }]}>
             <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Resignation Effective Date:</Text>
             <TextInput style={editMode ? styles.textInputEdit : styles.textInput} editable={editMode}
               onFocus={showResignationDatePicker} onKeyPress={showResignationDatePicker} label="Resignation Effective Date" placeholder="Date of Transfer"
@@ -330,40 +292,17 @@ const handleCessationConfirm = (e) => {
           </View>
 
           <View style={[{ paddingTop: 15 }]}>
-            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Date of Board Resolution in which appointment was made:</Text>
+            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Notification of Resignation:</Text>
             <TextInput style={editMode ? styles.textInputEdit : styles.textInput} editable={editMode}
-              onFocus={showAppBoardResolnPicker} onKeyPress={showAppBoardResolnPicker} label="Date of Board Resolution in which appointment was made" placeholder="Date of Transfer"
-              value={appBoardResolnDate == '' ? '' : formatTheDateLabel(appBoardResolnDate)} />
+              onFocus={showResignatnNotificatnPicker} onKeyPress={showResignatnNotificatnPicker}
+              value={resignatnNotificatnDate == '' ? '' : formatTheDateLabel(resignatnNotificatnDate)} />
             <DateTimePickerModal
-              isVisible={isAppBoardResolnDateVisible}
+              isVisible={isResignatnNotificatnDateVisible}
               mode="date"
-              date={appBoardResolnDate}
-              onConfirm={handleAppBoardResolnConfirm}
-              onCancel={hideAppBoardResolnPicker}
+              date={resignatnNotificatnDate}
+              onConfirm={handleResignatnNotificatnConfirm}
+              onCancel={hideResignatnNotificatnPicker}
             />
-          </View>
-
-          <View style={[{ paddingTop: 15 }]}>
-            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Date of Cessation of Office:</Text>
-            <TextInput style={editMode ? styles.textInputEdit : styles.textInput} editable={editMode}
-              onFocus={showCessationDatePicker} onKeyPress={showCessationDatePicker} label="Date of Cessation of Office" placeholder="Date of Transfer"
-              value={cessationDate == '' ? '' : formatTheDateLabel(cessationDate)} />
-            <DateTimePickerModal
-              isVisible={isCessationDateVisible}
-              mode="date"
-              date={cessationDate}
-              onConfirm={handleCessationConfirm}
-              onCancel={hideCessationDatePicker}
-            />
-          </View>
-          <View style={[{ paddingTop: 15 }]}>
-            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Reasons for Cessation of Office:</Text>
-            <TextInput
-              value={cessationReason}
-              onChangeText={setCessationReason}
-              style={editMode ? styles.textInputEdit : styles.textInput}
-              editable={editMode}>
-            </TextInput>
           </View>
 
           <OutroComponent editMode={editMode} attachmentNo={attachmentNo} uploads={uploads} setUploads={setUploads} setValidUploads={setValidUploads}
@@ -375,4 +314,4 @@ const handleCessationConfirm = (e) => {
   );
 };
 
-export default RODirectors ;
+export default ROSecretatries;

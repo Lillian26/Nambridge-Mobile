@@ -5,15 +5,21 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import HomeScreen from "../screens/HomeScreen";
 import Icon from "react-native-vector-icons/FontAwesome";
-import Iconb from "react-native-vector-icons/Ionicons";
 import Iconm from "react-native-vector-icons/MaterialCommunityIcons";
 import ProfileScreen from "../screens/ProfileScreen";
 import RegisterOfShareHolders from "../screens/RegisterViews/RegisterOfShareHolders";
+import MOShareHolders from "../screens/RegisterViews/MOShareHolders";
 import RODirectors from "../screens/RegisterViews/RODirectors";
+import RODInterest from "../screens/RegisterViews/RODirectors copy";
+import RODsSHgParticulars from "../screens/RegisterViews/RODsSHgParticulars";
+import MODirectors from "../screens/RegisterViews/MODirectors";
+import ROSecretatries from "../screens/RegisterViews/ROSecretatries";
+import ROMortgages from "../screens/RegisterViews/ROMortgages";
 import ROBranches from "../screens/RegisterViews/ROBranches";
 import RODebentures from "../screens/RegisterViews/RODebentures";
 import CoSealRegister from "../screens/RegisterViews/CoSealRegister";
 import ShareHoldersLedger from "../screens/RegisterViews/ShareHoldersLedger";
+import CreateLedger from "../screens/RegisterViews/ShareHoldersLedger/createLedger";
 import CompaniesScreen from "../screens/Manage/CompaniesScreen";
 import ActiveCompanyScreen from "../screens/Manage/ActiveCompanyScreen";
 import RegisterScreen from "../screens/RegisterScreen";
@@ -50,41 +56,19 @@ function TabStack() {
         name="AllCompanies"
         component={CompaniesScreen}
         options={{
-          tabBarLabel: 'All Companies',
-          // tabBarIcon: ({ color, size }) => (
-          //   <MaterialCommunityIcons
-          //       name="home"
-          //       color={color}
-          //       size={size}
-          //     />
-          // ),
+          tabBarLabel: 'All Companies'
         }} />
       <Tab.Screen
         name="ActiveCompany"
         component={ActiveCompanyScreen}
         options={{
-          tabBarLabel: 'Active',
-          // tabBarIcon: ({ color, size }) => (
-          //   <MaterialCommunityIcons
-          //       name="settings"
-          //       color={color}
-          //       size={size}
-          //     />
-          // ),
+          tabBarLabel: 'Active'
         }} />
     </Tab.Navigator>
   );
 }
 
 const Stack = createStackNavigator();
-
-const screenOptionStyle = {
-  headerStyle: {
-    backgroundColor: "#9AC4F8",
-  },
-  headerTintColor: "white",
-  headerBackTitle: "Back",
-};
 
 const HomeStackScreen = ({ navigation }) => (
   <Stack.Navigator screenOptions={{
@@ -106,27 +90,15 @@ const HomeStackScreen = ({ navigation }) => (
         headerLeft: () => (
           <Icon.Button name="bars" size={20} backgroundColor="#0165ff"
             onPress={() => navigation.openDrawer()} />
-        ),
-        // headerRight: () => (
-        //   <Iconb.Button name="chatbubbles-outline" size={22} backgroundColor="#0165ff"
-        //     onPress={() => {}} />
-        // ) 
+        )
       }}
     />
 
-    {/* <Stack.Screen name="Home" component={HomeScreen} options={{
-      title: 'Articles',
-      headerLeft: () => (
-        <Icon.Button name="bars" size={20} backgroundColor="#0165ff"
-          onPress={() => navigation.openDrawer()} />
-      ),
-      headerRight: () => (
-        <Iconb.Button name="chatbubbles-outline" size={22} backgroundColor="#0165ff"
-          onPress={() => {}} />
-      )
-    }} /> */}
-
     <Stack.Screen name="RegisterOfShareHolders" component={RegisterOfShareHolders} options={{
+      title: '...'
+    }} />
+
+    <Stack.Screen name="MOShareHolders" component={MOShareHolders} options={{
       title: '...'
     }} />
 
@@ -134,7 +106,27 @@ const HomeStackScreen = ({ navigation }) => (
       title: '...'
     }} />
 
+    <Stack.Screen name="RODInterest" component={RODInterest} options={{
+      title: '...'
+    }} />
+
+    <Stack.Screen name="RODsSHgParticulars" component={RODsSHgParticulars} options={{
+      title: '...'
+    }} />
+
+    <Stack.Screen name="MODirectors" component={MODirectors} options={{
+      title: '...'
+    }} />
+
     <Stack.Screen name="ROBranches" component={ROBranches} options={{
+      title: '...'
+    }} />
+
+    <Stack.Screen name="ROSecretatries" component={ROSecretatries} options={{
+      title: '...'
+    }} />
+
+    <Stack.Screen name="ROMortgages" component={ROMortgages} options={{
       title: '...'
     }} />
 
@@ -155,6 +147,10 @@ const HomeStackScreen = ({ navigation }) => (
               [{ text: 'Ok', onPress: () => navigation.navigate("CreateLedger") }, { text: 'Cancel', onPress: () => { } }])
           }} />
       )
+    }} />
+
+    <Stack.Screen name="CreateLedger" component={CreateLedger} options={{
+      title: 'Create Ledger'
     }} />
 
     <Stack.Screen name="NotFound" component={NotFound} options={{
@@ -197,73 +193,5 @@ const HomeStackScreen = ({ navigation }) => (
 
   </Stack.Navigator>
 );
-
-// const ManageStackScreen = ({ navigation }) => (
-//   <Stack.Navigator screenOptions={{
-//     headerStyle: {
-//       backgroundColor: '#0165ff',
-//     },
-//     headerTintColor: '#fff',
-//     headerTitleStyle: {
-//       fontWeight: 'bold'
-//     }
-//   }}>
-//     <Stack.Screen
-//       name="Manage"
-//       component={TabStack}
-//       options={{
-//         title: 'Manage',
-//         headerLeft: () => (
-//           <Icon.Button name="bars" size={20} backgroundColor="#0165ff"
-//             onPress={() => navigation.openDrawer()} />
-//         ),
-//         headerRight: () => (
-//           <Iconb.Button name="plus" size={22} backgroundColor="#0165ff"
-//             onPress={() => { }} />
-//         )
-//       }}
-//     />
-//   </Stack.Navigator>
-// );
-
-// const ProfileStackScreen = ({ navigation }) => (
-//   <Stack.Navigator screenOptions={{
-//     headerStyle: {
-//       backgroundColor: '#0165ff',
-//     },
-//     headerTintColor: '#fff',
-//     headerTitleStyle: {
-//       fontWeight: 'bold'
-//     }
-//   }}>
-//     <Stack.Screen name="Profile" component={ProfileScreen} options={{
-//       headerLeft: () => (
-//         <Icon.Button name="bars" size={25} backgroundColor="#0165ff"
-//           onPress={() => navigation.openDrawer()} />
-//       ),
-//     }} />
-//   </Stack.Navigator>
-// );
-
-// const EarnStackScreen = ({ navigation }) => (
-//     <Stack.Navigator screenOptions={{
-//         headerStyle: {
-//             backgroundColor: '#0165ff',
-//         },
-//         headerTintColor: '#fff',
-//         headerTitleStyle: {
-//             fontWeight: 'bold'
-//         }
-//     }}>
-//         <Stack.Screen name="Earn" component={EarnScreen} options={{
-//             headerLeft: () => (
-//                 <Icon.Button name="ios-menu" size={25} backgroundColor="#0165ff"
-//                     onPress={() => navigation.openDrawer()} />
-//             ),
-//             // headerShown: false,
-//         }} />
-//     </Stack.Navigator>
-// );
-
 
 export { HomeStackScreen };

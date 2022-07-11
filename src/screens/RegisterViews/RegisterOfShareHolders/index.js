@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator, StatusBar, LogBox, Image, TextInput, Alert } from 'react-native';
+import { View, TouchableOpacity, ScrollView, ActivityIndicator, LogBox, TextInput, Alert } from 'react-native';
 import colors from '../../../assets/theme/colors';
 import DocumentPicker from 'react-native-document-picker';
 import { Text } from 'native-base';
-import Icona from "react-native-vector-icons/AntDesign";
 import { rOShareHolders } from '../../../model/records';
-import { Button, Menu, Divider, Provider } from 'react-native-paper';
+import { Menu, Divider, Provider, Card, Title } from 'react-native-paper';
 import Iconsp from "react-native-vector-icons/SimpleLineIcons";
 import RNPickerSelect from "react-native-picker-select";
 import actuatedNormalize from '../../../helpers/actuatedNormalize';
@@ -38,6 +37,10 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
   const [transferType, setTransferType] = useState(null);
   const [transferFrom, setTransferFrom] = useState(null);
   const [originalIssue, setOriginalIssue] = useState(null);
+  const [availableShares, setAvailableShares] = useState("0");
+  const [sharesTotalAmt, setSharesTotalAmt] = useState("0.00");
+  const [valuePerShare, setValuePerShare] = useState("0.00");
+
   const [uploads, setUploads] = useState([]);
   const [validUploads, setValidUploads] = useState(false);
 
@@ -87,26 +90,26 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
 
 
   function handleChangeInput(i, value, name, uploads, setUploads, setValidUploads) {
-  if (value){    
-    const values = [...uploads];
+    if (value) {
+      const values = [...uploads];
 
-    // console.log('values[i][name]', values[i][name])
-    const thisVal = name === "Type" ? value : value[0]
-    const otherVal = name === "Type" ? values[i]["Document"] : values[i]["Type"]
+      // console.log('values[i][name]', values[i][name])
+      const thisVal = name === "Type" ? value : value[0]
+      const otherVal = name === "Type" ? values[i]["Document"] : values[i]["Type"]
 
-    if(values[i] && name === "Document"){
-      values[i]["Document"] = thisVal
-      values[i]["Type"] = otherVal
+      if (values[i] && name === "Document") {
+        values[i]["Document"] = thisVal
+        values[i]["Type"] = otherVal
+      }
+      else {
+        values[i]["Type"] = thisVal
+        values[i]["Document"] = otherVal
+      }
+
+      setValidUploads(values.filter(x => Object.values(x).some(x => x === '')).length == 0)
+      setUploads(values);
+      // console.log(uploads);
     }
-    else{
-      values[i]["Type"] = thisVal
-      values[i]["Document"] = otherVal
-    }
-
-    setValidUploads(values.filter(x => Object.values(x).some(x => x === '')).length == 0)
-    setUploads(values);
-    // console.log(uploads);
-  }
   }
 
   function handleAdd(uploads, setUploads, setValidUploads) {
@@ -247,24 +250,24 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
   const submitRecord = async () => {
 
     const data = [
-      {"member": member},
-      {"memberAddress": memberAddress},
-      {"dateOfEntry": dateOfEntry},
-      {"isDateOfEntryPickerVisible": isDateOfEntryPickerVisible},
-      {"certNo": certNo},
-      {"sharesNo": sharesNo},
-      {"amtPaid": amtPaid},
-      {"transferDate": transferDate},
-      {"isTransferDateVisible": isTransferDateVisible},
-      {"toWhom": toWhom},
-      {"sharesTransfered": sharesTransfered},
-      {"shareBalance": shareBalance},
-      {"attachmentNo": attachmentNo},
-      {"visible": visible},
-      {"transferType": transferType},
-      {"transferFrom": transferFrom},
-      {"originalIssue": originalIssue},
-      {"uploads": uploads}
+      { "member": member },
+      { "memberAddress": memberAddress },
+      { "dateOfEntry": dateOfEntry },
+      { "isDateOfEntryPickerVisible": isDateOfEntryPickerVisible },
+      { "certNo": certNo },
+      { "sharesNo": sharesNo },
+      { "amtPaid": amtPaid },
+      { "transferDate": transferDate },
+      { "isTransferDateVisible": isTransferDateVisible },
+      { "toWhom": toWhom },
+      { "sharesTransfered": sharesTransfered },
+      { "shareBalance": shareBalance },
+      { "attachmentNo": attachmentNo },
+      { "visible": visible },
+      { "transferType": transferType },
+      { "transferFrom": transferFrom },
+      { "originalIssue": originalIssue },
+      { "uploads": uploads }
     ]
 
     console.log("to submit: ", data)
@@ -297,7 +300,7 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
                         flexDirection: 'row',
                         justifyContent: 'center',
                         marginLeft: 50,
-                        marginBottom: visible ? 200 : 0
+                        marginBottom: visible ? 240 : 0
                       }}>
                       <Menu
                         visible={visible}
@@ -305,14 +308,16 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
                         anchor={<TouchableOpacity style={{ backgroundColor: '#f5f7fa', paddingHorizontal: 5, paddingVertical: 5, borderRadius: 5 }} onPress={openMenu}>
                           <Iconsp name="options-vertical" size={22} color="#017eff" />
                         </TouchableOpacity>}>
-                        <Menu.Item onPress={() => { closeMenu(); navigation.navigate("ShareHoldersLedger") }} icon="folder-account-outline" title="Shareholders Ledger" />
-                        <Divider />
                         <Menu.Item onPress={() => { closeMenu(); setEditMode(true) }} icon="file-document-edit-outline" title="Edit Record" />
                         <Divider />
                         <Menu.Item onPress={() => {
                           closeMenu(); Alert.alert('Delete', 'This record will be deleted.', [{ text: 'Continue', onPress: () => { alert('Archived!'); navigation.goBack() } },
                           { text: 'Cancel', onPress: () => { } }])
                         }} icon="trash-can-outline" title="Delete Record" />
+                        <Divider />
+                        <Menu.Item onPress={() => { closeMenu(); navigation.navigate("ShareHoldersLedger") }} icon="folder-plus-outline" title="Add Transaction" />
+                        <Divider />
+                        <Menu.Item onPress={() => { closeMenu(); navigation.navigate("ShareHoldersLedger") }} icon="folder-table-outline" title="Shareholders Ledger" />
                       </Menu>
                     </View>
                   </Provider>
@@ -322,7 +327,20 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
             }
           </View>
 
-          {/*  */}
+          {/* Summary cards */}
+
+            <View style={[{ paddingTop: 15, flexDirection: 'column', justifyContent: 'space-between' }]}>
+            <Card.Content>
+            <Title>Available Shares {availableShares}</Title>
+        </Card.Content>
+        <Card.Content>
+            <Title>Total Amount Of Shares {sharesTotalAmt}</Title>
+        </Card.Content>
+        <Card.Content>
+            <Title>Value Per Share {valuePerShare}</Title>
+        </Card.Content>
+            </View>
+
           <View style={[{ paddingTop: 15 }]}>
             <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Name of Member (Shareholder):</Text>
             <TextInput
@@ -381,7 +399,7 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
           </View>
           <View style={[{ paddingTop: 15 }]}>
             <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>From whom shares were transfered:</Text>
-            <View style={editMode ? [styles.pickerEdit, {marginHorizontal: 10}] : styles.picker}>
+            <View style={editMode ? [styles.pickerEdit, { marginHorizontal: 10 }] : styles.picker}>
               <RNPickerSelect
                 useNativeAndroidPickerStyle={false}
                 placeholder={{ label: "Select Transfer Type", value: null }}
@@ -465,59 +483,61 @@ const RegisterOfShareHolders = ({ route, navigation }) => {
           </View>
 
           {!editMode ?
-          <View style={{ paddingTop: 15, flexDirection: 'row', paddingBottom: 25 }}>
-          <Text style={styles.cardTitle}>Relevant Documents: </Text>
-            <Text>{attachmentNo}</Text>
-        </View>
-          :
-          <View style={[{ paddingTop: 15 }]}>
-          <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Attach Relevant Documents:</Text>
+            <View style={{ paddingTop: 15, flexDirection: 'row', paddingBottom: 25 }}>
+              <Text style={styles.cardTitle}>Relevant Documents: </Text>
+              <Text>{attachmentNo}</Text>
+            </View>
+            :
+            <View style={[{ paddingTop: 15 }]}>
+              <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Attach Relevant Documents:</Text>
 
-             <TouchableOpacity onPress={() => handleAdd(uploads, setUploads, setValidUploads)} style={[{ backgroundColor: "green", marginVertical: 10 }, styles.buttons]}>
-              <Text style={{ color: '#fff', alignSelf: 'center' }}>{`Add Upload`}</Text>
-            </TouchableOpacity>
+              <TouchableOpacity onPress={() => handleAdd(uploads, setUploads, setValidUploads)} style={[{ backgroundColor: "green", marginVertical: 10 }, styles.buttons]}>
+                <Text style={{ color: '#fff', alignSelf: 'center' }}>{`Add Upload`}</Text>
+              </TouchableOpacity>
 
-            { uploads.map((field, idx) => {
-              return (
-                <View key={`${field}-${idx}`} style={{
-                  // borderRadius: 1, borderWidth: .3, borderStyle: 'dashed',
-                  // borderColor: 'green',
-                  marginBottom: 10,
-                }}>
+              {uploads.map((field, idx) => {
+                return (
+                  <View key={`${field}-${idx}`} style={{
+                    // borderRadius: 1, borderWidth: .3, borderStyle: 'dashed',
+                    // borderColor: 'green',
+                    marginBottom: 10,
+                  }}>
 
-                  <View style={editMode ? [styles.pickerEdit, {marginHorizontal: 10}] : styles.picker}>
-                    <RNPickerSelect
-                      useNativeAndroidPickerStyle={false}
-                      placeholder={{ label: "Select Document Type", value: null }}
-                      onValueChange={(val) => {
-                        handleChangeInput(idx, val, 'Type', uploads, setUploads, setValidUploads);
-                      }}
-                      items={documentTypes}
-                      disabled={!editMode}
-                      value={uploads[idx]['Type']}
-                      style={pickerStyle}
-                    />
-                  </View>
+                    <View style={editMode ? [styles.pickerEdit, { marginHorizontal: 10 }] : styles.picker}>
+                      <RNPickerSelect
+                        useNativeAndroidPickerStyle={false}
+                        placeholder={{ label: "Select Document Type", value: null }}
+                        onValueChange={(val) => {
+                          handleChangeInput(idx, val, 'Type', uploads, setUploads, setValidUploads);
+                        }}
+                        items={documentTypes}
+                        disabled={!editMode}
+                        value={uploads[idx]['Type']}
+                        style={pickerStyle}
+                      />
+                    </View>
 
-                  <View style={[styles.action3]}>
-                    <TouchableOpacity onPress={() => selectOneFile(idx)}>
-                      <TextInput style={{ fontSize: 17 }} onFocus={() => selectOneFile(idx)}
-                        label="attachments" placeholder="Click here to upload document" onChangeText={() => selectOneFile(idx)}
-                        value={uploads[idx]['Document'].name} />
-                    </TouchableOpacity>
-                  </View>
+                    <View style={[styles.action3]}>
+                      <TouchableOpacity onPress={() => selectOneFile(idx)}>
+                        <TextInput style={{ fontSize: 17 }} onFocus={() => selectOneFile(idx)}
+                          label="attachments" placeholder="Click here to upload document" onChangeText={() => selectOneFile(idx)}
+                          value={uploads[idx]['Document'].name} />
+                      </TouchableOpacity>
+                    </View>
 
-                    <TouchableOpacity onPress={() => handleRemove(idx, uploads, setUploads, setValidUploads)} style={[{ backgroundColor: "red",
-                  justifyContent: 'center',
-                  margin: 5,
-                  alignSelf: 'flex-end', }, styles.button2]}>
+                    <TouchableOpacity onPress={() => handleRemove(idx, uploads, setUploads, setValidUploads)} style={[{
+                      backgroundColor: "red",
+                      justifyContent: 'center',
+                      margin: 5,
+                      alignSelf: 'flex-end',
+                    }, styles.button2]}>
                       <Text style={{ color: '#fff', alignSelf: 'center' }}>{`Remove`}</Text>
                     </TouchableOpacity>
-                </View>
-              );
-            })}
+                  </View>
+                );
+              })}
 
-          </View>}
+            </View>}
           {entryId ?
             editMode ? <View style={styles.button}>
               <TouchableOpacity onPress={() => submitRecord()} style={[{ backgroundColor: colors.button }, styles.buttons]}>

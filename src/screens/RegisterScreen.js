@@ -19,13 +19,13 @@ import { useTheme } from '@react-navigation/native';
 import actuatedNormalize from '../helpers/actuatedNormalize';
 import grayColor from '../constants/Colors';
 import {
-  ROShareHoldersCard, MOShareHoldersCard, RODirectorsCard, RODInterestCard, RODirectorsSHgCard
+  ROShareHoldersCard, MOShareHoldersCard, RODirectorsCard, RODInterestCard, RODsSHgParticularsCard
   , MODirectorsCard, ROSecretatriesCard, ROMortgagesCard, CoSealRegisterCard, RODebenturesCard,
   ROBranchesCard
 } from '../components/ListCard';
 
 import {
-  rOShareHolders, mOShareHolders, rODirectors, rODInterest, rODirectorsSHg
+  rOShareHolders, mOShareHolders, rODirectors, rODInterest, rODsSHgParticulars
   , mODirectors, rOSecretatries, rOMortgages, coSealRegister, rODebentures, rOBranches
 } from '../model/records';
 import registers from '../model/registers';
@@ -46,7 +46,7 @@ const RegisterScreen = ({ route, navigation, props }) => {
         break;
       case "Index of Minutes of Shareholders":
         setData(mOShareHolders);
-        setRegisterRoute('NotFound');
+        setRegisterRoute('MOShareHolders');
         break;
       case "Register of Directors":
         setData(rODirectors);
@@ -54,23 +54,23 @@ const RegisterScreen = ({ route, navigation, props }) => {
         break;
       case "Register of Directors Interest":
         setData(rODInterest);
-        setRegisterRoute('NotFound');
+        setRegisterRoute('RODInterest');
         break;
       case "Directors Shareholding & Related Particulars":
-        setData(rODirectorsSHg);
-        setRegisterRoute('NotFound');
+        setData(rODsSHgParticulars);
+        setRegisterRoute('RODsSHgParticulars');
         break;
       case "Index of Minutes of Directors":
         setData(mODirectors);
-        setRegisterRoute('NotFound');
+        setRegisterRoute('MODirectors');
         break;
       case "Register of Secretaries":
         setData(rOSecretatries);
-        setRegisterRoute('NotFound');
+        setRegisterRoute('ROSecretatries');
         break;
       case "Register of Mortgages & Charges":
         setData(rOMortgages);
-        setRegisterRoute('NotFound');
+        setRegisterRoute('ROMortgages');
         break;
       case "Company Seal Register":
         setData(coSealRegister);
@@ -122,7 +122,7 @@ const RegisterScreen = ({ route, navigation, props }) => {
           />);
       case "Directors Shareholding & Related Particulars":
         return (
-          <RODirectorsSHgCard
+          <RODsSHgParticularsCard
             item={item}
             onOpen={() => navigation.navigate(registerRoute, { entryId: item.id, registerId: registerId })}
           />);

@@ -12,7 +12,7 @@ export const MenuGroup = ({recordName, entryId, editMode, visible, setEditMode, 
       <Text style={[styles.cardTitleEdit, { paddingTop: 20, textDecorationLine: 'underline' }]}>{recordName}</Text>
       :
       <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-        <Text style={[styles.cardTitleEdit, { textDecorationLine: 'underline', paddingTop: 20, }]}>{recordName}</Text>
+        <Text style={[styles.cardTitleEdit, { textDecorationLine: 'underline', paddingTop: 20, maxWidth: 280 }]}>{recordName}</Text>
         {editMode ? null :
           <Provider>
             <View
@@ -20,7 +20,7 @@ export const MenuGroup = ({recordName, entryId, editMode, visible, setEditMode, 
                 paddingTop: 7,
                 flexDirection: 'row',
                 justifyContent: 'center',
-                marginLeft: 50,
+                // marginLeft: 0,
                 marginBottom: visible ? 155 : 0
               }}>
               <Menu

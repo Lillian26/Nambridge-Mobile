@@ -200,7 +200,7 @@ const RODInterestCard = (props) => {
 
   );
 }
-const RODirectorsSHgCard = (props) => {
+const RODsSHgParticularsCard = (props) => {
 
   const { item, onOpen } = props
 
@@ -219,7 +219,7 @@ const RODirectorsSHgCard = (props) => {
           <Text style={styles.labelView}>Date of Notification: {item.notification_date}</Text>
         </View>
         <View style={[{ flexDirection: 'row' }, styles.sector]}>
-          <Text style={styles.labelView}> Amount of class of shares: {item.amount_of_class}</Text>
+          <Text style={styles.labelView}> Amount of class of shares: {item.sh_debenture_class_amt}</Text>
         </View>
         <View style={[{ flexDirection: 'row' }, styles.sector]}>
           <Text style={styles.labelView}> Date of Grant of Right: {item.grant_right_date}</Text>
@@ -231,7 +231,7 @@ const RODirectorsSHgCard = (props) => {
           <Text style={styles.labelView}>What Consideration?: {item.consideration}</Text>
         </View>
         <View style={[{ flexDirection: 'row' }, styles.sector]}>
-          <Text style={styles.labelView}>Name in which shares: {item.registered_name}</Text>
+          <Text style={styles.labelView}>Name in which shares: {item.shr_registerd_name}</Text>
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingTop: 5 }}>
           <Text style={[styles.labelView, { flex: 2 }]}>Documents: {item.no_of_attachments}</Text>
@@ -271,7 +271,7 @@ const MODirectorsCard = (props) => {
           <Text style={styles.labelView}>Resolution Registration Date: {item.resolution_registration_date}</Text>
         </View>
         <View style={{ paddingVertical: 6 }}>
-          <Text style={styles.labelView}>Location of the Original Resolution: {item.location_of_the_orgin_issue}</Text>
+          <Text style={styles.labelView}>Location of the Original Resolution: {item.orginl_issue_loc}</Text>
         </View>
 
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingTop: 5 }}>
@@ -306,13 +306,13 @@ const ROSecretatriesCard = (props) => {
           <Text style={styles.labelView}>Office Held: {item.office_held}</Text>
         </View>
         <View style={[{ flexDirection: 'row' }, styles.sector]}>
-          <Text style={styles.labelView}>Appointment Effective Date: {item.appointment_date}</Text>
+          <Text style={styles.labelView}>Appointment Effective Date: {item.appointment_effective_date}</Text>
         </View>
         <View style={[{ flexDirection: 'row' }, styles.sector]}>
-          <Text style={styles.labelView}>Notification of Appointment: {item.appointment_date}</Text>
+          <Text style={styles.labelView}>Notification of Appointment: {item.date_notificatn_appointment}</Text>
         </View>
         <View style={[{ flexDirection: 'row' }, styles.sector]}>
-          <Text style={styles.labelView}>Resignation Effective Date: {item.resignation_date}</Text>
+          <Text style={styles.labelView}>Resignation Effective Date: {item.resignation_effective_date}</Text>
         </View>
         <View style={[{ flexDirection: 'row' }, styles.sector]}>
           <Text style={styles.labelView}> Notification of Resignation: {item.date_notificatn_resignation}</Text>
@@ -347,7 +347,7 @@ const ROMortgagesCard = (props) => {
           <Text style={styles.labelView}>Date of Creation: {item.creation_date}</Text>
         </View>
         <View style={[{ flexDirection: 'row' }, styles.sector]}>
-          <Text style={[styles.labelView]}>Address of Charger:</Text>
+          <Text style={[styles.labelView]}>Address of Chargor:</Text>
           <Text style={[styles.labelView]}> {item.chargor_address}</Text>
         </View>
         <View style={[{ flexDirection: 'row' }, styles.sector]}>
@@ -496,7 +496,7 @@ const ROBranchesCard = (props) => {
   );
 }
 export {
-  MOShareHoldersCard, ROShareHoldersCard, RODirectorsCard, RODInterestCard, RODirectorsSHgCard,
+  MOShareHoldersCard, ROShareHoldersCard, RODirectorsCard, RODInterestCard, RODsSHgParticularsCard,
   MODirectorsCard, ROSecretatriesCard, ROMortgagesCard, CoSealRegisterCard, RODebenturesCard, ROBranchesCard
 };
 

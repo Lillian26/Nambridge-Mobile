@@ -24,20 +24,34 @@ const RegistersList = ({ navigation }) => {
         navigation.navigate('RegisterOfShareHolders');
         break;
       case "Index of Minutes of Shareholders":
-        // navigation.navigate('RegisterOfShareHolders');
-        navigation.navigate('NotFound');
+        navigation.navigate('MOShareHolders');
         break;
       case "Register of Directors":
-        // navigation.navigate('RegisterOfShareHolders');
-        navigation.navigate('NotFound');
+        navigation.navigate('RODirectors');
         break;
       case "Register of Directors Interest":
-        // navigation.navigate('RegisterOfShareHolders');
-        navigation.navigate('NotFound');
+        navigation.navigate('RODInterest');
         break;
       case "Directors Shareholding & Related Particulars":
-        // navigation.navigate('RegisterOfShareHolders');
-        navigation.navigate('NotFound');
+        navigation.navigate('RODsSHgParticulars');
+        break;
+        case "Index of Minutes of Directors":
+        navigation.navigate('MODirectors');
+        break;
+        case "Register of Secretaries":
+          navigation.navigate('ROSecretatries');
+          break;
+      case "Register of Mortgages & Charges":
+        navigation.navigate('ROMortgages');
+        break;
+      case "Company Seal Register":
+        navigation.navigate('CoSealRegister');
+        break;
+      case "Register of Debentures":
+        navigation.navigate('RODebentures');
+        break;
+      case "Register of Branches":
+        navigation.navigate('ROBranches');
         break;
       default:
         navigation.navigate('NotFound');

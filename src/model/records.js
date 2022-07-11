@@ -49,30 +49,36 @@ export const rOShareHolders = [
 export const mOShareHolders = [
   {
     id: 1,
-    type_of_meeting: 'Share Holders',
+    type_of_meeting: 'annual',
     key_resolutions: 'Mutungo Hill',
     shareholder_meeting_date: '2002-04-2',
     resolution_extraction_date: '2001-04-01',
     registration_date: '2020-08-20',
-    location_of_registration: 'Otim Fredrick'
+    location_of_registration: 'Otim Fredrick',
+    key_resoln_summary: "Reason one is -",
+    no_of_attachments: '2'
   },
   {
     id: 2,
-    type_of_meeting: 'Share Holders',
+    type_of_meeting: 'annual',
     key_resolutions: 'Mutungo Hill',
     shareholder_meeting_date: '2005-01-20',
     resolution_extraction_date: '2009-04-12',
     registration_date: '2020-08-20',
-    location_of_registration: 'Anne Mery'
+    location_of_registration: 'Anne Mery',
+    key_resoln_summary: "Reason one is -",
+    no_of_attachments: '2'
   },
   {
     id: 3,
-    type_of_meeting: 'Share Holders',
+    type_of_meeting: 'annual',
     key_resolutions: 'Mutungo Hill',
     shareholder_meeting_date: '2009-08-02',
     resolution_extraction_date: '2001-04-20',
     registration_date: '2021-08-20',
-    location_of_registration: 'Jon sno'
+    location_of_registration: 'Jon sno',
+    key_resoln_summary: "Reason one is -",
+    no_of_attachments: '2'
   }]
 
 export const rODirectors = [
@@ -123,7 +129,7 @@ export const rODInterest = [
   {
     id: 1,
     director: 'Otim Fredrick',
-    interest_description: 'Mutungo Hill',
+    interest_conflict_desc: 'Mutungo Hill',
     date_notified: '2002-04-01',
     director_related_interest: '12344',
     remarks: '50',
@@ -132,7 +138,7 @@ export const rODInterest = [
   {
     id: 2,
     director: 'Anne Mery',
-    interest_description: 'Mutungo Hill',
+    interest_conflict_desc: 'Mutungo Hill',
     date_notified: '2012-01-05',
     director_related_interest: '12345',
     remarks: '70',
@@ -141,25 +147,25 @@ export const rODInterest = [
   {
     id: 3,
     director: 'Jon sno',
-    interest_description: 'Mutungo Hill',
+    interest_conflict_desc: 'Mutungo Hill',
     date_notified: '2020-08-20',
     director_related_interest: '12346',
     remarks: '60',
     no_of_attachments: '15',
   }]
 
-export const rODirectorsSHg = [
+export const rODsSHgParticulars = [
   {
     id: 1,
     director: 'Otim Fredrick',
     date_of_entry: '2002-04-01',
     notification_date: '50',
     nature: 'Otim Fredrick',
-    amount_of_class: '150.00',
+    sh_debenture_class_amt: '150.00',
     grant_right_date: '2021-04-05',
     period_of_grant: 'Lillian Namusisi',
-    consideration: 'Kind',
-    registered_name: 'Lillian N',
+    consideration: 'kind',
+    shr_registerd_name: 'Lillian N',
     no_of_attachments: '10',
   },
   {
@@ -169,11 +175,11 @@ export const rODirectorsSHg = [
     nationality: '12345',
     notification_date: '70',
     nature: 'Anne Mery',
-    amount_of_class: '150.00',
+    sh_debenture_class_amt: '150.00',
     grant_right_date: '2022-04-20',
     period_of_grant: 'Lillian Namusisi',
     consideration: 'Cash',
-    registered_name: 'Lillian N',
+    shr_registerd_name: 'Lillian N',
     no_of_attachments: '8',
   },
   {
@@ -183,11 +189,11 @@ export const rODirectorsSHg = [
     nationality: '12346',
     notification_date: '60',
     nature: 'Jon sno',
-    amount_of_class: '120.00',
+    sh_debenture_class_amt: '120.00',
     grant_right_date: '2022-03-21',
     period_of_grant: 'Lillian Namusisi',
     consideration: 'Kind',
-    registered_name: 'Lillian N',
+    shr_registerd_name: 'Lillian N',
     no_of_attachments: '15',
   }]
 
@@ -196,10 +202,10 @@ export const mODirectors = [
     id: 1,
     date_of_board_meeting: '2020-09-20',
     venue_type: 'physical',
-    summary_of_key_resolutions: 'Accounting for all activities',
+    key_resoln_summary: 'Accounting for all activities',
     resolution_extracted_date: '2021-04-05',
     resolution_registration_date: '2021-04-05',
-    location_of_the_orgin_issue: 'kampala',
+    orginl_issue_loc: 'kampala',
     no_of_attachments: '5'
   }]
 
@@ -209,9 +215,8 @@ export const rOSecretatries = [
     secretary: 'Otim Fredrick',
     secretary_address: 'Mutungo Hill',
     office_held: '150.00',
-    appointment_date: '2002-04-01',
+    appointment_effective_date: '2002-04-01',
     date_notificatn_appointment: '2002-04-01',
-    resignation_date: '2021-04-05',
     resignation_effective_date: '2021-04-05',
     date_notificatn_resignation: '2021-04-05',
     no_of_attachments: '4',
@@ -227,7 +232,7 @@ export const rOMortgages = [
     property_description: 'Mutungo Hill',
     property_discharge_date: '2002-04-01',
     no_of_attachments: '10',
-  },]
+  }]
 
 export const coSealRegister = [
   {
@@ -237,7 +242,7 @@ export const coSealRegister = [
     parties_particulars: 'Otim Fredrick',
     executed_doc_location: 'Mutungo Hill',
     no_of_attachments: '10',
-  },]
+  }]
 
 export const rODebentures = [
   {

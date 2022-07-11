@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, ScrollView, ActivityIndicator, LogBox, TextInput, Alert } from 'react-native';
 import { Text } from 'native-base';
-import { mOShareHolders } from '../../../model/records';
+import { mODirectors } from '../../../model/records';
 // import axios from "axios";
 import RNPickerSelect from "react-native-picker-select";
 import { MenuGroup } from '../../../components/MenuGroup';
@@ -12,7 +12,7 @@ import { pickerStyle ,styles } from '../../../styles/common';
 import OutroComponent from '../../../components/OutroComponent';
 import { handleAdd, handleRemove, handleChangeInput, fetchDocumentTypes, selectOneFile } from '../../../helpers/uploadMethods';
 
-const MOShareHolders = ({ route, navigation }) => {
+const MODirectors = ({ route, navigation }) => {
 
   const { entryId, registerId } = route.params ?? {};
 
@@ -20,8 +20,8 @@ const MOShareHolders = ({ route, navigation }) => {
 
   const [editMode, setEditMode] = useState(false);
   const [record, setRecord] = useState(null)
-  const [dateOfSHMtg, setDateOfSHMtg] = useState(defaultDate);
-  const [isDateOfSHMtgPickerVisible, setDateOfSHMtgPickerVisibility] = useState(false);
+  const [dateOfBoardMtg, setDateOfBoardMtg] = useState(defaultDate);
+  const [isDateOfBoardMtgPickerVisible, setDateOfBoardMtgPickerVisibility] = useState(false);
   const [typeOfMeeting, setTypeOfMeeting] = useState(null)
   const [keyResolnsSummary, setKeyResolnsSummary] = useState("")
   const [resolnExtractnDate, setResolnExtractnDate] = useState(defaultDate);
@@ -37,7 +37,7 @@ const MOShareHolders = ({ route, navigation }) => {
   const [documentTypes, setDocumentTypes] = useState([])//common
 
 
-  // -------------------------- handlers for Date of Resignation Picker --------------------------------------------
+  // -------------------------- handlers for Date of ResolnRegistratn Picker --------------------------------------------
 
   const showResolnRegistratnDatePicker = () => {
     setResolnRegistratnDateVisibility(true);
@@ -61,7 +61,6 @@ const MOShareHolders = ({ route, navigation }) => {
 
   // -------------------------- handlers for ResolnExtractnDate Picker --------------------------------------------
 
-
   const showResolnExtractnDatePicker = () => {
     setResolnExtractnDateVisibility(true);
   };
@@ -82,25 +81,25 @@ const MOShareHolders = ({ route, navigation }) => {
     }
   };
 
-  // -------------------------- handlers for Date of SHMtg Picker --------------------------------------------
+  // -------------------------- handlers for Date of BoardMtg Picker --------------------------------------------
 
-  const showDateOfSHMtgPicker = () => {
-    setDateOfSHMtgPickerVisibility(true);
+  const showDateOfBoardMtgPicker = () => {
+    setDateOfBoardMtgPickerVisibility(true);
   };
 
-  const hideDateOfSHMtgPicker = () => {
-    setDateOfSHMtgPickerVisibility(false);
+  const hideDateOfBoardMtgPicker = () => {
+    setDateOfBoardMtgPickerVisibility(false);
   };
 
-  const handleDateOfSHMtgConfirm = (e) => {
-    hideDateOfSHMtgPicker();
+  const handleDateOfBoardMtgConfirm = (e) => {
+    hideDateOfBoardMtgPicker();
     var date = new Date(e);
 
     if (isNaN(date.getTime())) {
-      setDateOfSHMtg(defaultDate)
+      setDateOfBoardMtg(defaultDate)
     }
     else {
-      setDateOfSHMtg(date)
+      setDateOfBoardMtg(date)
     }
   };
 
@@ -133,20 +132,19 @@ const MOShareHolders = ({ route, navigation }) => {
   const closeMenu = () => setVisible(false);
 
   const getRecordDetails = () => {
-    var theRecord = mOShareHolders.find(x => x.id == entryId);
-    setRecord("Index of Minutes of Shareholders");
-    setTypeOfMeeting(theRecord.type_of_meeting);
-    setDateOfSHMtg(new Date(theRecord.shareholder_meeting_date));
+    var theRecord = mODirectors.find(x => x.id == entryId);
+    setRecord("Index of Minutes of Directors");
+    setTypeOfMeeting(theRecord.venue_type);
+    setDateOfBoardMtg(new Date(theRecord.date_of_board_meeting));
     setKeyResolnsSummary(theRecord.key_resoln_summary)
-    setResolnExtractnDate(new Date(theRecord.resolution_extraction_date));
-    setResolnRegistratnDate(new Date(theRecord.registration_date));
-    setOriginalResolnLoctn(theRecord.location_of_registration)
+    setResolnExtractnDate(new Date(theRecord.resolution_extracted_date));
+    setResolnRegistratnDate(new Date(theRecord.resolution_registration_date));
+    setOriginalResolnLoctn(theRecord.orginl_issue_loc)
     setAttachmentNo(theRecord.no_of_attachments)
 
     // getAttachments()
 
   }
-
 
   // TODO
   // submit + axios config + loading
@@ -198,17 +196,17 @@ const MOShareHolders = ({ route, navigation }) => {
             navigation={navigation} />
 
           <View style={[{ paddingTop: 15 }]}>
-            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}> Date of Shareholder Meeting:</Text>
+            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}> Date of Board Meeting:</Text>
             <TextInput style={editMode ? styles.textInputEdit : styles.textInput}
-              editable={editMode} onFocus={showDateOfSHMtgPicker} onKeyPress={showDateOfSHMtgPicker}
-              value={dateOfSHMtg == '' ? '' : formatTheDateLabel(dateOfSHMtg)}
+              editable={editMode} onFocus={showDateOfBoardMtgPicker} onKeyPress={showDateOfBoardMtgPicker}
+              value={dateOfBoardMtg == '' ? '' : formatTheDateLabel(dateOfBoardMtg)}
               showSoftInputOnFocus={false} />
             <DateTimePickerModal
-              isVisible={isDateOfSHMtgPickerVisible}
+              isVisible={isDateOfBoardMtgPickerVisible}
               mode="date"
-              date={dateOfSHMtg}
-              onConfirm={handleDateOfSHMtgConfirm}
-              onCancel={hideDateOfSHMtgPicker}
+              date={dateOfBoardMtg}
+              onConfirm={handleDateOfBoardMtgConfirm}
+              onCancel={hideDateOfBoardMtgPicker}
             />
           </View>
           <Text style={editMode ? [styles.cardTitleEdit, {marginTop: 10}] : [styles.cardTitle, {marginTop: 10}]}>State whether meeting was?:</Text>
@@ -218,9 +216,8 @@ const MOShareHolders = ({ route, navigation }) => {
               placeholder={{ label: "Select option", value: null }}
               onValueChange={(value) => setTypeOfMeeting(value)}
               items={[
-                { label: "Annual Meeting", value: "annual" },
-                { label: "Extra ordinary general meeting", value: "extra_ordinary" },
-                { label: "Circular Meeting", value: "circular" },
+                { label: "Physical", value: "physical" },
+                { label: "Circular", value: "circular" },
                 { label: "Other", value: "other" }
               ]}
               disabled={!editMode}
@@ -267,7 +264,7 @@ const MOShareHolders = ({ route, navigation }) => {
           </View>
 
           <View style={[{ paddingTop: 15 }]}>
-            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Location of the Original Resolution:</Text>
+            <Text style={editMode ? styles.cardTitleEdit : styles.cardTitle}>Location of the Original Issue:</Text>
             <TextInput
               value={originalResolnLoctn}
               onChangeText={setOriginalResolnLoctn}
@@ -285,4 +282,4 @@ const MOShareHolders = ({ route, navigation }) => {
   );
 };
 
-export default MOShareHolders;
+export default MODirectors;
